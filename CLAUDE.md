@@ -28,11 +28,18 @@ the guardian manual.
 - **State lives entirely in the browser.** All user data is persisted to
   **`localStorage`** under the single key **`"prep-register-v2"`** (see
   `KEY`, `loadAll`, `saveAll` in `index.html`). The whole state tree is one
-  JSON blob. There is no backend, no database, and no network calls for data —
-  the only network requests are the CDN script/font loads above. Clearing
-  browser storage resets the tracker; data does not sync across devices or
-  browsers (by design). The **Backup** tab exports/imports that JSON so state
-  can be moved between browsers manually.
+  JSON blob. There is no backend and no database. Clearing browser storage
+  resets the tracker. The **Backup** tab exports/imports that JSON so state can
+  be moved between browsers manually.
+- **Optional Google Drive sync.** The Backup tab has a `Sync` component that can
+  save/load the same JSON blob to the user's *own* Google Drive
+  (`appDataFolder`) via Google Identity Services + the Drive REST API — no
+  backend, no cost, public OAuth Client ID only (SPA flow, no secret). Google's
+  `gsi/client` script is loaded **on demand** (only when the user clicks a sync
+  button), so the page still makes no third-party data calls by default. The
+  Client ID is stored in `localStorage` under `prep-gdrive-client`; the access
+  token is kept in memory only. This is the one deliberate exception to "no
+  network calls for data," and it is strictly user-initiated.
 - **Private by default.** `robots.txt` disallows all crawlers and the page
   sends `noindex, nofollow`. Keep it that way — this is one student's personal
   register, not a public site.

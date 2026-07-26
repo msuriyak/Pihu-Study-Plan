@@ -891,6 +891,7 @@ function App(){
     r.readAsText(f); e.target.value=""; };
   const reset=()=>{ if(!confirm("Clear every tick, test and week from this device? Export a backup first if you want to keep it.")) return;
     const seed={}; SEEDED.forEach(id=>{seed[id]={l1:true};}); commit({syllabus:seed,tests:[],audits:[],diag:{}}); };
+  const importObject=d=>commit({syllabus:d.syllabus||{},tests:d.tests||[],audits:d.audits||[],diag:d.diag||{}});
 
   const TABS=[["register","Register"],["week","This week"],["schedule","Schedule"],["papers","Papers"],["tests","Test log"],["sunday","Sunday"],
     ["diag","Diagnostic"],["plan","The plan"],["manual","Manual"],["data","Backup"]];
@@ -914,7 +915,7 @@ function App(){
             {tab==="diag" && <Diagnostic db={db} commit={commit}/>}
             {tab==="plan" && <Plan/>}
             {tab==="manual" && <Manual/>}
-            {tab==="data" && <Backup db={db} onExport={exportData} onImport={importData} onReset={reset}/>}
+            {tab==="data" && <><Sync db={db} onRestore={importObject}/><Backup db={db} onExport={exportData} onImport={importData} onReset={reset}/></>}
           </main>)}
       </div>
     </div>);
@@ -2072,6 +2073,93 @@ function Manual(){
         attention — are not subject expertise. They are the things you are already positioned to provide.</p>
     </Acc>
   </>);
+}
+
+/* ═══════════════════  CLOUD SYNC (Google Drive) ═══════════════════
+   Saves the tracker's JSON into the user's own Google Drive, in the hidden
+   per-app "appDataFolder". No backend, no cost. Google's sign-in script is
+   loaded only when the user actually clicks a sync button — nothing phones
+   home otherwise. The OAuth Client ID is public (SPA flow, no secret). */
+const DRIVE_FILE="prep-register.json";
+const DRIVE_SCOPE="https://www.googleapis.com/auth/drive.appdata";
+const CLIENT_KEY="prep-gdrive-client";
+let _tokenClient=null;
+function loadScript(src){ return new Promise((res,rej)=>{
+  if(document.querySelector(`script[src="${src}"]`)) return res();
+  const s=document.createElement("script"); s.src=src; s.async=true;
+  s.onload=()=>res(); s.onerror=()=>rej(new Error("Could not load Google sign-in — check your connection.")); document.head.appendChild(s); }); }
+async function getToken(clientId){
+  await loadScript("https://accounts.google.com/gsi/client");
+  return new Promise((resolve,reject)=>{
+    _tokenClient=window.google.accounts.oauth2.initTokenClient({
+      client_id:clientId, scope:DRIVE_SCOPE,
+      callback:r=>{ r.error?reject(new Error(r.error)):resolve(r.access_token); },
+      error_callback:e=>reject(new Error(e.type||"sign-in cancelled")) });
+    _tokenClient.requestAccessToken({prompt:""});
+  });
+}
+async function driveFindId(token){
+  const q=encodeURIComponent(`name='${DRIVE_FILE}'`);
+  const r=await fetch(`https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&fields=files(id)&q=${q}`,
+    {headers:{Authorization:"Bearer "+token}});
+  if(!r.ok) throw new Error("Drive read failed ("+r.status+")");
+  const j=await r.json(); return j.files&&j.files[0]?j.files[0].id:null;
+}
+async function driveSave(token,data){
+  const id=await driveFindId(token);
+  const meta=id?{}:{name:DRIVE_FILE,parents:["appDataFolder"]};
+  const b="-cut"+Date.now();
+  const body=`--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify(meta)}\r\n`+
+    `--${b}\r\nContent-Type: application/json\r\n\r\n${JSON.stringify(data)}\r\n--${b}--`;
+  const url="https://www.googleapis.com/upload/drive/v3/files"+(id?"/"+id:"")+"?uploadType=multipart";
+  const r=await fetch(url,{method:id?"PATCH":"POST",
+    headers:{Authorization:"Bearer "+token,"Content-Type":"multipart/related; boundary="+b},body});
+  if(!r.ok) throw new Error("Drive save failed ("+r.status+")");
+}
+async function driveLoad(token){
+  const id=await driveFindId(token); if(!id) return null;
+  const r=await fetch(`https://www.googleapis.com/drive/v3/files/${id}?alt=media`,{headers:{Authorization:"Bearer "+token}});
+  if(!r.ok) throw new Error("Drive load failed ("+r.status+")");
+  return await r.json();
+}
+function Sync({db,onRestore}){
+  const [cid,setCid]=useState(()=>{ try{return localStorage.getItem(CLIENT_KEY)||"";}catch{return "";} });
+  const [status,setStatus]=useState(""); const [busy,setBusy]=useState(false);
+  const saveCid=v=>{ setCid(v); try{localStorage.setItem(CLIENT_KEY,v.trim());}catch{} };
+  const run=async(fn)=>{ if(!cid.trim()){ setStatus("Paste your Google OAuth Client ID first."); return; }
+    setBusy(true); setStatus("Opening Google sign-in…");
+    try{ const t=await getToken(cid.trim()); await fn(t); }
+    catch(e){ setStatus("Error: "+e.message); } finally{ setBusy(false); } };
+  const when=()=>new Date().toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
+  const doSave=()=>run(async t=>{ await driveSave(t,db); setStatus("Saved to Google Drive · "+when()); });
+  const doLoad=()=>run(async t=>{ const d=await driveLoad(t);
+    if(!d){ setStatus("No backup in Drive yet — Save to Drive first."); return; }
+    if(confirm("Replace this device's tracker with the backup from Google Drive?")){ onRestore(d); setStatus("Loaded from Google Drive · "+when()); }
+    else setStatus("Load cancelled."); });
+  return (<div className="card">
+    <h2 className="card-h">Cloud sync — Google Drive <span className="pill">optional</span></h2>
+    <p className="card-sub">Saves this tracker to a private file in <b>your own</b> Google Drive (its hidden app-data area),
+      so you can pick it up on another device or browser. Free, and nothing is stored on any other server. Google's
+      sign-in only loads when you press a button below.</p>
+    <Field label="Google OAuth Client ID"><input value={cid} onChange={e=>saveCid(e.target.value)}
+      placeholder="xxxxxxxxxxxx.apps.googleusercontent.com"/></Field>
+    <div className="row-end">
+      <p className="hint hint-lead">{status||"A Google popup will ask permission for Drive app-data access only. Save writes; Load overwrites this device."}</p>
+      <div className="inline">
+        <button className="btn btn-ghost" disabled={busy} onClick={doLoad}>Load from Drive</button>
+        <button className="btn" disabled={busy} onClick={doSave}>Save to Drive</button></div>
+    </div>
+    <div className="note"><b>One-time free setup</b> (needed because this is your private page):
+      <ol className="steps" style={{marginTop:6}}>
+        <li>Go to <b>console.cloud.google.com</b> → create a project (free).</li>
+        <li><b>APIs &amp; Services → Library →</b> enable <b>Google Drive API</b>.</li>
+        <li><b>OAuth consent screen:</b> User type <i>External</i>, add your own Gmail as a <b>Test user</b>.</li>
+        <li><b>Credentials → Create credentials → OAuth client ID → Web application.</b> Under
+          <b> Authorized JavaScript origins</b> add your site URL (e.g. <code>https://msuriyak.github.io</code>).</li>
+        <li>Copy the <b>Client ID</b> and paste it above. That's it — it's remembered on this device.</li>
+      </ol>
+      Only the public Client ID is needed (no secret). One backup file is kept; Save overwrites it (last write wins).</div>
+  </div>);
 }
 
 /* ═══════════════════  BACKUP  ═══════════════════ */
