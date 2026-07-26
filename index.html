@@ -1120,6 +1120,15 @@ const NTA_JEE="https://jeemain.nta.nic.in/";
 const CBSE_SUBJECTS=[["Mathematics","maths"],["Physics","physics"],["Chemistry","chemistry"],
   ["English Core","english"],["Physical Education","pe"]];
 const PAPERS=[
+  { group:"Practice papers — printable, built into this tracker",
+    note:"Original JEE-style chapter sprints with verified answer keys, plus your Week 0 diagnostic — ready to print or save as PDF. These are not CBSE/NTA papers; more chapters can be added on request.",
+    bundled:[
+      ["Week 0 Diagnostic — question paper","papers/diagnostic-week0.html"],
+      ["Week 0 Diagnostic — marking key (for the guardian)","papers/diagnostic-week0-key.html"],
+      ["M1 Relations & Functions — JEE sprint (8 Q + key)","papers/sprint-m1.html"],
+      ["M5 Continuity & Differentiability — JEE sprint (10 Q + key)","papers/sprint-m5.html"],
+      ["C1 Solutions — JEE sprint (8 Q + key)","papers/sprint-c1.html"],
+      ["P8 Electromagnetic Waves — JEE sprint (8 Q + key)","papers/sprint-p8.html"]]},
   { group:"CBSE Class 12 — sample papers & marking schemes",
     note:"The official 2026–27 sample papers release around Sept–Oct 2026; until then the 2025–26 set is the closest stand-in. The marking scheme matters more than the paper — self-mark every answer against it.",
     source:{label:"Official — CBSE Academic, Sample Question Paper (Class XII)",url:CBSE_HOME},
@@ -1153,7 +1162,9 @@ function Papers(){
     {PAPERS.map(sec=>(
       <Acc key={sec.group} title={sec.group} open>
         {sec.note && <p>{sec.note}</p>}
-        <p><a className="paper-src" href={sec.source.url} target="_blank" rel="noopener noreferrer">{sec.source.label} ↗</a></p>
+        {sec.source && <p><a className="paper-src" href={sec.source.url} target="_blank" rel="noopener noreferrer">{sec.source.label} ↗</a></p>}
+        {sec.bundled && <ul className="glist">{sec.bundled.map(([label,file])=>(
+          <li key={file}><a className="paper-btn" href={file} target="_blank" rel="noopener noreferrer">Open / print</a>{label}</li>))}</ul>}
         {sec.subjects && <div className="tw"><table>
           <thead><tr><th>Subject</th><th>Sample paper</th><th>Marking scheme</th></tr></thead>
           <tbody>{sec.subjects.map(s=>(<tr key={s.name}><td>{s.name}</td>

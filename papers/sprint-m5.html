@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Mathematics — Continuity &amp; Differentiability (sprint)</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:'Georgia',serif;color:#16283C;max-width:820px;margin:0 auto;padding:28px 32px;line-height:1.5}
+h1{font-family:'Arial',sans-serif;font-size:22px;margin:0 0 2px}
+.sub{font-family:'Arial',sans-serif;color:#5B6E80;font-size:13px;margin:0 0 4px}
+.meta{font-family:'Arial',sans-serif;font-size:12px;color:#5B6E80;border-top:2px solid #16283C;border-bottom:1px solid #CBD8E0;padding:8px 0;margin:10px 0 18px;display:flex;gap:18px;flex-wrap:wrap}
+.meta b{color:#16283C}
+ol.qs{padding-left:22px} ol.qs>li{margin:0 0 14px;padding-left:4px}
+.opts{list-style:none;padding:0;margin:6px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:2px 18px;font-size:14px}
+.opts li:before{content:"(" attr(data-k) ")  ";font-family:'Arial',sans-serif;color:#5B6E80}
+.key{page-break-before:always;border-top:2px solid #16283C;margin-top:26px;padding-top:12px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+th,td{text-align:left;border-bottom:1px solid #CBD8E0;padding:6px 8px;vertical-align:top}
+th{font-family:'Arial',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#5B6E80;border-bottom:1.5px solid #16283C}
+td.a{font-family:'Arial',sans-serif;font-weight:bold;color:#1D6B50;white-space:nowrap}
+.note{background:#FBF6EC;border-left:3px solid #A9701A;padding:8px 12px;font-family:'Arial',sans-serif;font-size:12px;margin:14px 0}
+.orig{font-family:'Arial',sans-serif;font-size:11px;color:#8497A6;margin-top:22px;border-top:1px solid #CBD8E0;padding-top:8px}
+.pbtn{position:fixed;top:14px;right:14px;font-family:'Arial',sans-serif;font-size:12px;font-weight:bold;
+  background:#16283C;color:#fff;border:0;border-radius:3px;padding:9px 14px;cursor:pointer}
+h2{font-family:'Arial',sans-serif;font-size:15px;margin:20px 0 6px}
+h3{font-family:'Arial',sans-serif;font-size:13px;margin:16px 0 5px}
+hr{border:0;border-top:1px solid #CBD8E0;margin:16px 0}
+blockquote{border-left:3px solid #8497A6;margin:12px 0;padding:6px 12px;background:#F1F5F7;font-size:14px}
+ul.md{padding-left:20px} ul.md li{margin:4px 0}
+@media print{.pbtn{display:none}body{max-width:none;padding:0}}
+</style></head><body>
+<button class="pbtn" onclick="window.print()">Print / Save as PDF</button>
+<h1>Mathematics — Continuity &amp; Differentiability</h1>
+<p class="sub">Chapter sprint (M5) · JEE-style timed practice</p>
+<div class="meta"><span><b>Questions:</b> 10</span><span><b>Time:</b> 20 min</span>
+<span><b>Marking:</b> +4 / −1 / 0</span><span><b>Max:</b> 40</span></div>
+<div class="note">Single correct option. Aim for ~2 min/question. Log every error with a cause tag
+(concept / silly / speed / didn't know). Answer key on the last page — don't look until you're done.</div>
+<ol class="qs"><li>d/dx [ sin(x²) ] equals<ul class="opts"><li data-k="a">2x cos(x²)</li><li data-k="b">cos(x²)</li><li data-k="c">2 cos(x²)</li><li data-k="d">−2x cos(x²)</li></ul></li><li>d/dx [ log(sin x) ] equals<ul class="opts"><li data-k="a">cot x</li><li data-k="b">tan x</li><li data-k="c">−cot x</li><li data-k="d">sec x</li></ul></li><li>d/dx [ e^(x²) ] equals<ul class="opts"><li data-k="a">2x e^(x²)</li><li data-k="b">e^(x²)</li><li data-k="c">x² e^(x²)</li><li data-k="d">2 e^(x²)</li></ul></li><li>If y = x^x, then dy/dx equals<ul class="opts"><li data-k="a">x·x^(x−1)</li><li data-k="b">x^x (1 + ln x)</li><li data-k="c">x^x ln x</li><li data-k="d">x^x</li></ul></li><li>The function f(x) = |x| is<ul class="opts"><li data-k="a">differentiable everywhere</li><li data-k="b">continuous everywhere but not differentiable at x = 0</li><li data-k="c">discontinuous at x = 0</li><li data-k="d">not continuous at x = 0</li></ul></li><li>d/dx [ tan⁻¹ x ] equals<ul class="opts"><li data-k="a">1/√(1 − x²)</li><li data-k="b">−1/(1 + x²)</li><li data-k="c">1/(1 + x²)</li><li data-k="d">1/(1 − x²)</li></ul></li><li>For x = at², y = 2at, dy/dx equals<ul class="opts"><li data-k="a">1/t</li><li data-k="b">t</li><li data-k="c">2t</li><li data-k="d">1/(2t)</li></ul></li><li>d/dx [ ln(cos x) ] equals<ul class="opts"><li data-k="a">tan x</li><li data-k="b">−tan x</li><li data-k="c">cot x</li><li data-k="d">−cot x</li></ul></li><li>f(x) = x² sin(1/x) for x ≠ 0 and f(0) = 0. At x = 0, f is<ul class="opts"><li data-k="a">differentiable with f′(0) = 0</li><li data-k="b">not continuous</li><li data-k="c">continuous but not differentiable</li><li data-k="d">differentiable with f′(0) = 1</li></ul></li><li>The value of c in Rolle’s theorem for f(x) = x² − 4 on [−2, 2] is<ul class="opts"><li data-k="a">−1</li><li data-k="b">0</li><li data-k="c">1</li><li data-k="d">2</li></ul></li></ol><div class="key"><h2>Answer key &amp; solutions — M5 Continuity &amp; Differentiability</h2>
+<table><thead><tr><th>Q</th><th>Ans</th><th>Why</th></tr></thead><tbody><tr><td>1</td><td class="a">a</td><td>Chain rule.</td></tr><tr><td>2</td><td class="a">a</td><td>(1/sin x)·cos x = cot x.</td></tr><tr><td>3</td><td class="a">a</td><td>Chain rule.</td></tr><tr><td>4</td><td class="a">b</td><td>Logarithmic differentiation: ln y = x ln x.</td></tr><tr><td>5</td><td class="a">b</td><td>Corner at 0: left/right derivatives differ.</td></tr><tr><td>6</td><td class="a">c</td><td>Standard derivative.</td></tr><tr><td>7</td><td class="a">a</td><td>(dy/dt)/(dx/dt) = 2a/(2at) = 1/t.</td></tr><tr><td>8</td><td class="a">b</td><td>(1/cos x)(−sin x) = −tan x.</td></tr><tr><td>9</td><td class="a">a</td><td>f′(0) = lim x·sin(1/x) = 0.</td></tr><tr><td>10</td><td class="a">b</td><td>f′(x) = 2x = 0 ⇒ c = 0.</td></tr></tbody></table></div>
+<p class="orig">Original practice paper generated for this study tracker (not a CBSE/NTA paper).
+Answer keys verified by hand. Modelled on the JEE Main pattern.</p></body></html>
