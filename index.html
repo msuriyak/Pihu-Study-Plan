@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Preparation Register</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#16283C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Register">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E9EEF1; --paper-2:#F8FAFB; --paper-3:#F1F5F7;
+  --ink:#16283C; --ink-mid:#5B6E80; --ink-soft:#8497A6;
+  --rule:#CBD8E0; --rule-2:#DFE8ED;
+  --red:#B93A2E; --tick:#1D6B50; --amber:#A9701A;
+  --s-M:#2B5FA8; --s-P:#7A3E8F; --s-C:#1D6B50; --s-E:#A9701A; --s-X:#5B6E80;
+  --s-KM:#4A7FC4; --s-KP:#9B63AC; --s-KC:#3E8F72;
+}
+*{box-sizing:border-box;}
+html,body{margin:0; padding:0; background:var(--paper);}
+body{color:var(--ink); font-family:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+  font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased; -webkit-text-size-adjust:100%;}
+h1,h2,h3,h4{font-family:'Archivo',sans-serif; font-weight:700; letter-spacing:-.015em; margin:0;}
+.mono,input,select{font-family:'IBM Plex Mono',monospace; font-variant-numeric:tabular-nums;}
+.reg{position:relative; display:flex; min-height:100vh;}
+.spine{width:5px; flex:0 0 5px; background:var(--ink);}
+.sheet{flex:1; min-width:0; padding:0 clamp(11px,3vw,34px) calc(64px + env(safe-area-inset-bottom));}
+.mast{padding:22px 0 0; border-bottom:2px solid var(--ink);}
+.mast-top{display:flex; flex-wrap:wrap; gap:18px; justify-content:space-between; align-items:flex-end; padding-bottom:15px;}
+.mast h1{font-size:clamp(19px,5vw,31px); text-transform:uppercase; letter-spacing:.01em;}
+.mast-sub{margin:5px 0 0; font-size:12px; color:var(--ink-mid);}
+.counts{display:flex; gap:2px; flex-wrap:wrap;}
+.count{display:grid; grid-template-columns:auto auto; align-items:baseline; gap:0 5px;
+  padding:7px 12px; background:var(--paper-2); border:1px solid var(--rule); border-radius:2px;}
+.count-n{font-family:'IBM Plex Mono',monospace; font-size:22px; font-weight:600; line-height:1;}
+.count-u{font-size:10px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.09em;}
+.count-l{grid-column:1/-1; font-size:11px; font-weight:600; margin-top:4px;}
+.count-s{grid-column:1/-1; font-size:10px; color:var(--ink-soft); font-style:italic;}
+.tabs{display:flex; border-bottom:1px solid var(--rule); margin-bottom:20px; overflow-x:auto; -webkit-overflow-scrolling:touch;}
+.tab{appearance:none; background:none; border:0; border-bottom:2px solid transparent; padding:12px 14px;
+  font:600 12px/1 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.07em;
+  color:var(--ink-soft); cursor:pointer; white-space:nowrap;}
+.tab-on{color:var(--red); border-bottom-color:var(--red);}
+.tab:focus-visible,.btn:focus-visible,.tick:focus-visible,.bar:focus-visible,.due-item:focus-visible,
+input:focus-visible,select:focus-visible,.x:focus-visible,.acc-h:focus-visible,.tri:focus-visible{outline:2px solid var(--red); outline-offset:2px;}
+.body{display:flex; flex-direction:column; gap:18px;}
+.bars{display:grid; grid-template-columns:repeat(auto-fit,minmax(128px,1fr)); gap:7px;}
+.bar{display:grid; grid-template-columns:1fr auto; gap:5px 8px; align-items:center; text-align:left;
+  padding:9px 11px; background:var(--paper-2); border:1px solid var(--rule); border-radius:2px; cursor:pointer;
+  font-family:inherit; color:inherit;}
+.bar-on{border-color:var(--ink); box-shadow:inset 0 0 0 1px var(--ink);}
+.bar-t{font:600 10.5px/1 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.06em;}
+.bar-n{font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600;}
+.bar-n i{color:var(--ink-soft); font-style:normal; font-weight:400;}
+.bar-track{grid-column:1/-1; height:4px; background:var(--rule-2); border-radius:2px; overflow:hidden;}
+.bar-fill{display:block; height:100%; background:var(--tick); transition:width .3s;}
+.bar-11 .bar-fill{background:var(--s-KM);}
+.due{border:1px solid var(--amber); background:#FBF6EC; border-radius:2px; padding:13px 14px;}
+.due-h{font-size:12px; text-transform:uppercase; letter-spacing:.09em; color:var(--amber); margin-bottom:9px;}
+.due-list{display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:4px;}
+.due-item{display:flex; align-items:center; gap:8px; width:100%; text-align:left; cursor:pointer;
+  background:var(--paper-2); border:1px solid var(--rule); border-radius:2px; padding:8px 9px;
+  font-family:inherit; font-size:12px; color:inherit;}
+.due-code{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:11px; color:var(--ink-mid);}
+.due-title{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.due-tag{font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-soft);}
+.due-when{font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--amber); font-weight:600;}
+.due-when.late{color:var(--red);}
+.due-note{margin:9px 0 0; font-size:11px; color:var(--ink-mid);}
+.grid-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch; background:var(--paper-2); border:1px solid var(--rule); border-radius:2px;}
+.grid{width:100%; border-collapse:collapse; font-size:13px; min-width:600px;}
+.grid thead th{position:sticky; top:0; z-index:2; background:var(--paper-3); border-bottom:1.5px solid var(--ink);
+  padding:8px 5px; text-align:left; font:600 10px/1.2 'Archivo',sans-serif; text-transform:uppercase;
+  letter-spacing:.07em; color:var(--ink-mid);}
+.grid .c-code{width:44px; padding-left:11px;}
+.grid .c-title{border-left:1.5px solid var(--red); padding-left:10px;}
+.grid .c-wk{width:34px; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-soft);}
+.grid .c-box{width:40px; text-align:center;}
+.grid th.c-box{text-align:center;}
+.grid .n,.grid th.n{text-align:right;}
+.grid td{padding:6px 5px; border-bottom:1px solid var(--rule-2); vertical-align:middle;}
+.row-now td{background:#FDF9EF;}
+.row-done .c-title{color:var(--ink-mid);}
+.sub-head td{background:var(--paper-3); border-bottom:1px solid var(--rule); border-top:1px solid var(--rule);
+  font:600 10px/1 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.11em; color:var(--ink-mid); padding:7px 11px;}
+.sub-head em{text-transform:none; letter-spacing:0; font-weight:400; color:var(--red); font-size:10.5px;}
+.code{font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; color:#fff; background:var(--ink-soft);
+  border-radius:2px; padding:2px 5px; display:inline-block; min-width:24px; text-align:center;}
+.s-M{background:var(--s-M);} .s-P{background:var(--s-P);} .s-C{background:var(--s-C);}
+.s-E{background:var(--s-E);} .s-X{background:var(--s-X);}
+.s-KM{background:var(--s-KM);} .s-KP{background:var(--s-KP);} .s-KC{background:var(--s-KC);}
+.heavy,.crit{margin-left:6px; font:600 9px/1 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.08em;
+  border-radius:2px; padding:2px 4px; vertical-align:1px;}
+.heavy{color:var(--red); border:1px solid var(--red);}
+.crit{color:#fff; background:var(--red);}
+.pre{font-size:9.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--tick); font-family:'IBM Plex Sans',sans-serif;}
+.na{color:var(--rule);}
+.when{display:block; font-family:'IBM Plex Mono',monospace; font-size:8.5px; color:var(--ink-soft); margin-top:1px;}
+.when.late{color:var(--red); font-weight:600;}
+.legend{font-size:11px; color:var(--ink-mid); margin:0; line-height:1.7;}
+.legend b{color:var(--ink); font-weight:600;}
+.tick{width:26px; height:26px; border:1.5px solid var(--rule); background:var(--paper-2); border-radius:2px;
+  display:inline-flex; align-items:center; justify-content:center; cursor:pointer; color:transparent; padding:0;
+  -webkit-tap-highlight-color:transparent;}
+.tick-on{background:var(--tick); border-color:var(--tick); color:#fff; animation:ink .18s ease-out;}
+.tick-muted{opacity:.35;} .tick-warn{border-color:var(--red); background:#FBF0EE;}
+@keyframes ink{from{transform:scale(.7);}to{transform:scale(1);}}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important;}}
+.card{background:var(--paper-2); border:1px solid var(--rule); border-radius:2px; padding:16px 15px;}
+.card-h{font-size:15px;}
+.card-sub{margin:4px 0 13px; font-size:12px; color:var(--ink-mid);}
+.card-foot{margin:11px 0 0; padding-top:10px; border-top:1px solid var(--rule-2); font-size:11.5px; color:var(--ink-mid);}
+.sub-h{font-size:11px; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-mid); margin:18px 0 8px;}
+.score{font-family:'IBM Plex Mono',monospace; color:var(--ink); margin-left:6px;}
+.score i{color:var(--ink-soft); font-style:normal;}
+.form,.tags{display:grid; grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); gap:9px;}
+.field{display:flex; flex-direction:column; gap:3px;}
+.field-wide{grid-column:1/-1;}
+.field-l{font:600 9.5px/1 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft);}
+input,select{width:100%; padding:9px 8px; font-size:16px; color:var(--ink); background:#fff;
+  border:1px solid var(--rule); border-radius:2px;}
+select{font-family:'IBM Plex Sans',sans-serif;}
+input::placeholder{color:var(--ink-soft); font-family:'IBM Plex Sans',sans-serif; font-size:13px;}
+.inline{display:flex; align-items:center; gap:7px; padding-top:3px;}
+.hint{font-size:11px; color:var(--ink-soft); margin:0;}
+.hint-lead{flex:1; min-width:170px; max-width:62ch; color:var(--ink-mid);}
+.row-end{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:15px;}
+.btn{background:var(--ink); color:var(--paper-2); border:0; border-radius:2px; padding:11px 20px;
+  font:600 11px/1 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.09em; cursor:pointer;}
+.btn-ghost{background:none; color:var(--ink-mid); border:1px solid var(--rule);}
+.x{background:none; border:0; color:var(--ink-soft); font-size:19px; line-height:1; cursor:pointer; padding:0 5px;}
+.charts{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px;}
+.grid-log{min-width:660px;}
+.ttype{font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600; padding:2px 5px;
+  border:1px solid var(--rule); border-radius:2px; color:var(--ink-mid);}
+.tt-T4{border-color:var(--ink); color:var(--ink);} .tt-T5{border-color:var(--s-E); color:var(--s-E);}
+.alarm{border:1px solid var(--amber); border-left:4px solid var(--amber); background:#FBF6EC;
+  padding:12px 14px; border-radius:2px; font-size:12.5px; line-height:1.6;}
+.alarm-hot{border-color:var(--red); border-left-color:var(--red); background:#FBF0EE;}
+.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
+.checks li{display:flex; gap:10px; align-items:flex-start;}
+.checks li div{flex:1; min-width:0;}
+.checks b{display:block; font-size:12.5px; font-weight:600;}
+.checks span{display:block; font-size:11px; color:var(--ink-mid); margin-top:1px;}
+.verdict{margin:9px 0 0; font-size:12px; color:var(--ink-mid); padding-left:36px;}
+.verdict-good{color:var(--tick); font-weight:600;} .verdict-bad{color:var(--red); font-weight:600;}
+.weeks{list-style:none; margin:0; padding:0;}
+.weeks li{display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid var(--rule-2); font-size:12px;}
+.w-date{width:60px; flex:0 0 60px; font-size:11px; color:var(--ink-mid);}
+.w-note{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--ink-mid); font-style:italic;}
+.pill{font:600 10px/1 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.06em; border:1px solid var(--rule);
+  border-radius:2px; padding:3px 6px; color:var(--ink-mid); white-space:nowrap;}
+.pill-good{border-color:var(--tick); color:var(--tick);} .pill-bad{border-color:var(--red); color:var(--red);}
+.wgrid,.bgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;}
+.wrow{display:grid; grid-template-columns:1fr 62px 24px; gap:8px; align-items:center; padding:3px 0; font-size:11.5px;}
+.wtrack{height:5px; background:var(--rule-2); border-radius:2px; overflow:hidden;}
+.wfill{display:block; height:100%; background:var(--s-M);}
+.wnum{font-size:11px; text-align:right; font-weight:600;}
+.blist{list-style:none; margin:0; padding:0; font-size:12px;}
+.blist li{padding:5px 0; border-bottom:1px solid var(--rule-2); line-height:1.45;}
+.when-pill{display:inline-block; font:600 8.5px/1 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.07em;
+  border:1px solid var(--rule); border-radius:2px; padding:2px 4px; margin-right:7px; color:var(--ink-soft);}
+.wp-now{border-color:var(--tick); color:var(--tick);}
+.steps{margin:0; padding-left:19px; font-size:12.5px; line-height:1.65;}
+.steps li{margin-bottom:8px; padding-left:4px;}
+.steps li::marker{font-family:'IBM Plex Mono',monospace; font-weight:600; color:var(--red);}
+.steps-flag li::marker{color:var(--amber);}
+.phases{list-style:none; margin:0; padding:0;}
+.phases li{display:flex; align-items:center; gap:11px; padding:8px; border-bottom:1px solid var(--rule-2); font-size:12.5px;}
+.ph-now{background:#FDF9EF; box-shadow:inset 3px 0 0 var(--red);}
+.ph-n{width:20px; color:var(--ink-soft); font-weight:600;}
+.ph-name{flex:1;} .ph-d{font-size:11px; color:var(--ink-mid);}
+.empty{padding:24px 16px; text-align:center; font-size:12.5px; color:var(--ink-mid); background:var(--paper-2);
+  border:1px dashed var(--rule); border-radius:2px; line-height:1.6;}
+.ch-wrap{width:100%; overflow:hidden;}
+.ch-legend{display:flex; gap:14px; flex-wrap:wrap; font-size:10.5px; color:var(--ink-mid); margin-top:6px;}
+.ch-key{display:inline-block; width:11px; height:2.5px; margin-right:5px; vertical-align:3px;}
+/* accordion */
+.acc{background:var(--paper-2); border:1px solid var(--rule); border-radius:2px; overflow:hidden;}
+.acc + .acc{margin-top:-1px;}
+.acc-h{width:100%; display:flex; align-items:center; gap:10px; text-align:left; background:none; border:0;
+  padding:14px 15px; cursor:pointer; font-family:'Archivo',sans-serif; font-weight:700; font-size:13.5px;
+  color:var(--ink); letter-spacing:-.01em;}
+.acc-h[aria-expanded="true"]{border-bottom:1px solid var(--rule-2);}
+.acc-i{flex:0 0 auto; width:14px; color:var(--red); font-family:'IBM Plex Mono',monospace; font-size:15px; line-height:1;}
+.acc-b{padding:2px 15px 16px; font-size:12.8px; line-height:1.65;}
+.acc-b p{margin:10px 0;} .acc-b p:first-child{margin-top:8px;}
+.acc-b ul{margin:9px 0; padding-left:18px;} .acc-b li{margin-bottom:6px;}
+.acc-b h4{font-size:11px; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-mid); margin:16px 0 6px;}
+.acc-b table{width:100%; border-collapse:collapse; font-size:11.5px; margin:10px 0;}
+.acc-b th{text-align:left; font:600 9.5px/1.3 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.07em;
+  color:var(--ink-mid); border-bottom:1.5px solid var(--ink); padding:5px 6px 5px 0;}
+.acc-b td{padding:6px 6px 6px 0; border-bottom:1px solid var(--rule-2); vertical-align:top;}
+.tw{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+.note{border-left:3px solid var(--amber); background:#FBF6EC; padding:9px 12px; margin:11px 0; font-size:12px;}
+.note-red{border-left-color:var(--red); background:#FBF0EE;}
+/* diagnostic */
+.q{border-bottom:1px solid var(--rule-2); padding:10px 0;}
+.q-top{display:flex; gap:9px; align-items:flex-start;}
+.q-n{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:11.5px; color:var(--ink-soft); flex:0 0 30px;}
+.q-t{flex:1; min-width:0; font-size:12.5px; line-height:1.55;}
+.q-a{font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; color:var(--tick);
+  border:1px solid var(--tick); border-radius:2px; padding:2px 6px; white-space:nowrap; flex:0 0 auto;}
+.tri-set{display:flex; gap:4px; margin-top:7px; margin-left:39px;}
+.tri{border:1px solid var(--rule); background:var(--paper-2); border-radius:2px; padding:7px 11px;
+  font:600 10px/1 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft);
+  cursor:pointer; -webkit-tap-highlight-color:transparent;}
+.tri-c.on{background:var(--tick); border-color:var(--tick); color:#fff;}
+.tri-w.on{background:var(--red); border-color:var(--red); color:#fff;}
+.tri-s.on{background:var(--ink-soft); border-color:var(--ink-soft); color:#fff;}
+.opts{margin:5px 0 0 39px; font-size:11.5px; color:var(--ink-mid); font-family:'IBM Plex Mono',monospace;}
+.res{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:9px; margin-bottom:14px;}
+.res-c{background:var(--paper-3); border:1px solid var(--rule); border-radius:2px; padding:11px 12px;}
+.res-n{font-family:'IBM Plex Mono',monospace; font-size:21px; font-weight:600; line-height:1;}
+.res-l{font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin-top:5px;}
+.band{border-left:3px solid var(--ink-soft); padding:9px 12px; margin:8px 0; font-size:12.3px; line-height:1.6; background:var(--paper-3);}
+.band-good{border-left-color:var(--tick);} .band-warn{border-left-color:var(--amber);} .band-bad{border-left-color:var(--red);}
+@media (max-width:620px){ .counts{width:100%;} .count{flex:1; min-width:92px;} .mast-top{align-items:flex-start;} }
+@media print{ .tabs,.spine,.btn,.x{display:none !important;} .card,.acc{border:1px solid #999; break-inside:avoid;} body{background:#fff;} }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7/babel.min.js" crossorigin></script>
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useMemo, Fragment } = React;
+
+/* ═══════════════════  DATA  ═══════════════════ */
+const START = "2026-07-27";
+const MILESTONES = [
+  { label:"JEE Main S1", sub:"rehearsal", date:"2027-01-25" },
+  { label:"CBSE Boards", sub:"single attempt", date:"2027-02-17" },
+  { label:"JEE Main S2", sub:"the real one", date:"2027-04-05" },
+];
+const PHASES = [
+  { n:0, name:"Diagnostic & setup", start:"2026-07-27", end:"2026-08-02" },
+  { n:1, name:"First pass", start:"2026-08-03", end:"2026-11-08" },
+  { n:2, name:"Second pass & consolidation", start:"2026-11-09", end:"2026-12-20" },
+  { n:3, name:"JEE Session 1 window", start:"2026-12-21", end:"2027-01-24" },
+  { n:4, name:"Board lockdown", start:"2027-01-25", end:"2027-02-16" },
+  { n:5, name:"Board exam window", start:"2027-02-17", end:"2027-03-25" },
+  { n:6, name:"JEE Session 2 sprint", start:"2027-03-26", end:"2027-04-05" },
+];
+
+// [subject, code, title, week, tier, board?, jee?, critical?]
+const CH = [
+  ["M","1","Relations and Functions",2,"m",1,1],["M","2","Inverse Trigonometric Functions",0,"m",1,1],
+  ["M","3","Matrices",0,"m",1,1],["M","4","Determinants",0,"m",1,1],
+  ["M","5","Continuity and Differentiability",1,"h",1,1],["M","6","Application of Derivatives",3,"h",1,1],
+  ["M","7","Integrals",5,"h",1,1],["M","8","Application of Integrals",6,"l",1,1],
+  ["M","9","Differential Equations",8,"m",1,1],["M","10","Vector Algebra",10,"m",1,1],
+  ["M","11","Three Dimensional Geometry",11,"m",1,1],["M","12","Linear Programming",13,"l",1,0],
+  ["M","13","Probability",12,"m",1,1],
+  ["P","1","Electric Charges and Fields",0,"m",1,1],["P","2","Electrostatic Potential and Capacitance",2,"h",1,1],
+  ["P","3","Current Electricity",4,"m",1,1],["P","4","Moving Charges and Magnetism",6,"h",1,1],
+  ["P","5","Magnetism and Matter",4,"l",1,1],["P","6","Electromagnetic Induction",7,"m",1,1],
+  ["P","7","Alternating Current",8,"m",1,1],["P","8","Electromagnetic Waves",1,"l",1,1],
+  ["P","9","Ray Optics and Optical Instruments",9,"h",1,1],["P","10","Wave Optics",10,"m",1,1],
+  ["P","11","Dual Nature of Radiation and Matter",10,"l",1,1],["P","12","Atoms",12,"l",1,1],
+  ["P","13","Nuclei",12,"l",1,1],["P","14","Semiconductor Electronics",8,"l",1,1],
+  ["C","1","Solutions",1,"m",1,1],["C","2","Electrochemistry",5,"h",1,1],
+  ["C","3","Chemical Kinetics",3,"m",1,1],["C","4","The d- and f-Block Elements",4,"m",1,1],
+  ["C","5","Coordination Compounds",7,"h",1,1],["C","6","Haloalkanes and Haloarenes",0,"m",1,1],
+  ["C","7","Alcohols, Phenols and Ethers",9,"m",1,1],["C","8","Aldehydes, Ketones and Carboxylic Acids",11,"h",1,1],
+  ["C","9","Amines",13,"m",1,1],["C","10","Biomolecules",13,"l",1,1],
+  ["E","F1","The Last Lesson",0,"l",1,0],["E","F2","Lost Spring",0,"l",1,0],
+  ["E","F3","Deep Water",1,"l",1,0],["E","F4","The Rattrap",3,"l",1,0],
+  ["E","F5","Indigo",6,"l",1,0],["E","F6","Poets and Pancakes",8,"l",1,0],
+  ["E","F7","The Interview",11,"l",1,0],["E","F8","Going Places",14,"l",1,0],
+  ["E","Pm1","My Mother at Sixty-Six",0,"l",1,0],["E","Pm2","Keeping Quiet",2,"l",1,0],
+  ["E","Pm3","A Thing of Beauty",5,"l",1,0],["E","Pm4","A Roadside Stand",9,"l",1,0],
+  ["E","Pm5","Aunt Jennifer's Tigers",12,"l",1,0],["E","V1","The Third Level",0,"l",1,0],
+  ["E","V2","The Tiger King",4,"l",1,0],["E","V3","Journey to the End of the Earth",7,"l",1,0],
+  ["E","V4","The Enemy",10,"l",1,0],["E","V5","On the Face of It",13,"l",1,0],
+  ["E","V6","Memories of Childhood",14,"l",1,0],
+  ["X","1","Management of Sporting Events",0,"l",1,0],["X","2","Children and Women in Sports",0,"l",1,0],
+  ["X","3","Yoga as Preventive Measure",0,"l",1,0],["X","4","Physical Education for CWSN",0,"l",1,0],
+  ["X","5","Sports and Nutrition",0,"l",1,0],["X","6","Test and Measurement in Sports",0,"l",1,0],
+  ["X","7","Physiology and Injuries in Sports",0,"l",1,0],["X","8","Biomechanics and Sports",0,"l",1,0],
+  ["X","9","Psychology and Sports",0,"l",1,0],["X","10","Training in Sports",0,"l",1,0],
+  /* ── Class 11, JEE-only track ── */
+  ["KC","9","Organic Chemistry — Basic Principles (GOC)",1,"h",0,1,1],
+  ["KM","10","Limits and Derivatives",1,"m",0,1,1],
+  ["KC","1","Some Basic Concepts (Mole Concept)",2,"h",0,1,1],
+  ["KM","9","Trigonometric Ratios, Identities and Equations",2,"m",0,1],
+  ["KC","3","Chemical Bonding and Molecular Structure",3,"h",0,1,1],
+  ["KP","6","Rotational Motion",3,"h",0,1,1],
+  ["KM","2","Complex Numbers and Quadratic Equations",4,"h",0,1],
+  ["KC","6","Equilibrium — Chemical and Ionic",5,"h",0,1,1],
+  ["KP","12","Oscillations (SHM)",5,"h",0,1,1],
+  ["KM","8","Conic Sections",6,"h",0,1],
+  ["KP","13","Waves",6,"m",0,1],
+  ["KC","4","Classification of Elements and Periodicity",7,"l",0,1],
+  ["KP","3","Laws of Motion",7,"m",0,1],
+  ["KM","3","Sequences and Series",8,"m",0,1],
+  ["KC","2","Atomic Structure",8,"m",0,1],
+  ["KP","2","Kinematics",9,"m",0,1],
+  ["KM","7","Circles",9,"m",0,1],
+  ["KC","5","Chemical Thermodynamics",10,"m",0,1],
+  ["KP","11","Thermodynamics",10,"m",0,1],
+  ["KM","6","Straight Lines",11,"m",0,1],
+  ["KP","4","Work, Energy and Power",11,"m",0,1],
+  ["KC","10","Hydrocarbons",12,"m",0,1],
+  ["KM","4","Permutations and Combinations",12,"m",0,1],
+  ["KP","5","Centre of Mass, Momentum and Collisions",13,"m",0,1],
+  ["KM","5","Binomial Theorem",13,"l",0,1],
+  ["KC","7","Redox Reactions",14,"l",0,1],
+  ["KP","7","Gravitation",14,"l",0,1],
+  ["KP","8","Mechanical Properties of Solids and Fluids",15,"m",0,1],
+  ["KM","11","Statistics",15,"l",0,1],
+  ["KP","10","Kinetic Theory of Gases",16,"l",0,1],
+  ["KC","8","p-Block Elements (Groups 13 and 14)",16,"l",0,1],
+  ["KP","9","Thermal Properties of Matter",17,"l",0,1],
+  ["KM","1","Sets, Relations and Functions",17,"l",0,1],
+  ["KP","1","Units, Dimensions and Measurement",18,"l",0,1],
+].map(([s,code,title,wk,tier,board,jee,crit])=>({id:s+code,s,code,title,wk,tier,board:!!board,jee:!!jee,crit:!!crit}));
+
+const SEEDED = ["M2","M3","M4","P1","C6","EF1","EF2","EPm1","EV1"];
+const SUBJECTS = {
+  M:{name:"Mathematics",short:"Maths",yr:12}, P:{name:"Physics",short:"Physics",yr:12},
+  C:{name:"Chemistry",short:"Chem",yr:12}, E:{name:"English Core",short:"English",yr:12},
+  X:{name:"Physical Education",short:"PE",yr:12},
+  KM:{name:"Class 11 Mathematics — JEE only",short:"11 Maths",yr:11},
+  KP:{name:"Class 11 Physics — JEE only",short:"11 Physics",yr:11},
+  KC:{name:"Class 11 Chemistry — JEE only",short:"11 Chem",yr:11},
+};
+const LAYERS = [
+  {k:"l1",label:"Read",hint:"Concept intake — NCERT + lecture"},
+  {k:"l2",label:"Board",hint:"NCERT exercises + board PYQ + written answers"},
+  {k:"l3",label:"Recall",hint:"One handwritten A4 recall sheet + flashcards"},
+  {k:"l4",label:"JEE",hint:"Chapter-wise JEE PYQ + timed 15Q sprint"},
+];
+const REVISITS = [{k:"r7",d:7},{k:"r21",d:21},{k:"r60",d:60}];
+const TEST_TYPES = { T1:"Chapter sprint (15Q)", T2:"Weekly mixed retrieval (25Q)",
+  T3:"Part-syllabus JEE mock", T4:"Full-length JEE mock", T5:"Board sample paper" };
+const TAGS = [
+  {k:"concept",label:"Concept",note:"Real content gap — that chapter needs another pass"},
+  {k:"silly",label:"Silly",note:"Knowledge fine, execution leaking. Fastest gain available"},
+  {k:"speed",label:"Speed",note:"Knows it, can't do it in time. More timed sprints"},
+  {k:"unknown",label:"Didn't know",note:"Coverage gap — check against the Phase 1 schedule"},
+  {k:"gamble",label:"Mis-gamble",note:"Guessing discipline under negative marking"},
+];
+const TASKS = [
+  ["recall","Recall sheets","One handwritten A4 per chapter finished. In her handwriting — not printed."],
+  ["log","Test log filled","Every scheduled test has a row, and the reviewed box is ticked."],
+  ["errors","Error journal tagged","Entries exist and each one carries a tag."],
+  ["teach","Teach-back done","Five minutes, chapter of your choosing, told only at the start."],
+  ["written","Self-marked answer","Value points ticked against an official marking scheme."],
+];
+const TEACHBACK = ["Started with the point, not the first formula","Didn't look anything up",
+  "Used her own example or analogy","Survived a naive follow-up question"];
+
+/* ── Phase 1 intake table ── */
+const WEEKS = [
+  [1,"3–9 Aug","5. Continuity & Differentiability","8. Electromagnetic Waves","1. Solutions","Deep Water"],
+  [2,"10–16 Aug","1. Relations & Functions","2. Electrostatic Potential & Capacitance","—","Keeping Quiet"],
+  [3,"17–23 Aug","6. Application of Derivatives","—","3. Chemical Kinetics","The Rattrap"],
+  [4,"24–30 Aug","—","3. Current Electricity · 5. Magnetism & Matter","4. d- and f-Block","The Tiger King"],
+  [5,"31 Aug–6 Sep","7. Integrals (part 1)","—","2. Electrochemistry","A Thing of Beauty"],
+  [6,"7–13 Sep","7. Integrals (part 2) · 8. App. of Integrals","4. Moving Charges & Magnetism","—","Indigo"],
+  [7,"14–20 Sep","—","6. Electromagnetic Induction","5. Coordination Compounds","Journey to the End of the Earth"],
+  [8,"21–27 Sep","9. Differential Equations","7. Alternating Current · 14. Semiconductors","—","Poets and Pancakes"],
+  [9,"28 Sep–4 Oct","—","9. Ray Optics","7. Alcohols, Phenols & Ethers","A Roadside Stand"],
+  [10,"5–11 Oct","10. Vector Algebra","10. Wave Optics · 11. Dual Nature","—","The Enemy"],
+  [11,"12–18 Oct","11. Three Dimensional Geometry","—","8. Aldehydes, Ketones & Acids","The Interview"],
+  [12,"19–25 Oct","13. Probability","12. Atoms · 13. Nuclei","—","Aunt Jennifer's Tigers"],
+  [13,"26 Oct–1 Nov","12. Linear Programming","—","9. Amines · 10. Biomolecules","On the Face of It"],
+  [14,"2–8 Nov","Buffer — spillover, consolidation, full-syllabus audit","","","Going Places · Memories of Childhood"],
+];
+
+/* ── Diagnostic ── */
+const DIAG_A = [
+  ["A1","A body starts from rest with uniform acceleration. Ratio of distance in the 3rd second to distance in the first 3 seconds","(a) 5:9 (b) 3:9 (c) 1:3 (d) 5:12","a"],
+  ["A2","2 kg block on rough surface, μ=0.2, horizontal force 6 N. Acceleration","(a) 0.5 (b) 1 (c) 2 (d) 3 m/s²","b"],
+  ["A3","Solid sphere rolling without slipping. Fraction of total KE that is rotational","(a) 2/5 (b) 2/7 (c) 5/7 (d) 3/7","b"],
+  ["A4","Escape velocity from Earth 11.2 km/s. From a planet of twice the mass and twice the radius","(a) 5.6 (b) 11.2 (c) 22.4 (d) 15.8","b"],
+  ["A5","SHM of amplitude A. KE equals PE at displacement","(a) A/2 (b) A/√2 (c) A/4 (d) A√3/2","b"],
+  ["A6","2 mol monatomic ideal gas heated at constant volume 300→400 K. Heat supplied","(a) 1.25 (b) 2.49 (c) 4.16 (d) 3.32 kJ","b"],
+  ["A7","Carnot engine between 500 K and 300 K. Efficiency","(a) 20% (b) 40% (c) 60% (d) 25%","b"],
+  ["A8","y = 5 sin(4πt − 0.02πx), SI units. Wave speed","(a) 50 (b) 100 (c) 200 (d) 400 m/s","c"],
+  ["A9","F = (3î + 4ĵ) N moves a body from origin to (3,4) m. Work done","(a) 7 (b) 12 (c) 25 (d) 5 J","c"],
+  ["A10","Dimensional formula of coefficient of viscosity","(a) ML⁻¹T⁻¹ (b) MLT⁻¹ (c) ML⁻²T⁻² (d) ML⁻¹T⁻²","a"],
+  ["A11","z = (1+i)/(1−i). Then z¹⁰⁰ equals","(a) 1 (b) −1 (c) i (d) −i","a"],
+  ["A12","AP with 3rd term 7 and 7th term 19. Sum of first 20 terms","(a) 570 (b) 590 (c) 610 (d) 630","b"],
+  ["A13","Number of 4-letter words, no repetition, from the letters of DELHI","(a) 60 (b) 120 (c) 240 (d) 24","b"],
+  ["A14","Coefficient of x⁵ in (1+x)¹⁰","(a) 120 (b) 210 (c) 252 (d) 45","c"],
+  ["A15","Distance between 3x+4y=9 and 3x+4y=4","(a) 1 (b) 5 (c) 1/5 (d) 2","a"],
+  ["A16","Circle with centre (1,−2) and radius 3","(a) x²+y²−2x+4y−4=0 (b) x²+y²+2x−4y−4=0 (c) x²+y²−2x+4y+4=0 (d) x²+y²−2x−4y−4=0","a"],
+  ["A17","Eccentricity of x²/25 + y²/16 = 1","(a) 3/5 (b) 4/5 (c) 3/4 (d) 5/3","a"],
+  ["A18","lim(x→0) sin3x / tan5x","(a) 1 (b) 3/5 (c) 5/3 (d) 0","b"],
+  ["A19","sinθ + cosθ = 1, 0 ≤ θ ≤ π/2. Then sinθ·cosθ","(a) 0 (b) 1/2 (c) 1 (d) 1/4","a"],
+  ["A20","α, β are roots of x²−5x+6=0. Then α²+β²","(a) 11 (b) 13 (c) 25 (d) 12","b"],
+];
+const DIAG_D = [
+  ["D1","If A = [[2,3],[1,4]], find det A","5"],["D2","sin⁻¹(1/2) + cos⁻¹(1/2)","π/2 (90°)"],
+  ["D3","A is 3×3 with |A| = 4. Find |2A|","32"],["D4","tan⁻¹1 + tan⁻¹2 + tan⁻¹3","π (180°)"],
+  ["D5","A is 2×3, B is 3×4. Order of AB","2 × 4"],["D6","3×3 matrix, |A| = 3. Find |adj A|","9"],
+  ["D7","sin⁻¹(sin 5π/6)","π/6 (30°)"],["D8","[[x,2],[3,4]] singular. Find x","3/2"],
+  ["D9","Derivative of xˣ at x = 1","1"],["D10","∫₀¹ x² dx","1/3"],
+  ["D11","Solve 2^(x+1) = 32","4"],["D12","Number of solutions of |x−1| = 3","2"],
+  ["D13","A both symmetric and skew-symmetric. Then A is","the zero (null) matrix"],
+  ["D14","cos⁻¹(−1/2)","2π/3 (120°)"],["D15","Slope of tangent to y = x³ at x = 2","12"],
+];
+const DIAG_B = [
+  ["B1","Coulomb's law",3,[
+    "Force ∝ product of the charges, ∝ 1/(distance)²",
+    "Formula of the form F = (1/4πε₀)(q₁q₂/r²) — q₁q₂ on top, r² on the bottom",
+    "Vector form: a hat symbol (r̂, n̂), or states the force acts along the line joining the charges",
+    "In a medium the force is reduced — divided by K"]],
+  ["B2","Electric flux",3,[
+    "Defines flux as field lines through a surface, or gives Φ = E·A or ∮E·dS",
+    "SI unit N m²/C or V m (either is correct)",
+    "Net flux through a surface enclosing a dipole is zero",
+    "Justifies it: total enclosed charge is zero, or mentions Gauss's law"]],
+  ["B3","Field lines",3,[
+    "Single positive charge: lines radiating outward, arrows pointing away",
+    "Two positive charges: lines curving away from each other, gap or neutral point between",
+    "One correct property (never cross / start on +, end on − / perpendicular to conductor / density shows strength)"]],
+  ["B4","Gauss's theorem, charged wire",5,[
+    "States Gauss's theorem, or writes Φ = q_enclosed/ε₀",
+    "Diagram showing a cylinder around the wire",
+    "Flux through flat end faces is zero, or E perpendicular to the wire",
+    "Uses charge enclosed = λL",
+    "Final answer of the form E = λ / (2πε₀r)"]],
+  ["B5","Torque on a dipole",5,[
+    "Diagram: dipole at an angle in a field, forces marked on both charges",
+    "Two forces equal and opposite, so net force is zero",
+    "Torque as force × perpendicular distance, term like qE × 2a sinθ",
+    "Result τ = pE sinθ, or vector form τ = p × E",
+    "Defines dipole moment (p = q × 2a) and states torque is maximum at θ = 90°"]],
+];
+const DIAG_C = [
+  "Recognises Franz is reacting to the order that only German will be taught in Alsace and Lorraine",
+  "Identifies the tone as bitter, sarcastic, ironic, anguished or absurd",
+  "Notes the pigeons represent something natural, free or innocent — something that cannot be commanded",
+  "Connects it to linguistic imperialism, cultural oppression, or the futility of forcing a language on a people",
+  "Mentions Franz's regret, his new love of French, or his changed attitude to the language he neglected",
+];
+
+/* ═══════════════════  UTILS  ═══════════════════ */
+const D = s => new Date(s+"T00:00:00");
+const today = () => { const t=new Date(); t.setHours(0,0,0,0); return t; };
+const days = (a,b) => Math.round((b-a)/86400000);
+const iso = d => { const z=new Date(d.getTime()-d.getTimezoneOffset()*60000); return z.toISOString().slice(0,10); };
+const addDays = (s,n) => { const d=D(s); d.setDate(d.getDate()+n); return iso(d); };
+const fmt = s => D(s).toLocaleDateString("en-IN",{day:"numeric",month:"short"});
+const pct = (a,b) => b>0 ? Math.round(a/b*100) : null;
+const currentPhase = () => { const t=iso(today());
+  return PHASES.find(p=>t>=p.start&&t<=p.end) || (t<START?PHASES[0]:PHASES[6]); };
+const currentWeek = () => { const n=days(D(START),today()); return n<0?0:Math.floor(n/7)+1; };
+const applicableLayers = ch => LAYERS.filter(l =>
+  !(l.k==="l2" && !ch.board) && !(l.k==="l4" && !ch.jee));
+const KEY = "prep-register-v2";
+const loadAll = () => { try{ const r=localStorage.getItem(KEY); return r?JSON.parse(r):null; }catch{ return null; } };
+const saveAll = d => { try{ localStorage.setItem(KEY,JSON.stringify(d)); }catch{} };
+
+/* ═══════════════════  SHARED  ═══════════════════ */
+const Tick = ({on,onClick,title,muted,warn}) => (
+  <button onClick={onClick} title={title} aria-pressed={!!on}
+    className={`tick ${on?"tick-on":""} ${muted?"tick-muted":""} ${warn?"tick-warn":""}`}>
+    {on && <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+      <path d="M2.5 8.5 L6.2 12 L13.5 3.6" fill="none" stroke="currentColor" strokeWidth="2.4"
+        strokeLinecap="round" strokeLinejoin="round"/></svg>}
+  </button>);
+const Field = ({label,children,wide}) => (
+  <label className={`field ${wide?"field-wide":""}`}><span className="field-l">{label}</span>{children}</label>);
+const Empty = ({children}) => <div className="empty">{children}</div>;
+
+function Acc({title, children, open:init}){
+  const [open,setOpen] = useState(!!init);
+  return (
+    <section className="acc">
+      <button className="acc-h" aria-expanded={open} onClick={()=>setOpen(!open)}>
+        <span className="acc-i">{open?"−":"+"}</span>{title}
+      </button>
+      {open && <div className="acc-b">{children}</div>}
+    </section>);
+}
+
+function Chart({rows,lines,height=180,yMax,integers}){
+  const W=320,H=height,PL=30,PR=8,PT=10,PB=22;
+  const vals = rows.flatMap(r=>lines.map(l=>r[l.k]).filter(v=>v!=null&&!isNaN(v)));
+  if(!vals.length) return null;
+  const max = yMax || Math.max(...vals,1)*1.15, n = rows.length;
+  const x = i => PL + (n===1 ? (W-PL-PR)/2 : i*(W-PL-PR)/(n-1));
+  const y = v => PT + (H-PT-PB)*(1-v/max);
+  return (
+    <div className="ch-wrap">
+      <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} preserveAspectRatio="none" role="img">
+        {[0,max/2,max].map((t,i)=>(<g key={i}>
+          <line x1={PL} x2={W-PR} y1={y(t)} y2={y(t)} stroke="var(--rule)" vectorEffect="non-scaling-stroke"/>
+          <text x={PL-5} y={y(t)+3} textAnchor="end" fontSize="8" fill="var(--ink-soft)" fontFamily="IBM Plex Mono, monospace">
+            {integers?Math.round(t):(max>20?Math.round(t):t.toFixed(1))}</text></g>))}
+        {lines.map(l=>{
+          const pts = rows.map((r,i)=>[x(i),r[l.k]]).filter(p=>p[1]!=null&&!isNaN(p[1]));
+          if(!pts.length) return null;
+          return (<g key={l.k}>
+            <polyline fill="none" stroke={l.color} strokeWidth="1.8" vectorEffect="non-scaling-stroke"
+              strokeDasharray={l.dash||"none"} strokeLinejoin="round"
+              points={pts.map(p=>`${p[0]},${y(p[1])}`).join(" ")}/>
+            {pts.map((p,i)=><circle key={i} cx={p[0]} cy={y(p[1])} r="2.2" fill={l.color}/>)}</g>);})}
+        {rows.map((r,i)=>(n<=8||i%Math.ceil(n/6)===0) && (
+          <text key={i} x={x(i)} y={H-6} textAnchor="middle" fontSize="8" fill="var(--ink-soft)"
+            fontFamily="IBM Plex Mono, monospace">{r.label}</text>))}
+      </svg>
+      <div className="ch-legend">{lines.map(l=><span key={l.k}><i className="ch-key" style={{background:l.color}}/>{l.name}</span>)}</div>
+    </div>);
+}
+function Bars({rows,height=170}){
+  const W=320,H=height,PL=26,PR=6,PT=8,PB=26;
+  const max=Math.max(...rows.map(r=>r.value),1), bw=(W-PL-PR)/rows.length;
+  return (<div className="ch-wrap">
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} preserveAspectRatio="none" role="img">
+      {[0,max/2,max].map((t,i)=>(<g key={i}>
+        <line x1={PL} x2={W-PR} y1={PT+(H-PT-PB)*(1-t/max)} y2={PT+(H-PT-PB)*(1-t/max)} stroke="var(--rule)" vectorEffect="non-scaling-stroke"/>
+        <text x={PL-4} y={PT+(H-PT-PB)*(1-t/max)+3} textAnchor="end" fontSize="8" fill="var(--ink-soft)"
+          fontFamily="IBM Plex Mono, monospace">{Math.round(t)}</text></g>))}
+      {rows.map((r,i)=>{ const h=(H-PT-PB)*(r.value/max);
+        return (<g key={r.k}>
+          <rect x={PL+i*bw+bw*0.18} y={H-PB-h} width={bw*0.64} height={Math.max(h,0)} fill={r.color}/>
+          <text x={PL+i*bw+bw/2} y={H-9} textAnchor="middle" fontSize="8" fill="var(--ink-mid)">{r.name}</text></g>);})}
+    </svg></div>);
+}
+
+/* ═══════════════════  APP  ═══════════════════ */
+function App(){
+  const [tab,setTab]=useState("register");
+  const [db,setDb]=useState(null);
+  useEffect(()=>{
+    const d=loadAll();
+    if(d) setDb({syllabus:d.syllabus||{},tests:d.tests||[],audits:d.audits||[],diag:d.diag||{}});
+    else{ const seed={}; SEEDED.forEach(id=>{seed[id]={l1:true};});
+      const init={syllabus:seed,tests:[],audits:[],diag:{}}; setDb(init); saveAll(init); }
+  },[]);
+  const commit=n=>{setDb(n); saveAll(n);};
+  const setChapter=(id,patch)=>{
+    const row={...(db.syllabus[id]||{}),...patch};
+    const ch=CH.find(c=>c.id===id);
+    const core=applicableLayers(ch).every(l=>row[l.k]);
+    if(core&&!row.done) row.done=iso(today());
+    if(!core&&row.done) delete row.done;
+    commit({...db,syllabus:{...db.syllabus,[id]:row}});
+  };
+  const exportData=()=>{
+    const b=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(b);
+    a.download=`prep-register-${iso(today())}.json`; a.click(); URL.revokeObjectURL(a.href);
+  };
+  const importData=e=>{ const f=e.target.files[0]; if(!f) return;
+    const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result);
+      commit({syllabus:d.syllabus||{},tests:d.tests||[],audits:d.audits||[],diag:d.diag||{}}); alert("Backup restored.");
+    }catch{ alert("That file could not be read. Choose a register backup .json file."); } };
+    r.readAsText(f); e.target.value=""; };
+  const reset=()=>{ if(!confirm("Clear every tick, test and week from this device? Export a backup first if you want to keep it.")) return;
+    const seed={}; SEEDED.forEach(id=>{seed[id]={l1:true};}); commit({syllabus:seed,tests:[],audits:[],diag:{}}); };
+
+  const TABS=[["register","Register"],["tests","Test log"],["sunday","Sunday"],
+    ["diag","Diagnostic"],["plan","The plan"],["manual","Manual"],["data","Backup"]];
+  return (
+    <div className="reg">
+      <div className="spine" aria-hidden="true"/>
+      <div className="sheet">
+        <Masthead/>
+        <nav className="tabs" role="tablist">
+          {TABS.map(([k,l])=>(<button key={k} role="tab" aria-selected={tab===k}
+            className={`tab ${tab===k?"tab-on":""}`} onClick={()=>setTab(k)}>{l}</button>))}
+        </nav>
+        {!db ? <Empty>Opening the register…</Empty> : (
+          <main className="body">
+            {tab==="register" && <Register syl={db.syllabus} setChapter={setChapter}/>}
+            {tab==="tests" && <TestLog db={db} commit={commit}/>}
+            {tab==="sunday" && <Sunday db={db} commit={commit}/>}
+            {tab==="diag" && <Diagnostic db={db} commit={commit}/>}
+            {tab==="plan" && <Plan/>}
+            {tab==="manual" && <Manual/>}
+            {tab==="data" && <Backup db={db} onExport={exportData} onImport={importData} onReset={reset}/>}
+          </main>)}
+      </div>
+    </div>);
+}
+
+function Masthead(){
+  const ph=currentPhase(), wk=currentWeek(), t=today();
+  return (<header className="mast"><div className="mast-top">
+    <div><h1>Preparation Register</h1>
+      <p className="mast-sub">CBSE Class&nbsp;12 · JEE Main 2027 — Phase {ph.n}, {ph.name}{wk>0&&wk<=20?` · week ${wk}`:""}</p></div>
+    <div className="counts">{MILESTONES.map(m=>{ const n=days(t,D(m.date));
+      return (<div key={m.label} className="count">
+        <span className="count-n">{n>0?n:"—"}</span><span className="count-u">{n>0?"days":"passed"}</span>
+        <span className="count-l">{m.label}</span><span className="count-s">{m.sub}</span></div>);})}</div>
+  </div></header>);
+}
+
+/* ═══════════════════  REGISTER  ═══════════════════ */
+function Register({syl,setChapter}){
+  const [only,setOnly]=useState("all");
+  const [yr,setYr]=useState(12);
+  const due=useMemo(()=>{ const out=[],t=iso(today());
+    CH.forEach(ch=>{ const r=syl[ch.id]; if(!r||!r.done) return;
+      REVISITS.forEach(rv=>{ if(r[rv.k]) return; const on=addDays(r.done,rv.d);
+        if(on<=t) out.push({ch,rv,on,over:days(D(on),today())}); }); });
+    return out.sort((a,b)=>b.over-a.over); },[syl]);
+  const stats=useMemo(()=>{ const o={};
+    Object.keys(SUBJECTS).forEach(s=>{ const list=CH.filter(c=>c.s===s); let done=0,boxes=0,filled=0;
+      list.forEach(ch=>{ const r=syl[ch.id]||{}, ls=applicableLayers(ch);
+        boxes+=ls.length; filled+=ls.filter(l=>r[l.k]).length; if(r.done) done++; });
+      o[s]={total:list.length,done,progress:pct(filled,boxes)||0}; }); return o; },[syl]);
+  const rows = only==="all" ? CH.filter(c=>SUBJECTS[c.s].yr===yr) : CH.filter(c=>c.s===only);
+  const wk=currentWeek(), t=iso(today());
+  const shown = Object.entries(SUBJECTS).filter(([,m])=>m.yr===yr);
+
+  return (<>
+    <div className="bars" style={{gridTemplateColumns:"repeat(2,1fr)",maxWidth:340}}>
+      <button className={`bar ${yr===12?"bar-on":""}`} onClick={()=>{setYr(12);setOnly("all");}}>
+        <span className="bar-t">Class 12 — boards + JEE</span></button>
+      <button className={`bar bar-11 ${yr===11?"bar-on":""}`} onClick={()=>{setYr(11);setOnly("all");}}>
+        <span className="bar-t">Class 11 — JEE only</span></button>
+    </div>
+
+    {yr===11 && (
+      <div className="note">
+        <b>Lower priority, but not optional.</b> Roughly 45% of the JEE Main paper comes from Class 11.
+        This track runs at about 5–6 hrs/week alongside Phase 1 and 2, in the rotating daily slot — never
+        instead of a Class 12 chapter. Board layer is switched off here because none of it is examined in boards.
+        Chapters marked <span className="crit" style={{marginLeft:0}}>key</span> are the ones the Class 12 syllabus
+        actually rests on; do not let those slip. Chapters removed by NTA in 2024–25 (States of Matter, Hydrogen,
+        s-Block, Mathematical Induction, Mathematical Reasoning, Solution of Triangles) are already excluded —
+        re-verify against the 2027 bulletin in October.
+      </div>)}
+
+    <div className="bars">
+      {shown.map(([s,meta])=>(
+        <button key={s} className={`bar ${only===s?"bar-on":""} ${meta.yr===11?"bar-11":""}`}
+          onClick={()=>setOnly(only===s?"all":s)}>
+          <span className="bar-t">{meta.short}</span>
+          <span className="bar-track"><span className="bar-fill" style={{width:stats[s].progress+"%"}}/></span>
+          <span className="bar-n">{stats[s].done}<i>/{stats[s].total}</i></span></button>))}
+    </div>
+
+    {due.length>0 && (<section className="due">
+      <h2 className="due-h">Revision due — {due.length}</h2>
+      <div className="due-list">{due.slice(0,12).map(({ch,rv,over})=>(
+        <button key={ch.id+rv.k} className="due-item" onClick={()=>setChapter(ch.id,{[rv.k]:true})}>
+          <span className="due-code">{ch.s}{ch.code}</span><span className="due-title">{ch.title}</span>
+          <span className="due-tag">+{rv.d}d</span>
+          <span className={`due-when ${over>3?"late":""}`}>{over===0?"today":over+"d late"}</span></button>))}</div>
+      <p className="due-note">Tap a row to mark that revisit done. Overdue past three days means the queue is slipping.</p>
+    </section>)}
+
+    <div className="grid-wrap"><table className="grid">
+      <thead><tr><th className="c-code">Ch</th><th className="c-title">Chapter</th><th className="c-wk">Wk</th>
+        {LAYERS.map(l=><th key={l.k} className="c-box" title={l.hint}>{l.label}</th>)}
+        {REVISITS.map(r=><th key={r.k} className="c-box">+{r.d}</th>)}</tr></thead>
+      <tbody>{rows.map((ch,i)=>{
+        const prev=rows[i-1], head=!prev||prev.s!==ch.s;
+        const r=syl[ch.id]||{}, ls=applicableLayers(ch);
+        return (<Fragment key={ch.id}>
+          {head && <tr className="sub-head"><td colSpan={3+LAYERS.length+REVISITS.length}>
+            {SUBJECTS[ch.s].name}{ch.s==="X" && <em> — confirm these units against your syllabus</em>}</td></tr>}
+          <tr className={`row ${r.done?"row-done":""} ${ch.wk===wk&&SUBJECTS[ch.s].yr===12?"row-now":""}`}>
+            <td className="c-code"><span className={`code s-${ch.s}`}>{ch.code}</span></td>
+            <td className="c-title">{ch.title}
+              {ch.crit && <span className="crit" title="Class 12 depends on this">key</span>}
+              {ch.tier==="h" && <span className="heavy" title="Heavy chapter">heavy</span>}</td>
+            <td className="c-wk">{ch.wk===0?<span className="pre">seen</span>:ch.wk}</td>
+            {LAYERS.map(l=>{ const na=!ls.includes(l);
+              return (<td key={l.k} className="c-box">{na?<span className="na">–</span>:
+                <Tick on={!!r[l.k]} title={l.hint} onClick={()=>setChapter(ch.id,{[l.k]:!r[l.k]})}/>}</td>);})}
+            {REVISITS.map(rv=>{ const on=r.done?addDays(r.done,rv.d):null, late=on&&!r[rv.k]&&on<=t;
+              return (<td key={rv.k} className="c-box">
+                <Tick on={!!r[rv.k]} muted={!r.done} warn={late}
+                  title={on?`Due ${fmt(on)}`:"Finish the layers above first"}
+                  onClick={()=>r.done&&setChapter(ch.id,{[rv.k]:!r[rv.k]})}/>
+                {on&&!r[rv.k]&&<span className={`when ${late?"late":""}`}>{fmt(on)}</span>}</td>);})}
+          </tr></Fragment>);})}</tbody>
+    </table></div>
+    <p className="legend"><b>Read</b> concept intake · <b>Board</b> NCERT exercises, board PYQ, written answers ·
+      <b> Recall</b> handwritten A4 sheet · <b>JEE</b> chapter PYQ + timed sprint ·
+      <b> +7 / +21 / +60</b> spaced revisits, dated automatically once the layers are ticked.
+      Dashes mean that layer does not apply — Class 11 has no board layer, English and PE have no JEE layer.</p>
+  </>);
+}
+
+/* ═══════════════════  TEST LOG  ═══════════════════ */
+const BLANK_TEST={date:"",type:"T4",label:"",totalQ:"",attempted:"",correct:"",minutes:"",marks:"",maxMarks:"",leakage:"",reviewed:false,note:""};
+function TestLog({db,commit}){
+  const tests=db.tests;
+  const [f,setF]=useState({...BLANK_TEST,date:iso(today())});
+  const set=(k,v)=>setF(p=>({...p,[k]:v}));
+  const num=v=>(v===""||v==null)?null:Number(v);
+  const derive=t=>{ const a=num(t.attempted),c=num(t.correct),q=num(t.totalQ),m=num(t.minutes);
+    return {accuracy:a&&c!=null?Math.round(c/a*100):null, attemptRate:q&&a!=null?Math.round(a/q*100):null,
+      speed:c&&m?+(m/c).toFixed(2):null}; };
+  const submit=()=>{ if(!f.date) return; commit({...db,tests:[...tests,{...f,id:Date.now()}]}); setF({...BLANK_TEST,date:iso(today())}); };
+  const del=i=>commit({...db,tests:tests.filter((_,j)=>j!==i)});
+  const tog=i=>commit({...db,tests:tests.map((t,j)=>j===i?{...t,reviewed:!t.reviewed}:t)});
+  const sorted=useMemo(()=>[...tests].sort((a,b)=>a.date<b.date?-1:1),[tests]);
+  const chart=sorted.map(t=>({label:fmt(t.date),...derive(t),leakage:num(t.leakage)}));
+  const hasRate=chart.some(r=>r.accuracy!=null), hasSpeed=chart.some(r=>r.speed!=null||r.leakage!=null);
+  const un=tests.filter(t=>!t.reviewed).length;
+  return (<>
+    {un>=2 && (<div className={`alarm ${un>=3?"alarm-hot":""}`}><b>{un} tests not reviewed.</b>{" "}
+      {un>=3?"Three is a stop-and-fix. No new tests until the backlog clears — an unreviewed paper teaches nothing and burns a paper we can't get back."
+        :"Two is a warning. This is the earliest reliable sign the plan is slipping."}</div>)}
+    <section className="card"><h2 className="card-h">Record a test</h2>
+      <div className="form">
+        <Field label="Date"><input type="date" value={f.date} onChange={e=>set("date",e.target.value)}/></Field>
+        <Field label="Type"><select value={f.type} onChange={e=>set("type",e.target.value)}>
+          {Object.entries(TEST_TYPES).map(([k,v])=><option key={k} value={k}>{k} — {v}</option>)}</select></Field>
+        <Field label="Paper / subject" wide><input value={f.label}
+          placeholder="e.g. Oswaal Physics SP-2, or JEE Main Jan 2026 Shift 1" onChange={e=>set("label",e.target.value)}/></Field>
+        <Field label="Questions"><input type="number" inputMode="numeric" value={f.totalQ} onChange={e=>set("totalQ",e.target.value)}/></Field>
+        <Field label="Attempted"><input type="number" inputMode="numeric" value={f.attempted} onChange={e=>set("attempted",e.target.value)}/></Field>
+        <Field label="Correct"><input type="number" inputMode="numeric" value={f.correct} onChange={e=>set("correct",e.target.value)}/></Field>
+        <Field label="Minutes"><input type="number" inputMode="numeric" value={f.minutes} onChange={e=>set("minutes",e.target.value)}/></Field>
+        <Field label="Marks"><input type="number" inputMode="numeric" value={f.marks} onChange={e=>set("marks",e.target.value)}/></Field>
+        <Field label="Out of"><input type="number" inputMode="numeric" value={f.maxMarks} onChange={e=>set("maxMarks",e.target.value)}/></Field>
+        <Field label="Leakage"><input type="number" inputMode="numeric" value={f.leakage} placeholder="marks" onChange={e=>set("leakage",e.target.value)}/></Field>
+        <Field label="Reviewed"><div className="inline"><Tick on={f.reviewed} onClick={()=>set("reviewed",!f.reviewed)} title="Reviewed next morning"/>
+          <span className="hint">next morning, not same day</span></div></Field>
+        <Field label="Note" wide><input value={f.note} placeholder="What she'll do differently next time — be specific" onChange={e=>set("note",e.target.value)}/></Field>
+      </div>
+      <div className="row-end"><p className="hint hint-lead"><b>Leakage</b> = marks lost on questions she knew.
+        Ask her directly; it's the cheapest score improvement anywhere in the plan, and invisible unless measured.</p>
+        <button className="btn" onClick={submit}>Add to log</button></div>
+    </section>
+    {chart.length>=2 && (hasRate||hasSpeed) && (<div className="charts">
+      {hasRate && <section className="card"><h2 className="card-h">Accuracy and attempt rate</h2>
+        <p className="card-sub">Accuracy below 75% means over-attempting, not under-knowing.</p>
+        <Chart rows={chart} yMax={100} integers lines={[{k:"accuracy",name:"Accuracy %",color:"var(--tick)"},
+          {k:"attemptRate",name:"Attempt %",color:"var(--ink-mid)",dash:"4 3"}]}/></section>}
+      {hasSpeed && <section className="card"><h2 className="card-h">Speed and leakage</h2>
+        <p className="card-sub">Minutes per correct answer should roughly halve by April.</p>
+        <Chart rows={chart} lines={[{k:"speed",name:"Min / correct",color:"var(--ink)"},
+          {k:"leakage",name:"Leakage (marks)",color:"var(--red)"}]}/></section>}
+    </div>)}
+    <section className="card"><h2 className="card-h">The log — {tests.length} {tests.length===1?"entry":"entries"}</h2>
+      {tests.length===0 ? <Empty>Nothing logged yet. The first entry is the Week 0 diagnostic — record Sections A and D as one row each.</Empty>
+      : (<div className="grid-wrap"><table className="grid grid-log">
+        <thead><tr><th>Date</th><th>Type</th><th>Paper</th><th className="n">Score</th><th className="n">Acc</th>
+          <th className="n">Att</th><th className="n">Min/c</th><th className="n">Leak</th><th className="n">Rev</th><th/></tr></thead>
+        <tbody>{[...tests].sort((a,b)=>a.date<b.date?1:-1).map(t=>{ const i=tests.indexOf(t),d=derive(t);
+          return (<tr key={t.id} className="row"><td className="mono">{fmt(t.date)}</td>
+            <td><span className={`ttype tt-${t.type}`}>{t.type}</span></td>
+            <td className="c-title">{t.label||<span className="na">—</span>}</td>
+            <td className="n mono">{t.marks!==""?`${t.marks}${t.maxMarks?"/"+t.maxMarks:""}`:"—"}</td>
+            <td className="n mono">{d.accuracy!=null?d.accuracy+"%":"—"}</td>
+            <td className="n mono">{d.attemptRate!=null?d.attemptRate+"%":"—"}</td>
+            <td className="n mono">{d.speed!=null?d.speed:"—"}</td>
+            <td className="n mono">{t.leakage!==""?t.leakage:"—"}</td>
+            <td className="n"><Tick on={!!t.reviewed} onClick={()=>tog(i)} title="Reviewed"/></td>
+            <td className="n"><button className="x" onClick={()=>del(i)} title="Delete row">×</button></td></tr>);})}
+        </tbody></table></div>)}
+    </section>
+  </>);
+}
+
+/* ═══════════════════  SUNDAY  ═══════════════════ */
+function Sunday({db,commit}){
+  const audits=db.audits;
+  const blank={date:iso(today()),tasks:{},teach:[],tags:{},note:""};
+  const [f,setF]=useState(blank);
+  const set=(k,v)=>setF(p=>({...p,[k]:v}));
+  const submit=()=>{ commit({...db,audits:[...audits,{...f,id:Date.now()}]}); setF({...blank,date:iso(today())}); };
+  const del=i=>commit({...db,audits:audits.filter((_,j)=>j!==i)});
+  const sorted=useMemo(()=>[...audits].sort((a,b)=>a.date<b.date?-1:1),[audits]);
+  const teachSeries=sorted.map(a=>({label:fmt(a.date),score:(a.teach||[]).length}));
+  const tagTotals=TAGS.map(t=>({name:t.label,k:t.k,value:audits.reduce((s,a)=>s+(Number(a.tags?.[t.k])||0),0),
+    color:t.k==="concept"?"var(--red)":t.k==="silly"?"var(--amber)":"var(--ink-mid)"}));
+  const top=tagTotals.reduce((m,t)=>t.value>m.value?t:m,{value:-1});
+  const dom=TAGS.find(t=>t.k===top.k);
+  return (<>
+    <section className="card"><h2 className="card-h">This week's audit</h2>
+      <p className="card-sub">Fifteen minutes. You are checking that the artefacts exist, not that they are correct.</p>
+      <Field label="Week ending"><input type="date" value={f.date} onChange={e=>set("date",e.target.value)}/></Field>
+      <h3 className="sub-h">Task pack</h3>
+      <ul className="checks">{TASKS.map(([k,label,note])=>(<li key={k}>
+        <Tick on={!!f.tasks[k]} onClick={()=>set("tasks",{...f.tasks,[k]:!f.tasks[k]})} title={label}/>
+        <div><b>{label}</b><span>{note}</span></div></li>))}</ul>
+      <h3 className="sub-h">Teach-back <span className="score">{f.teach.length}<i>/4</i></span></h3>
+      <p className="card-sub">You pick the chapter and tell her only at the start. When she stalls, stay silent — the stall is the data.</p>
+      <ul className="checks">{TEACHBACK.map((t,i)=>(<li key={i}>
+        <Tick on={f.teach.includes(i)} onClick={()=>set("teach",f.teach.includes(i)?f.teach.filter(x=>x!==i):[...f.teach,i])} title={t}/>
+        <div><b>{t}</b></div></li>))}</ul>
+      {f.teach.length===1 && <p className="verdict verdict-bad">She has read this chapter, not learned it. Put it back in the queue this week.</p>}
+      {f.teach.length===2 && <p className="verdict">Shaky — schedule an extra revision pass.</p>}
+      {f.teach.length>=3 && <p className="verdict verdict-good">Solid.</p>}
+      <h3 className="sub-h">Error journal tags</h3>
+      <div className="tags">{TAGS.map(t=>(<Field key={t.k} label={t.label}>
+        <input type="number" inputMode="numeric" value={f.tags[t.k]??""} placeholder="0"
+          onChange={e=>set("tags",{...f.tags,[t.k]:e.target.value})}/></Field>))}</div>
+      <Field label="Note" wide><input value={f.note} placeholder="What felt worst this week?" onChange={e=>set("note",e.target.value)}/></Field>
+      <div className="row-end"><p className="hint hint-lead">Praise the process, never the score. Weekly, not daily.</p>
+        <button className="btn" onClick={submit}>Save the week</button></div>
+    </section>
+    {audits.length>=1 && (<div className="charts">
+      <section className="card"><h2 className="card-h">Where the marks go</h2>
+        {dom&&top.value>0 ? <p className="card-sub"><b>Mostly {dom.label.toLowerCase()}.</b> {dom.note}.</p>
+          : <p className="card-sub">Counts across every week logged.</p>}
+        <Bars rows={tagTotals}/>
+        <p className="card-foot">A drift from <b>concept</b> toward <b>silly</b> over the months is exactly what progress looks like.
+          Point it out to her when it happens.</p></section>
+      {teachSeries.length>=2 && (<section className="card"><h2 className="card-h">Teach-back</h2>
+        <p className="card-sub">Stuck at 1–2 for three weeks means content is being covered, not learned.</p>
+        <Chart rows={teachSeries} yMax={4} integers lines={[{k:"score",name:"Score /4",color:"var(--tick)"}]}/></section>)}
+    </div>)}
+    <section className="card"><h2 className="card-h">Weeks logged — {audits.length}</h2>
+      {audits.length===0 ? <Empty>No weeks recorded yet. The Sunday audit done every week without exception is the single
+        habit that keeps this plan alive through October and November.</Empty>
+      : (<ul className="weeks">{[...audits].sort((a,b)=>a.date<b.date?1:-1).map(a=>{
+        const i=audits.indexOf(a), t=TASKS.filter(([k])=>a.tasks?.[k]).length, tb=(a.teach||[]).length;
+        return (<li key={a.id}><span className="mono w-date">{fmt(a.date)}</span>
+          <span className={`pill ${t===5?"pill-good":t<=2?"pill-bad":""}`}>{t}/5 tasks</span>
+          <span className={`pill ${tb>=3?"pill-good":tb<=1?"pill-bad":""}`}>teach {tb}/4</span>
+          <span className="w-note">{a.note}</span>
+          <button className="x" onClick={()=>del(i)} title="Delete week">×</button></li>);})}</ul>)}
+    </section>
+  </>);
+}
+
+/* ═══════════════════  DIAGNOSTIC  ═══════════════════ */
+function Diagnostic({db,commit}){
+  const d=db.diag||{};
+  const up=patch=>commit({...db,diag:{...d,...patch}});
+  const mark=(sec,q,v)=>up({[sec]:{...(d[sec]||{}),[q]:v}});
+  const rub=(sec,key)=>{ const cur=d[sec]||{}; up({[sec]:{...cur,[key]:!cur[key]}}); };
+
+  const A=d.A||{}, Dd=d.D||{}, B=d.B||{}, C=d.C||{};
+  const aC=Object.values(A).filter(v=>v==="c").length, aW=Object.values(A).filter(v=>v==="w").length;
+  const aAtt=aC+aW;
+  const aPhys=DIAG_A.slice(0,10).filter(q=>A[q[0]]==="c").length;
+  const aMath=DIAG_A.slice(10).filter(q=>A[q[0]]==="c").length;
+  const dC=Object.values(Dd).filter(v=>v==="c").length, dW=Object.values(Dd).filter(v=>v==="w").length;
+  const bScore=DIAG_B.reduce((s,[k,,max,items])=>s+Math.min(max,items.filter((_,i)=>B[k+i]).length),0);
+  const cScore=DIAG_C.filter((_,i)=>C[i]).length;
+  const speed=dC>0&&d.dMin ? +(Number(d.dMin)/dC).toFixed(2) : null;
+  const diagrams=Number(d.diagrams||0);
+
+  const Tri=({sec,q})=>(<div className="tri-set">
+    {[["c","Correct","tri-c"],["w","Wrong","tri-w"],["s","Skipped","tri-s"]].map(([v,l,cls])=>(
+      <button key={v} className={`tri ${cls} ${(sec==="A"?A:Dd)[q]===v?"on":""}`}
+        onClick={()=>mark(sec,q,(sec==="A"?A:Dd)[q]===v?null:v)}>{l}</button>))}</div>);
+
+  const band=(cond,cls,text)=>cond?<div className={`band ${cls}`}>{text}</div>:null;
+
+  return (<>
+    <div className="note"><b>How to use this.</b> Print or copy the question paper below and give it to her in one
+      sitting — 1 hour 45 minutes, four sections timed separately, no calculator or phone. Mark it yourself
+      afterwards using the buttons here; the interpretation writes itself at the bottom. This is the only paper
+      you mark rather than she does, because a baseline should be independent.</div>
+
+    <Acc title="Section A — Class 11 Physics & Maths · 20 questions · 35 minutes">
+      <p className="hint">+4 / −1 / 0. The answer is shown beside each question — she should not see this screen.</p>
+      {DIAG_A.map(([q,text,opts,ans])=>(<div className="q" key={q}>
+        <div className="q-top"><span className="q-n">{q}</span><span className="q-t">{text}</span>
+          <span className="q-a">{ans}</span></div>
+        <div className="opts">{opts}</div><Tri sec="A" q={q}/></div>))}
+    </Acc>
+
+    <Acc title="Section B — Physics, board style · 21 marks · 30 minutes">
+      <p className="hint">Tick each idea that appears anywhere in her answer, in any wording. You are checking
+        presence, not elegance. When genuinely unsure, tick it.</p>
+      {DIAG_B.map(([k,title,max,items])=>(<div key={k} style={{marginTop:14}}>
+        <h4>{k} — {title} <span className="mono" style={{color:"var(--ink)"}}>
+          {Math.min(max,items.filter((_,i)=>B[k+i]).length)}/{max}</span></h4>
+        <ul className="checks">{items.map((it,i)=>(<li key={i}>
+          <Tick on={!!B[k+i]} onClick={()=>rub("B",k+i)} title={it}/><div><b style={{fontWeight:400}}>{it}</b></div></li>))}</ul>
+      </div>))}
+      <div style={{marginTop:16}}><Field label="Diagrams drawn without being told to (out of 3)">
+        <input type="number" inputMode="numeric" min="0" max="3" value={d.diagrams??""}
+          onChange={e=>up({diagrams:e.target.value})}/></Field>
+        <p className="hint" style={{marginTop:6}}>Count B3, B4 and B5. This single observation predicts board marks
+          better than almost anything else on the paper.</p></div>
+    </Acc>
+
+    <Acc title="Section C — English literature · 5 marks · 15 minutes">
+      <p className="hint">The Last Lesson — Franz wonders whether they will make even the pigeons sing in German.
+        What does this reveal about his state of mind and the theme of the story? (about 120 words)</p>
+      <ul className="checks">{DIAG_C.map((it,i)=>(<li key={i}>
+        <Tick on={!!C[i]} onClick={()=>rub("C",i)} title={it}/><div><b style={{fontWeight:400}}>{it}</b></div></li>))}</ul>
+    </Acc>
+
+    <Acc title="Section D — Speed test · 15 questions · 25 minutes">
+      <p className="hint">Short answers, final answer only. Note the time she finishes even if under 25 minutes.
+        Accept equivalent forms — 0.5 for 1/2, degrees for radians. If unsure whether a form is equivalent, count
+        it correct; this section measures speed, not pedantry.</p>
+      {DIAG_D.map(([q,text,ans])=>(<div className="q" key={q}>
+        <div className="q-top"><span className="q-n">{q}</span><span className="q-t">{text}</span>
+          <span className="q-a">{ans}</span></div><Tri sec="D" q={q}/></div>))}
+      <div style={{marginTop:14}}><Field label="Time taken (minutes)">
+        <input type="number" inputMode="numeric" value={d.dMin??""} onChange={e=>up({dMin:e.target.value})}/></Field></div>
+    </Acc>
+
+    <section className="card">
+      <h2 className="card-h">Results and what they mean</h2>
+      <p className="card-sub">Updates as you mark. Send me these six numbers and I'll tune the hour allocations.</p>
+      <div className="res">
+        <div className="res-c"><div className="res-n">{aC}<span style={{fontSize:13,color:"var(--ink-soft)"}}>/20</span></div>
+          <div className="res-l">Section A correct</div></div>
+        <div className="res-c"><div className="res-n">{aAtt}</div><div className="res-l">A attempted</div></div>
+        <div className="res-c"><div className="res-n">{aPhys}<i style={{fontSize:12,color:"var(--ink-soft)",fontStyle:"normal"}}> / {aMath}</i></div>
+          <div className="res-l">A physics / maths</div></div>
+        <div className="res-c"><div className="res-n">{dC}<span style={{fontSize:13,color:"var(--ink-soft)"}}>/15</span></div>
+          <div className="res-l">Section D correct</div></div>
+        <div className="res-c"><div className="res-n">{speed??"—"}</div><div className="res-l">Min per correct</div></div>
+        <div className="res-c"><div className="res-n">{bScore}<span style={{fontSize:13,color:"var(--ink-soft)"}}>/21</span></div>
+          <div className="res-l">Section B</div></div>
+        <div className="res-c"><div className="res-n">{cScore}<span style={{fontSize:13,color:"var(--ink-soft)"}}>/5</span></div>
+          <div className="res-l">Section C</div></div>
+        <div className="res-c"><div className="res-n">{diagrams||0}<span style={{fontSize:13,color:"var(--ink-soft)"}}>/3</span></div>
+          <div className="res-l">Diagrams drawn</div></div>
+      </div>
+
+      {aAtt>0 && (<>
+        <h3 className="sub-h">Section A — the Class 11 backlog</h3>
+        {band(aC>=14,"band-good","Class 11 is in good shape. Cut the Class 11 track to 3 hrs/week and move the time into JEE problem volume.")}
+        {band(aC>=9&&aC<14,"","Normal at this stage. Keep the Class 11 track at 5–6 hrs/week as planned.")}
+        {band(aC>=5&&aC<9,"band-warn","Real backlog. Raise the Class 11 track to 8 hrs/week and drop one chapter per fortnight from the Phase 1 intake table.")}
+        {band(aC<5,"band-bad","Serious gap. Phase 1 needs rebuilding around it — tell me and I'll redo the schedule.")}
+        {band(aAtt>=17&&aC<10,"band-warn","Over-attempting: she is guessing under pressure. This is a strategy problem, fixable in weeks with the three-pass discipline. Good news, in a sense.")}
+        {band(aAtt<12&&aC/Math.max(aAtt,1)>0.7,"","Accurate but cautious or slow. Fixable with volume rather than strategy.")}
+        {band(aPhys<aMath-2,"","Physics well below maths — expected, and consistent with your description. The Class 11 track should be physics-weighted.")}
+      </>)}
+      {(dC+dW)>0 && (<>
+        <h3 className="sub-h">Section D — the speed baseline</h3>
+        {band(dC>=12,"band-good","Excellent. Maths speed is already a strength to monetise.")}
+        {band(dC>=9&&dC<12,"","Solid foundation, needs volume.")}
+        {band(dC>=6&&dC<9,"band-warn","Speed is the binding constraint — the timed sprints matter more than extra theory.")}
+        {band(dC<6,"band-bad","Recall of already-covered chapters is weaker than assumed. The spaced-revision queue is critical.")}
+        {speed && <div className="band">Speed number <b className="mono">{speed}</b> min per correct answer. This is the figure
+          we plot all year — expect it to roughly halve by April. Nothing motivates a logical student like a falling number.</div>}
+      </>)}
+      {bScore>0 && (<>
+        <h3 className="sub-h">Section B — board physics</h3>
+        {band(bScore>=16,"band-good","The extensive-theory worry is overstated. Standard plan.")}
+        {band(bScore>=11&&bScore<16,"band-warn","Knowledge is there, presentation is leaking marks. The derivation bank and value-point discipline will close this.")}
+        {band(bScore<11,"band-bad","Needs the full board layer on every physics chapter. Add 1 hr/week of written answer practice from Week 1.")}
+        {band(diagrams<=1,"band-warn","Diagrams are being lost to habit, not ignorance — the cheapest fix in the world. Make \u201Cdiagram first, then words\u201D a standing rule from day one.")}
+      </>)}
+      {cScore>0 && (<>
+        <h3 className="sub-h">Section C — English</h3>
+        {band(cScore>=4,"band-good","Fine. Light-touch English through Phase 1 as planned.")}
+        {band(cScore>=2&&cScore<4,"band-warn","The classic avid-reader pattern — fluent, insightful, missing the specific points examiners tick. If the answer reads beautifully but scored 2, tell her exactly that: she is writing for a reader, and the board wants her to write for a marker. It lands well with a good reader, because it reframes the problem as format rather than comprehension.")}
+        {band(cScore<2,"band-bad","The text needs re-reading, not just the technique.")}
+      </>)}
+      <p className="card-foot">Give her the marked paper and these rubrics afterwards. Knowing how marks are
+        actually awarded is half the skill.</p>
+    </section>
+  </>);
+}
+
+/* ═══════════════════  THE PLAN  ═══════════════════ */
+const BOARD_WEIGHT={
+  Mathematics:[["Calculus (5–9)",35],["Vectors & 3D (10, 11)",14],["Algebra (3, 4)",10],
+    ["Relations & Functions (1, 2)",8],["Probability (13)",8],["Linear Programming (12)",5]],
+  Physics:[["Optics + EM Waves (8–10)",18],["Magnetism, EMI & AC (4–7)",17],["Electrostatics + Current (1–3)",16],
+    ["Dual Nature, Atoms, Nuclei (11–13)",12],["Electronic Devices (14)",7]],
+  Chemistry:[["Electrochemistry",9],["Aldehydes, Ketones & Acids",8],["Solutions",7],["Chemical Kinetics",7],
+    ["d- and f-Block",7],["Coordination Compounds",7],["Biomolecules",7],["Haloalkanes",6],
+    ["Alcohols, Phenols, Ethers",6],["Amines",6]],
+};
+function Plan(){
+  return (<>
+    <Acc title="The calendar you are planning against" open>
+      <div className="tw"><table><thead><tr><th>Milestone</th><th>Expected</th></tr></thead><tbody>
+        <tr><td>Plan starts</td><td>Mon 27 Jul 2026</td></tr>
+        <tr><td><b>CBSE exam form window</b></td><td><b>Sept 2026 — hard deadline</b></td></tr>
+        <tr><td>JEE Main bulletin & registration</td><td>Oct–Nov 2026</td></tr>
+        <tr><td>CBSE date sheet</td><td>Dec 2026</td></tr>
+        <tr><td>CBSE practicals</td><td>Dec 2026 – Feb 2027</td></tr>
+        <tr><td><b>JEE Main Session 1</b></td><td>Last week Jan 2027</td></tr>
+        <tr><td><b>CBSE Class 12 theory</b></td><td>~17 Feb – late Mar 2027</td></tr>
+        <tr><td><b>JEE Main Session 2</b></td><td>First week Apr 2027</td></tr>
+      </tbody></table></div>
+      <p><b>The structural gift here:</b> Session 2 falls after the boards. That turns a brutal January collision
+        into a clean sequence. Session 1 becomes a free, scored rehearsal — NTA counts only the better of the two
+        attempts — and Session 2 gets a dedicated sprint with board content at peak sharpness.</p>
+      <ul className="phases">{PHASES.map(p=>(<li key={p.n} className={currentPhase().n===p.n?"ph-now":""}>
+        <span className="ph-n mono">{p.n}</span><span className="ph-name">{p.name}</span>
+        <span className="ph-d mono">{fmt(p.start)} – {fmt(p.end)}</span></li>))}</ul>
+    </Acc>
+
+    <Acc title="Seven decisions this plan is built on">
+      <p><b>1. Session 1 is a rehearsal, not the attempt.</b> She sits it fully and seriously, but the plan does not
+        distort December and January to peak for it. Its value is a genuine percentile reading and exam-hall
+        experience, six weeks before it counts.</p>
+      <p><b>2. Class 11 is ~45% of the JEE paper and must be scheduled, not assumed.</b> A permanent daily slot,
+        5–6 hrs/week, roughly 150 hours total. See the Class 11 track in the Register.</p>
+      <p><b>3. Inorganic chemistry is the highest marks-per-hour on the paper — and exactly what she dislikes.</b>{" "}
+        ~30 JEE marks answerable in seconds with no calculation. The fix is not "memorise harder": never present a
+        bare list. Every fact gets hung on a reason. Facts anchored to logic survive in a logical mind; naked facts
+        fall out. 20 minutes daily from Week 5.</p>
+      <p><b>4. Physics gets a split personality.</b> Board physics is extensive theory articulated in writing with
+        derivations and diagrams. JEE physics is numericals under time pressure. Separate layers within each
+        chapter, because one does not transfer to the other.</p>
+      <p><b>5. Repetition is scheduled, not hoped for.</b> Rather than a second full pass, every chapter enters a
+        spaced queue and is revisited at Day +7, +21 and +60. Three touches, each shorter, more effective than two
+        heavy reads and cheaper in hours.</p>
+      <p><b>6. Boards get primacy on content; JEE gets primacy on speed.</b> Where the syllabi overlap, one deep
+        pass serves both. Where they diverge, board needs win before mid-February and JEE needs win after.</p>
+      <p><b>7. Testing is scheduled workload.</b> Review time at least equals test time. And the exam is a separate
+        skill from the syllabus — question selection and gambling discipline are worth 30–50 marks to a student
+        with identical knowledge.</p>
+    </Acc>
+
+    <Acc title="Where the marks are — board weightage">
+      <div className="wgrid">{Object.entries(BOARD_WEIGHT).map(([sub,rows])=>{
+        const max=Math.max(...rows.map(r=>r[1]));
+        return (<div key={sub}><h4>{sub}</h4>{rows.map(([label,m])=>(<div key={label} className="wrow">
+          <span>{label}</span><span className="wtrack"><span className="wfill" style={{width:(m/max*100)+"%"}}/></span>
+          <span className="wnum mono">{m}</span></div>))}</div>);})}</div>
+      <h4>JEE — a different ranking</h4>
+      <ul>
+        <li><b>Maximise:</b> Inorganic (Coordination, d-&f, p-Block) · Modern Physics · Semiconductors · EM Waves.
+          Low difficulty, low time per question, high certainty.</li>
+        <li><b>Heavy investment:</b> Maths Calculus · Vectors & 3D · Electrostatics & Current · Magnetism/EMI/AC ·
+          the organic chain. High question count and overlaps the board syllabus — the double-dip zone.</li>
+        <li><b>Board-only, defer:</b> Linear Programming · Biomolecules for JEE · English · PE.</li>
+      </ul>
+    </Acc>
+
+    <Acc title="The chapter cycle — the engine">
+      <p>Every chapter runs the same five layers. This is what makes practice, PYQs, notes and JEE sets automatic
+        rather than something to remember.</p>
+      <p><b>L1 Concept intake (~25%)</b> — NCERT read plus lecture. Understanding, not mastery. Do not linger; the
+        second and third passes are already scheduled.</p>
+      <p><b>L2 Board layer (~25%)</b> — all NCERT in-text and exercise questions, then chapter-wise board PYQs from
+        the last 10 years. Critically: write out at least two 3-mark and one 5-mark answer longhand, timed, with
+        the derivation and a labelled diagram. Board marks are lost to presentation, not knowledge.</p>
+      <p><b>L3 Recall layer (~10%, memory-heavy chapters only)</b> — all inorganic, biomolecules, name reactions,
+        physics definitions and SI units, PE, English value points. One A4 recall sheet she writes herself, plus
+        spaced-repetition cards.</p>
+      <p><b>L4 JEE layer (~30%)</b> — chapter-wise JEE PYQs 2019–2026, then a timed 15-question sprint at exam pace.
+        Every error logged with a cause tag. That tag distribution is the most useful diagnostic in the plan.</p>
+      <p><b>L5 Spaced revisits (~10%)</b> — Day +7 (30 min), Day +21 (20 min), Day +60 (15 min). The Register dates
+        these automatically.</p>
+      <p className="hint">Chapter cost: heavy 12–14 hrs · medium 8–10 hrs · light 5–6 hrs.</p>
+    </Acc>
+
+    <Acc title="Daily templates and the weekly budget">
+      <h4>Standard day — ~3 hrs alongside coaching, 5 days a week</h4>
+      <ul>
+        <li><b>45 min retrieval warm-up</b> — flashcards (inorganic-weighted), yesterday's flagged errors, one
+          chapter from the spaced-revision queue.</li>
+        <li><b>90 min lead chapter block</b> — this week's primary chapter, whichever layer it is in.</li>
+        <li><b>45 min rotating slot</b> — Mon Class 11 Physics · Tue English · Wed Class 11 Maths ·
+          Thu Class 11 Chemistry · Fri PE.</li>
+      </ul>
+      <h4>Stretch day — 7–10 hrs, twice a week on the lightest coaching days</h4>
+      <ul>
+        <li>2.5 hrs new chapter deep read + NCERT in-text</li>
+        <li>2 hrs NCERT exercises, board PYQ, longhand written answers</li>
+        <li>2 hrs JEE PYQ set + timed 15Q sprint</li>
+        <li>1.5 hrs English long answer (written, timed) + PE + recall sheets</li>
+        <li>1 hr spaced revision queue + error journal</li>
+      </ul>
+      <h4>Weekly budget — about 33 hrs</h4>
+      <div className="tw"><table><tbody>
+        <tr><td>New chapters, including chapter sprints</td><td className="mono">17</td></tr>
+        <tr><td>Class 11 JEE track</td><td className="mono">5</td></tr>
+        <tr><td>Exam practice — weekly mixed test + mock average</td><td className="mono">5</td></tr>
+        <tr><td>Spaced revision queue</td><td className="mono">2.5</td></tr>
+        <tr><td>English</td><td className="mono">2.5</td></tr>
+        <tr><td>Physical Education</td><td className="mono">1</td></tr>
+      </tbody></table></div>
+      <p>Testing rises from 5 hrs/week here to ~11 in Phase 2, ~17 in Phase 3, and near-total in Phases 4–6. The
+        content workload shrinks to make room; the total does not grow.</p>
+      <div className="note">One half-day off every week, genuinely off. This is a 36-week plan; a student who burns
+        out in November scores nothing in April. The rest days are load-bearing, not rewards.</div>
+    </Acc>
+
+    <Acc title="Phase 1 — the 14-week intake schedule">
+      <p className="hint">New chapter intake. Daily practice, the revision queue and the Class 11 track run
+        continuously underneath and always span at least two subjects, so nothing goes cold in a week where it takes
+        no new chapter.</p>
+      <div className="tw"><table><thead><tr><th>Wk</th><th>Dates</th><th>Maths</th><th>Physics</th><th>Chemistry</th><th>English</th></tr></thead>
+        <tbody>{WEEKS.map(w=>(<tr key={w[0]}><td className="mono">{w[0]}</td><td className="mono">{w[1]}</td>
+          <td>{w[2]}</td><td>{w[3]}</td><td>{w[4]}</td><td>{w[5]}</td></tr>))}</tbody></table></div>
+      <h4>Why this sequence</h4>
+      <ul>
+        <li>Calculus starts in Week 1 and dominates Aug–Sep. It is 35 board marks and the largest JEE block, and it
+          needs the longest runway to its Day-60 revisits.</li>
+        <li>Integrals gets a full 1.5 weeks. Highest-effort chapter in the syllabus, and everything downstream
+          depends on it.</li>
+        <li>Physics electricity and magnetism is deliberately broken across Weeks 2–8 rather than run consecutively,
+          so she is never seven chapters deep in one topic.</li>
+        <li>Modern Physics and Semiconductors land in Weeks 8–12 — cheap JEE marks arriving mid-plan, when
+          motivation typically dips.</li>
+        <li>Organic runs in dependency order 7→8→9, building on Haloalkanes which is already done.</li>
+        <li>Linear Programming is last: 5 board marks, absent from JEE, learnable in two sittings.</li>
+        <li>Week 14 is a real buffer, not padding. Something will slip. Plan for it.</li>
+      </ul>
+    </Acc>
+
+    <Acc title="The Class 11 JEE track">
+      <p>Lower priority than Class 12, but it cannot be absent — roughly 45% of the JEE Main paper comes from it,
+        and several Class 11 chapters are load-bearing for the Class 12 syllabus she is studying now. 34 chapters,
+        ~5–6 hrs/week, running across Phase 1 and Phase 2 in the rotating daily slot, then revised hard in Phase 6.</p>
+      <h4>The rule that makes this work</h4>
+      <p>The Class 11 slot is <b>never</b> allowed to displace a Class 12 chapter. If a week goes badly, Class 11
+        is what slips — and it catches up in Phase 2 and in the post-board sprint, when there is nothing competing.
+        That is the whole reason it is scheduled as a parallel track rather than woven into the main table.</p>
+      <h4>The four that must not slip</h4>
+      <ul>
+        <li><b>GOC — Organic Basic Principles (Week 1).</b> Every Class 12 organic chapter sits on top of it, and
+          those start in Week 9. Doing this late means learning Aldehydes and Amines twice.</li>
+        <li><b>Mole Concept (Week 2).</b> Underpins Solutions, Electrochemistry and every physical chemistry
+          numerical.</li>
+        <li><b>Chemical Bonding (Week 3).</b> Feeds Coordination Compounds directly.</li>
+        <li><b>Limits and Derivatives (Week 1).</b> Sits under the entire calculus block, which starts in Week 1.</li>
+      </ul>
+      <h4>Highest JEE yield after those</h4>
+      <p>Rotational Motion and SHM in Physics (2 questions each, reliably) · Equilibrium and Periodicity in
+        Chemistry (Periodicity being near-free marks) · Conic Sections and Complex Numbers &amp; Quadratic in Maths.
+        These sit in Weeks 3–8 for that reason.</p>
+      <h4>What is deliberately excluded</h4>
+      <p>NTA removed these in the 2024–25 rationalisation and they remain out: <b>Chemistry</b> — States of Matter,
+        Hydrogen, s-Block, Environmental Chemistry, significant figures. <b>Maths</b> — Mathematical Induction,
+        Mathematical Reasoning, Solution of Triangles. <b>Physics</b> — Communication Systems, basic scalars and
+        vectors, Doppler effect in sound.</p>
+      <div className="note">Re-verify these exclusions against the official 2027 information bulletin when it
+        releases in Oct–Nov 2026. Studying a deleted chapter costs weeks.</div>
+      <h4>Layers</h4>
+      <p>Read → Recall → JEE. No board layer, because none of it is examined in the boards. Spaced revisits still
+        apply, and matter more here than anywhere else: this is the material most decayed by the January and
+        February board lockdown, which is why Phase 6 opens with Class 11 revision.</p>
+    </Acc>
+
+    <Acc title="Phases 2 through 6">
+      <h4>Phase 2 — Second pass and consolidation · 9 Nov – 20 Dec</h4>
+      <p>The whole Class 12 syllabus has been seen once. This converts "seen" into "solid". 4–5 chapters a week:
+        recall sheet <i>from memory</i>, then the full board PYQ set, then a timed JEE set. No re-reading from
+        scratch — retrieval first, book open only where retrieval fails.</p>
+      <div className="tw"><table><thead><tr><th>Wk</th><th>JEE full mocks</th><th>Board paper</th><th>Test hrs</th></tr></thead><tbody>
+        <tr><td className="mono">1</td><td>1 (Sun)</td><td>Physics</td><td className="mono">11</td></tr>
+        <tr><td className="mono">2</td><td>1 (Sun)</td><td>Chemistry</td><td className="mono">11</td></tr>
+        <tr><td className="mono">3</td><td>1 (Sun)</td><td>Maths</td><td className="mono">11</td></tr>
+        <tr><td className="mono">4</td><td>2 (Wed, Sun)</td><td>English</td><td className="mono">17</td></tr>
+        <tr><td className="mono">5</td><td>2 (Wed, Sun)</td><td>Physics #2</td><td className="mono">17</td></tr>
+        <tr><td className="mono">6</td><td>2 (Wed, Sun)</td><td>Physical Education</td><td className="mono">17</td></tr>
+      </tbody></table></div>
+      <p>Around 10 December the CBSE date sheet lands. Rebuild Phases 4 and 5 around the real gaps between papers.</p>
+
+      <h4>Phase 3 — JEE Session 1 window + practicals · 21 Dec – 24 Jan</h4>
+      <ul>
+        <li><b>21 Dec – 10 Jan:</b> mock day / review day alternating, ~10 full mocks. Mix your test series with
+          real JEE Main papers from Jan and Apr 2025 and 2026 — real papers calibrate difficulty in a way mocks
+          often don't.</li>
+        <li><b>11–18 Jan:</b> 3 mocks, spaced. Attempt-strategy drilling is the priority now, not content.</li>
+        <li><b>19–21 Jan:</b> one final half-length paper. Error journal only.</li>
+        <li><b>22 Jan onward:</b> no mocks. Formula capsules, recall sheets, sleep.</li>
+      </ul>
+      <p>Every mock is shift-accurate — same start time as her allotted shift once the admit card confirms it,
+        3 hours, no breaks, water only. Practicals prep ~1.5 hrs/week. Board work: one sample paper a week to keep
+        writing stamina alive.</p>
+      <p><b>Sit Session 1 with full seriousness and zero outcome pressure.</b> Three days off afterwards, then one
+        long analysis session. That analysis writes the content priority list for Phase 6.</p>
+
+      <h4>Phase 4 — Board lockdown · 25 Jan – 16 Feb</h4>
+      <p><b>100% boards. Zero JEE.</b> The hardest instruction in the plan and the most important. The JEE syllabus
+        is already loaded and will keep for six weeks; board marks are earned in exactly this window.</p>
+      <ul>
+        <li>One full board paper every alternate day, longhand, timed — ~10 papers. Rotate Physics, Chemistry,
+          Maths, English, PE. Self-mark against the official scheme and record the score; a rising curve over three
+          weeks is the best confidence input possible going into 17 February.</li>
+        <li>Alternate days are review days — rework every question that lost marks and log why: missed value point,
+          missing diagram, ran out of time, didn't know.</li>
+        <li><b>Physical Education gets its concentrated block here</b> — largely recall-based, and it retains best
+          learned close to the exam. 12–15 hrs total.</li>
+        <li>English: all 19 pieces revised, plus the writing section (notice, letter, article, report) which is 40%+
+          of the paper and routinely neglected.</li>
+        <li>Last 3 days before the first paper: recall sheets and formula capsules only.</li>
+      </ul>
+
+      <h4>Phase 5 — Board exam window · 17 Feb – late Mar</h4>
+      <ul>
+        <li>Live off the date sheet. The gap between papers is the study time for the next paper, nothing else.</li>
+        <li>Standing rule: the evening after each paper is off. No post-mortems.</li>
+        <li>Day before each paper: recall sheet, formula capsule, one PYQ skim. Sleep by 10.</li>
+        <li>One 30-minute JEE maintenance slot on gaps of 3+ days — light Maths or inorganic, purely to stop the
+          machinery seizing. Not real study.</li>
+      </ul>
+
+      <h4>Phase 6 — JEE Session 2 sprint · last board paper → early Apr</h4>
+      <p>10–20 days depending on the date sheet. The highest-intensity window of the plan — she will be exam-fit,
+        board content at peak sharpness, nothing else competing.</p>
+      <ul>
+        <li>Days 1–2: complete rest. Non-negotiable.</li>
+        <li>Then a repeating 2-day cycle. Day A: full mock at shift time (3 hrs) + 3 hrs on the weakest area
+          exposed. Day B: 3 hrs mock review + 4 hrs Class 11 revision. That yields 6–8 full mocks.</li>
+        <li>Content priority: Class 11 (most decayed by the lockdown) → inorganic flashcards → the three weakest
+          chapters from the Session 1 analysis.</li>
+        <li>Final 3 days: error journal, formula sheets, one half-length paper. No new problems, no new mocks.</li>
+      </ul>
+    </Acc>
+
+    <Acc title="The testing engine">
+      <div className="tw"><table><thead><tr><th></th><th>Test</th><th>Length</th><th>Review</th><th>From</th></tr></thead><tbody>
+        <tr><td className="mono"><b>T1</b></td><td>Chapter sprint — 15 JEE questions, 2 min each</td><td>30 min</td><td>30 min</td><td>Week 1</td></tr>
+        <tr><td className="mono"><b>T2</b></td><td>Weekly mixed retrieval — 25 questions across everything covered</td><td>50 min</td><td>60 min</td><td>Week 1</td></tr>
+        <tr><td className="mono"><b>T3</b></td><td>Part-syllabus JEE mock — covered chapters only</td><td>3 hrs</td><td>3 hrs</td><td>Week 2</td></tr>
+        <tr><td className="mono"><b>T4</b></td><td>Full-length JEE mock — exam conditions</td><td>3 hrs</td><td>3 hrs</td><td>Phase 2</td></tr>
+        <tr><td className="mono"><b>T5</b></td><td>Board sample paper — longhand, self-marked</td><td>3 hrs</td><td>2 hrs</td><td>Phase 1 wk 6</td></tr>
+      </tbody></table></div>
+      <p>Total across the plan: roughly <b>37 mock papers and 23 full board papers</b> before the exams that count.
+        That volume is what separates a student who knows the syllabus from one who can convert it under a clock.</p>
+      <p><b>Full-length mocks deliberately do not start in Phase 1.</b> Testing her on Class 11 chapters not yet
+        revised produces a demoralising number and no usable information. Part-syllabus mocks give a clean read.</p>
+      <h4>The review protocol — the part most students skip</h4>
+      <ol className="steps">
+        <li><b>Re-attempt cold.</b> Every wrong, skipped or flagged question, redone untimed, <i>before opening any
+          solution</i>. Many will now come out — those were never knowledge failures, and they need a completely
+          different fix.</li>
+        <li><b>Then solutions</b>, only for what survived step 1.</li>
+        <li><b>Tag every error</b> — concept / silly / speed / didn't know / mis-gamble.</li>
+        <li><b>Extract to the error journal</b>, one line each.</li>
+        <li><b>Record the four numbers.</b></li>
+      </ol>
+      <p className="hint">Never review on the day for anything over an hour. Overnight consolidation genuinely helps,
+        and reviewing while demoralised teaches nothing.</p>
+      <h4>The four numbers</h4>
+      <ul>
+        <li><b>Accuracy %</b> — correct ÷ attempted. Should sit at 85%+ under negative marking. Below 75% means
+          over-attempting, not under-knowing.</li>
+        <li><b>Attempt %</b> — the dial that trades against accuracy.</li>
+        <li><b>Time per correct answer</b> — the best single measure of exam efficiency.</li>
+        <li><b>Leakage</b> — marks lost to silly, speed and mis-gamble tags: everything known but not scored.
+          Typically 20–40 marks. The cheapest score improvement anywhere in this plan, and invisible unless measured.</li>
+      </ul>
+      <h4>JEE attempt strategy — drill from Phase 2</h4>
+      <ol className="steps">
+        <li><b>Chemistry first, always.</b> Fastest section, mostly recall, banks certain marks and settles nerves.
+          Target 30–35 min. Then Maths — her strength, so a strong second section builds momentum. Physics last.</li>
+        <li><b>Pass 1 — the 15-second rule.</b> Attempt only what you can see a path to within fifteen seconds.
+          Everything else flagged and abandoned instantly. No exceptions, no "just one more minute".</li>
+        <li><b>Pass 2.</b> Return to flagged, up to 3 min each, then abandon again.</li>
+        <li><b>Pass 3 — the gambling calculus.</b> On a four-option MCQ at +4/−1, a blind guess is worth +0.25;
+          eliminate one option and it rises to about +0.67. <b>Never leave an MCQ blank if one option can be ruled
+          out.</b> Section B numericals have carried negative marking since 2025, so blind numerical guesses are
+          pure loss — leave those blank.</li>
+      </ol>
+      <p>For three mocks in Phase 2 the goal is not the score but executing the sweep without deviation. Have her
+        note how many times she broke the 15-second rule. That number should fall to zero.</p>
+      <div className="note">Re-verify the marking scheme against the official 2027 bulletin in Oct–Nov 2026.
+        NTA has changed it twice in recent years.</div>
+      <h4>Board attempt strategy — drill in Phase 4</h4>
+      <ul>
+        <li>Use the 15-minute reading time deliberately: mark what to do first, mentally outline the two 5-markers.</li>
+        <li>Answer in the marker's currency — value points, not prose. Underline keywords. Diagram for every
+          question that can take one, labelled, even where not asked. A 5-mark derivation without a diagram loses a
+          mark almost every time.</li>
+        <li>Roughly 1 point per mark, plus a diagram. Over-writing costs time, never marks.</li>
+        <li>Never leave blanks — there is no negative marking. A half-remembered definition scores; a blank does not.</li>
+      </ul>
+    </Acc>
+
+    <Acc title="Subject playbooks">
+      <p><b>Maths.</b> The strength — protect it and monetise it. The gap is JEE speed, not understanding. Time every
+        chapter sprint at ~2 min/question and record it. Track speed as a number; a logical student responds to a
+        moving curve. From Phase 2, add one 25-question mixed set weekly drawing from every chapter covered so far.</p>
+      <p><b>Physics.</b> Two deliverables per chapter. <i>Board:</i> a written derivation bank — every derivation in
+        the syllabus, written out once longhand with a diagram, collected in one book. About 25 in total, and they
+        recur year after year. <i>JEE:</i> volume. The "not very proficient" gap closes with problem count, not more
+        theory. Target 60+ JEE questions per heavy chapter.</p>
+      <p><b>Chemistry.</b> Physical chapters (Solutions, Electrochemistry, Kinetics) will come easily — treat them as
+        numerical practice like physics. Organic is pattern recognition, not memory: one reaction map per chapter
+        showing what converts to what, and the "exceptions" mostly dissolve into mechanism. Inorganic is the
+        deliberate campaign from decision 3 — 20 minutes daily, reason-scaffolded, never bare lists.</p>
+      <p><b>English.</b> An avid reader will have no comprehension problem and may still underperform, because CBSE
+        marking rewards value points, not fluency. For each piece: read once for pleasure, extract 6–8 value points,
+        write one 120-word answer under time, self-mark against the official scheme. Watch for the beautifully
+        written answer that scores 3/5 because it missed two required points. Don't neglect the writing section —
+        notice, letter, article, report are formula-driven and quickly learned.</p>
+      <p><b>Physical Education.</b> Low effort, high return, best deferred. 45 min/week in the Friday slot through
+        Phases 1–2, then a concentrated 12–15 hour block in Phase 4.</p>
+    </Acc>
+
+    <Acc title="Risks and open items">
+      <ol className="steps steps-flag">
+        <li><b>CBSE exam registration — action this first.</b> For the 2026 cycle the Class 12 private candidate form
+          opened 9 Sept and closed 30 Sept, late fee to 11 Oct. The 2027 equivalent falls in September 2026. Two
+          things to verify: <b>eligibility</b> — CBSE private candidature is generally limited to fail, compartment,
+          essential-repeat and improvement candidates, so a first-time homeschooled candidate typically needs either
+          enrolment in a CBSE-affiliated school or the NIOS route; and <b>practicals</b> — Physics, Chemistry and PE
+          each carry 30 practical marks that must be arranged somewhere. If she is already on a school's rolls this
+          is a five-minute check. If not, it needs resolving before anything else in this plan matters.</li>
+        <li><b>Class 11 status.</b> The 5 hrs/week reservation is a placeholder until the diagnostic sizes the real
+          backlog.</li>
+        <li><b>Coaching sequence.</b> If the online course covers chapters in a different order, realign so
+          self-study reinforces the lecture rather than running ahead of or behind it.</li>
+        <li><b>Test series capacity.</b> This plan consumes ~37 mocks. Check the series actually contains that many,
+          whether papers release on a fixed schedule, whether it offers part-syllabus papers for Phase 1, and
+          whether it runs on a CBT interface matching NTA's.</li>
+        <li><b>Date sheet dependency.</b> Phases 4 and 5 assume a ~17 Feb start. Rebuild both when the real sheet
+          arrives in December.</li>
+        <li><b>Sustainability.</b> 36 weeks is long. The half-day off, the sleep and the post-exam rest are
+          load-bearing parts of the plan. A student who arrives in April fresh will outscore one who arrives
+          depleted, regardless of hours logged.</li>
+      </ol>
+    </Acc>
+  </>);
+}
+
+/* ═══════════════════  MANUAL  ═══════════════════ */
+const BOOKS=[
+  ["Mathematics",[["NCERT Class 12, Parts 1 & 2","now"],["NCERT Exemplar Problems","now"],
+    ["Oswaal CBSE Question Bank","now"],["Cengage Mathematics (G. Tewani) — one volume at a time","now"],
+    ["Arihant 40 Years' JEE Main Chapterwise","now"]]],
+  ["Physics",[["NCERT Class 12 — board questions come almost verbatim","now"],["Oswaal CBSE Question Bank","now"],
+    ["H. C. Verma, Concepts of Physics Vol. 2","now"],["D. C. Pandey, Understanding Physics — E&M, Optics & Modern","now"],
+    ["Arihant 40 Years' JEE Main Chapterwise","now"]]],
+  ["Chemistry",[["NCERT Class 12 — read line by line. Highest return per hour on this list","now"],
+    ["N. Awasthi, Physical Chemistry — Levels 1 and 2 only","now"],
+    ["M. S. Chouhan, Organic Chemistry — earlier exercises only","week 9"],
+    ["Oswaal CBSE Question Bank","now"],["J. D. Lee (Indian adaptation) — reference only","phase 2"]]],
+  ["Class 11 (JEE track)",[["NCERT Class 11 — all three subjects, especially Chemistry","now"],
+    ["H. C. Verma, Concepts of Physics Vol. 1 — mechanics, SHM, waves","now"],
+    ["The same chapterwise JEE PYQ book, Class 11 sections","now"]]],
+  ["English & PE",[["NCERT Flamingo and Vistas","now"],["Oswaal / Educart English Core Question Bank","now"],
+    ["Saraswati, Health and Physical Education Class 12","now"],
+    ["CBSE sample papers and marking schemes — cbseacademic.nic.in, free","now"]]],
+];
+function Manual(){
+  return (<>
+    <Acc title="Your actual job" open>
+      <p>You are not the teacher. The coaching, the online course and the books teach the content. Trying to teach
+        it yourself is the one thing that will reliably go wrong: you will be wrong occasionally, she will notice,
+        and the trust you need for the rest of this will erode.</p>
+      <p><b>Your job is to audit the process, not the physics.</b> That turns out to be the more important job,
+        because almost every student who underperforms does so for process reasons — tests not reviewed, revision
+        skipped, errors never analysed — and almost none of those require subject knowledge to spot.</p>
+      <ul>
+        <li><b>Timekeeper.</b> You start and stop the clock. She cannot invigilate herself.</li>
+        <li><b>Auditor.</b> You verify the artefacts exist — not that they are correct, that they are there.</li>
+        <li><b>Regulator.</b> You protect the rest days and the sleep, and absorb the emotional volatility around
+          bad scores so she doesn't have to manage it alone.</li>
+      </ul>
+      <p>The thing to internalise: you can tell whether someone understands something without understanding it
+        yourself. You do this constantly in ordinary life. The teach-back turns it into a method.</p>
+    </Acc>
+
+    <Acc title="How to run a test">
+      <h4>Before</h4>
+      <ul>
+        <li>Fix the slot in advance and treat it as immovable. Full JEE mocks start at <b>9:00 AM</b> — the same
+          time as her exam shift, so the body learns to peak then.</li>
+        <li>Phone in another room. Yours too. Blank rough sheets, pen, water, nothing else on the desk.</li>
+        <li>Computer-based mocks: the full three hours in one sitting, no pausing.
+          <b> Pausing a mock is the most common way students fool themselves.</b></li>
+      </ul>
+      <h4>During</h4>
+      <p>Timekeeping only. Do not hover, do not enter the room, do not ask how it's going. If she wants to stop
+        early, let her — note the time and ask about it the next day, not that day.</p>
+      <h4>After</h4>
+      <ul>
+        <li>No marking on the day for anything over an hour.</li>
+        <li><b>She marks, not you</b> — except the Week 0 diagnostic, because a baseline should be independent.
+          Self-marking against an official scheme is how she internalises what a marker rewards. Don't take it away.</li>
+        <li>Your role is to check the marking happened and record the numbers.</li>
+      </ul>
+      <h4>The three questions after every test</h4>
+      <ol className="steps">
+        <li><b>"How many did you get wrong that you knew?"</b> — the leakage number.</li>
+        <li><b>"Which one question cost you the most time?"</b> — surfaces the abandon-discipline problem.</li>
+        <li><b>"What will you do differently next time?"</b> — if the answer is "study harder", push back. It should
+          be specific: <i>Chemistry first</i>, <i>drop anything I can't start in 15 seconds</i>, <i>diagram before
+          words</i>.</li>
+      </ol>
+      <p>If the third answer is vague three tests running, the review protocol isn't being followed. That's a real
+        finding, and you found it without knowing any physics.</p>
+    </Acc>
+
+    <Acc title="The teach-back — your best instrument">
+      <p><b>Once a week, Sunday, five minutes. She explains one chapter to you as if you had never heard of it.</b></p>
+      <p>You cannot judge whether her answer to a Gauss's law problem is right. You can absolutely judge whether an
+        explanation is fluent and structured or halting and hedged. That judgement is reliable, requires no
+        expertise, and correlates strongly with real mastery. Genuine understanding compresses; half-understanding
+        rambles.</p>
+      <p>Score out of 4 — the four boxes are in the Sunday tab. 3–4 solid · 2 shaky, schedule an extra pass ·
+        0–1 she has read it, not learned it.</p>
+      <p><b>Two rules.</b> You choose the chapter, from anything covered in the last month, and tell her only at the
+        start — a teach-back she prepared for measures preparation, not understanding. And when she stalls, stay
+        silent and wait. The stall <i>is</i> the data. Rescuing her destroys the instrument.</p>
+    </Acc>
+
+    <Acc title="The weekly task pack">
+      <p>Five things every Sunday, all countable or inspectable by anyone. Fifteen minutes total — that's the whole
+        audit. Record it in the Sunday tab.</p>
+      <div className="tw"><table><thead><tr><th>Deliverable</th><th>What you check</th></tr></thead><tbody>
+        {TASKS.map(([k,l,n])=>(<tr key={k}><td><b>{l}</b></td><td>{n}</td></tr>))}
+      </tbody></table></div>
+      <h4>What the error tags tell you</h4>
+      <div className="tw"><table><thead><tr><th>Dominant tag</th><th>Meaning</th><th>Change</th></tr></thead><tbody>
+        <tr><td>Silly</td><td>Knowledge fine, execution leaking</td><td>Attempt strategy, slow down on pass 1. Fastest gain available</td></tr>
+        <tr><td>Speed</td><td>Knows it, can't do it in time</td><td>More timed sprints, fewer new chapters</td></tr>
+        <tr><td>Concept</td><td>Genuine content gaps</td><td>That chapter needs another pass</td></tr>
+        <tr><td>Didn't know</td><td>Coverage gap, not skill gap</td><td>Check against the Phase 1 schedule; something was skipped</td></tr>
+      </tbody></table></div>
+      <p>A shift from <b>concept</b> toward <b>silly</b> over the months is exactly what progress looks like. Point
+        it out to her when it happens.</p>
+    </Acc>
+
+    <Acc title="How to talk about it">
+      <p><b>Never ask "did you study today?"</b> It invites a yes and teaches nothing. Ask about artefacts instead:
+        <i> "can I see this week's test log?"</i> Objects are harder to fudge than assurances, and the question
+        carries no accusation.</p>
+      <p><b>Audit weekly, not daily.</b> Daily monitoring produces resentment and gaming — she'll optimise for
+        looking busy rather than learning.</p>
+      <p><b>Praise process, never scores.</b> "You reviewed every mock this week" is about something she controls.
+        "You got 210" is about the paper's difficulty as much as her. Students praised for scores become frightened
+        of hard papers; students praised for process seek them out. Over eight months this compounds enormously.</p>
+      <p><b>Never react to one number.</b> Mock scores drop when papers get harder and when the syllabus broadens —
+        both are supposed to happen. React only to a three-test trend. Say this out loud now, before the first bad
+        score, so it doesn't sound like consolation invented afterwards.</p>
+      <p><b>Pre-agree what happens after Session 1 in January: nothing.</b> The score will very likely disappoint —
+        it's a rehearsal taken mid-preparation, and only the better of the two attempts counts. Agree the response
+        today: three days off, one analysis session, back to the plan. A January score treated as a verdict can cost
+        more in February than the paper was ever worth.</p>
+      <p><b>Rest is a scheduled item, not a reward for output.</b> Don't let her trade it away on a bad week. She
+        will try.</p>
+      <p><b>When she's struggling and you can't help with the content</b> — and this will happen — the honest
+        response is the good one: <i>"I can't help with the physics, but I can help you work out who can."</i>{" "}
+        Offering process help you can actually deliver builds more trust than pretending to competence you don't have.</p>
+      <div className="note">Worth saying once, explicitly: she is doing something hard, and doing it without the
+        ambient company of thirty other people doing the same thing. That isolation is a real cost and worth naming
+        rather than leaving her to assume everyone else finds this easier. If there is any route to a peer group —
+        a coaching batch that actually meets, even an online study group — take it. It is worth more than another book.</div>
+    </Acc>
+
+    <Acc title="Books">
+      <p className="hint">Deliberately short. Every extra book is a daily decision about which one to open, and
+        unfinished books breed guilt. One core book per purpose, finished, beats five started. Buy the "now" items
+        in Week 0 and nothing else until Phase 2.</p>
+      <div className="bgrid">{BOOKS.map(([sub,list])=>(<div key={sub}><h4>{sub}</h4>
+        <ul className="blist">{list.map(([b,when])=>(<li key={b}>
+          <span className={`when-pill ${when==="now"?"wp-now":""}`}>{when}</span>{b}</li>))}</ul></div>))}</div>
+      <div className="note note-red"><b>Do not buy Irodov</b> — aimed well above JEE Main, a time sink for a Mains
+        candidate. If someone recommends it, that recommendation is calibrated for a different exam. In Awasthi and
+        Chouhan, <b>Levels 1 and 2 only</b>; Level 3 is Advanced material that costs hours and buys almost nothing here.</div>
+      <h4>Free and essential</h4>
+      <ul>
+        <li><b>cbseacademic.nic.in</b> — sample papers, marking schemes, official syllabus. The marking schemes are
+          the more valuable document; they show exactly which points earn marks.</li>
+        <li><b>NTA Abhyas app</b> — official practice on the real exam interface. Useful specifically because the
+          interface matters.</li>
+        <li><b>jeemain.nta.nic.in</b> — past papers and answer keys released after each session.</li>
+      </ul>
+      <p className="hint">The "now" column is roughly ₹8,000–12,000. If budget is tight, the irreducible core is:
+        all NCERTs (Class 11 and 12), one Oswaal question bank per subject, and one chapter-wise JEE PYQ book.</p>
+    </Acc>
+
+    <Acc title="Red flags">
+      <p className="hint">All spottable without knowing any subject. The first three mean something is wrong now.</p>
+      <ol className="steps steps-flag">
+        <li><b>Unreviewed tests accumulating.</b> Two is a warning, three is a stop-and-fix. The earliest and most
+          reliable signal that the plan is slipping.</li>
+        <li><b>Recall sheets copied, not written.</b> Printed, photographed or transcribed means the retrieval step
+          is being skipped — and retrieval is the entire mechanism by which the second read works.</li>
+        <li><b>Error entries untagged, or all tagged the same.</b> The review is being performed rather than done.</li>
+        <li><b>Teach-back stuck at 1–2 for three weeks.</b> Content covered, not learned.</li>
+        <li><b>Sleep under seven hours regularly.</b> Below that, retention falls faster than the extra hours add.
+          An arithmetic point, not a moral one.</li>
+        <li><b>She stops complaining.</b> Counterintuitive, but silence and compliance often mean she has given up on
+          the plan and is going through the motions. Friction usually signals engagement.</li>
+      </ol>
+    </Acc>
+
+    <Acc title="Your calendar">
+      <div className="tw"><table><thead><tr><th>When</th><th>Task</th></tr></thead><tbody>
+        <tr><td><b>This week</b></td><td>Resolve the CBSE exam registration route — September is the hard deadline</td></tr>
+        <tr><td><b>This week</b></td><td>Administer the diagnostic. Buy the "now" books. Set up the four artefacts</td></tr>
+        <tr><td>Every Sunday</td><td>15-minute task pack audit + 5-minute teach-back + record the numbers</td></tr>
+        <tr><td>Every mock</td><td>Timekeeping, then the three questions the next day</td></tr>
+        <tr><td>Monthly</td><td>Look at the trend on the four numbers, not the last point</td></tr>
+        <tr><td>Sept 2026</td><td>CBSE exam form submitted and confirmed</td></tr>
+        <tr><td>Oct–Nov 2026</td><td>JEE registration. Re-verify marking scheme and deleted syllabus against the bulletin</td></tr>
+        <tr><td>Dec 2026</td><td>CBSE date sheet — rebuild Phases 4 and 5 around the real gaps</td></tr>
+        <tr><td>Late Jan 2027</td><td>Session 1. Then three days off, one analysis session, nothing else</td></tr>
+        <tr><td>Feb–Mar 2027</td><td>Board window. Logistics, food, sleep, transport. No academics from you</td></tr>
+        <tr><td>Mar–Apr 2027</td><td>Session 2 sprint</td></tr>
+      </tbody></table></div>
+      <p>Eight months is a long time, and the middle of it — roughly October to December — is where most plans
+        quietly die. Not dramatically; they just stop being followed. The single practice that prevents this is the
+        Sunday audit, done every week without exception, in the same fifteen minutes, whether or not it seems
+        necessary that week. Everything else here is downstream of that habit.</p>
+      <p>You've said you're not an educator. For this role that is genuinely not the limitation it feels like. The
+        things that decide the outcome — consistency, honest measurement, protected rest, and someone paying steady
+        attention — are not subject expertise. They are the things you are already positioned to provide.</p>
+    </Acc>
+  </>);
+}
+
+/* ═══════════════════  BACKUP  ═══════════════════ */
+function Backup({db,onExport,onImport,onReset}){
+  const ticks=Object.values(db.syllabus).reduce((s,r)=>s+Object.keys(r).filter(k=>k!=="done"&&r[k]).length,0);
+  return (<>
+    <section className="card"><h2 className="card-h">Backup and transfer</h2>
+      <p className="card-sub">This register saves to <b>this browser on this device only</b>. Clearing browsing data
+        will erase it, and it does not travel to another phone or laptop by itself. Export a copy every few weeks.</p>
+      <ul className="blist" style={{marginBottom:16}}><li><b>{ticks}</b> boxes ticked ·
+        <b> {db.tests.length}</b> tests logged · <b>{db.audits.length}</b> weeks audited</li></ul>
+      <div className="row-end" style={{marginTop:0,justifyContent:"flex-start",gap:10}}>
+        <button className="btn" onClick={onExport}>Export a backup</button>
+        <label className="btn btn-ghost" style={{cursor:"pointer"}}>Restore from file
+          <input type="file" accept="application/json,.json" onChange={onImport} style={{display:"none"}}/></label>
+        <button className="btn btn-ghost" onClick={onReset}>Clear everything</button>
+      </div>
+      <p className="card-foot">To share between two devices, export from one and restore on the other. Restoring
+        replaces whatever is already there, so agree who keeps the master copy — usually whoever runs the Sunday audit.</p>
+    </section>
+    <section className="card"><h2 className="card-h">Privacy</h2>
+      <p className="card-sub">Nothing here leaves your device.</p>
+      <p style={{fontSize:12.5,lineHeight:1.65,margin:"0 0 10px"}}>There is no account, no login, no server and no
+        analytics. Every tick and every number sits in your own browser's storage. The only network requests this
+        page makes are for the React library and the fonts when it first loads, and nothing about your data is sent
+        with them. It asks for no name, no email and no identifying detail of any kind — and you should keep it that
+        way when you fill it in. Use initials rather than a full name if you note anything personal at all.</p>
+      <p style={{fontSize:12.5,lineHeight:1.65,margin:0}}>That also means nobody can recover it for you. The export
+        file is your only backup.</p>
+    </section>
+  </>);
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
