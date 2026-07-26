@@ -1156,12 +1156,15 @@ function Schedule(){
 }
 
 /* ═══════════════════  PAPERS  ═══════════════════ */
-const CBSE_HOME="https://cbseacademic.nic.in/";
+const CBSE_PAGE="https://cbseacademic.nic.in/SQP_CLASSXII_2025-26.html";
+const CBSE_SQP="https://cbseacademic.nic.in/web_material/SQP/ClassXII_2025_26/";
 const NCERT_TB="https://ncert.nic.in/textbook.php";
 const NCERT_EX="https://ncert.nic.in/exemplar-problems.php";
 const NTA_JEE="https://jeemain.nta.nic.in/";
-const CBSE_SUBJECTS=[["Mathematics","maths"],["Physics","physics"],["Chemistry","chemistry"],
-  ["English Core","english"],["Physical Education","pe"]];
+// [display name, local-file slug, CBSE PDF basename]
+const CBSE_SUBJECTS=[["Mathematics","maths","Maths"],["Physics","physics","Physics"],
+  ["Chemistry","chemistry","Chemistry"],["English Core","english","EnglishCore"],
+  ["Physical Education","pe","PhysicalEducation"]];
 const PAPERS=[
   { group:"Practice papers — printable, built into this tracker",
     note:"Original JEE-style chapter sprints (single correct, +4/−1) with hand-verified answer keys on the last page, plus your Week 0 diagnostic. Every Class 12 Maths, Physics and Chemistry chapter is covered. Open one and use Print / Save as PDF. These are original practice papers, not CBSE/NTA papers.",
@@ -1208,11 +1211,12 @@ const PAPERS=[
         ["C8 · Aldehydes, Ketones and Carboxylic Acids","papers/sprint-c8.html"],
         ["C9 · Amines","papers/sprint-c9.html"],
         ["C10 · Biomolecules","papers/sprint-c10.html"]]}]},
-  { group:"CBSE Class 12 — sample papers & marking schemes",
-    note:"The official 2026–27 sample papers release around Sept–Oct 2026; until then the 2025–26 set is the closest stand-in. The marking scheme matters more than the paper — self-mark every answer against it.",
-    source:{label:"Official — CBSE Academic, Sample Question Paper (Class XII)",url:CBSE_HOME},
-    subjects:CBSE_SUBJECTS.map(([name,slug])=>({name,
-      sqp:`papers/cbse-xii-${slug}-sqp.pdf`, ms:`papers/cbse-xii-${slug}-ms.pdf`, url:CBSE_HOME}))},
+  { group:"CBSE Class 12 — sample papers & marking schemes (2025–26)",
+    note:"Official CBSE Academic papers. The 2026–27 set releases around Sept–Oct 2026 — check the source page then; until then the 2025–26 set is the closest match. The marking scheme matters more than the paper — self-mark every answer against it. The \"official\" links open the exact PDF on cbseacademic.nic.in.",
+    source:{label:"Official — CBSE Academic: Class XII 2025-26, all subjects (SQP + MS)",url:CBSE_PAGE},
+    subjects:CBSE_SUBJECTS.map(([name,slug,base])=>({name,
+      sqp:`papers/cbse-xii-${slug}-sqp.pdf`, ms:`papers/cbse-xii-${slug}-ms.pdf`,
+      sqpUrl:`${CBSE_SQP}${base}-SQP.pdf`, msUrl:`${CBSE_SQP}${base}-MS.pdf`}))},
   { group:"JEE Main — previous-year papers & official answer keys",
     note:"Mix your test-series papers with real NTA papers from the Jan and Apr sessions of 2024–2026 — real papers calibrate difficulty in a way mock papers rarely do. Official answer keys drop after each session.",
     source:{label:"Official — NTA JEE Main portal",url:NTA_JEE},
@@ -1253,9 +1257,9 @@ function Papers(){
           <thead><tr><th>Subject</th><th>Sample paper</th><th>Marking scheme</th></tr></thead>
           <tbody>{sec.subjects.map(s=>(<tr key={s.name}><td>{s.name}</td>
             <td><HostedLink file={s.sqp}>Download / print</HostedLink>
-              <a className="paper-src" href={s.url} target="_blank" rel="noopener noreferrer">official ↗</a></td>
+              <a className="paper-src" href={s.sqpUrl} target="_blank" rel="noopener noreferrer">official ↗</a></td>
             <td><HostedLink file={s.ms}>Download / print</HostedLink>
-              <a className="paper-src" href={s.url} target="_blank" rel="noopener noreferrer">official ↗</a></td></tr>))}
+              <a className="paper-src" href={s.msUrl} target="_blank" rel="noopener noreferrer">official ↗</a></td></tr>))}
           </tbody></table></div>}
         {sec.links && <ul className="glist">{sec.links.map(([label,url])=>(
           <li key={label}><a href={url} target="_blank" rel="noopener noreferrer">{label} ↗</a></li>))}</ul>}
