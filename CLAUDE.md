@@ -42,6 +42,8 @@ the guardian manual.
 ```
 index.html                     the entire app (edit this)
 robots.txt                     Disallow: / — keep crawlers out
+papers/                        printable exam papers served by the Papers tab
+  README.md                    naming convention the app HEAD-checks for
 docs/                          source reference material the app content is derived from
   study-plan.md                the full 11-part integrated prep plan
   guardian-manual.md           how a non-expert guardian runs the plan
@@ -49,6 +51,29 @@ docs/                          source reference material the app content is deri
   diagnostic-marking-key.md    marking key + interpretation for the diagnostic
 CLAUDE.md
 ```
+
+## Tabs (each is a React component in `index.html`)
+
+Register · **This week** · **Papers** · Test log · Sunday · Diagnostic · The
+plan · Manual · Backup. Two are worth calling out because they're data-driven
+and meant to grow:
+
+- **This week** (`WeekPage` + `ChapterGuide`) — pick any week (stepper /
+  dropdown / "jump to now") or search a chapter, and get a per-chapter guide:
+  what matters, core reading, question banks, extra materials, a live progress
+  gauge wired to the register's ticks, and the tests to sit. Content comes from
+  two objects: `SUBJECT_GUIDE` (per-subject defaults every chapter inherits)
+  and `CH_GUIDE` (per-chapter specifics, keyed by chapter id like `"M5"`).
+  **To extend the guides, edit those two objects** — a chapter with no
+  `CH_GUIDE` entry still renders the subject defaults plus a "not written yet"
+  note.
+- **Papers** (`Papers` + `HostedLink`) — official CBSE / JEE Main / NCERT
+  sources. Any PDF placed in `papers/` under the names in `papers/README.md`
+  auto-appears as a Download/print button: `HostedLink` does a `HEAD` fetch on
+  each expected path and only shows the button when the file returns 200.
+  Everything else links out to the official portal. The `PAPERS` array is the
+  data model — extend it to add more papers or point rows at local files.
+  Never commit copyrighted commercial question banks here.
 
 The `docs/*.md` files are **reference source material**, not loaded or fetched
 by the app — the plan text and manual shown inside the tracker are hand-ported

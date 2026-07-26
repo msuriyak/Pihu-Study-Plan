@@ -211,6 +211,12 @@ input::placeholder{color:var(--ink-soft); font-family:'IBM Plex Sans',sans-serif
 .cg-title{display:flex; align-items:center; gap:8px; flex:1; min-width:0;}
 .cg-name{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 .cg-prog{margin-left:auto; flex:0 0 auto;}
+.paper-btn{display:inline-block; font:600 10px/1 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.06em;
+  background:var(--ink); color:var(--paper-2); border-radius:2px; padding:6px 9px; text-decoration:none; margin-right:8px;}
+.paper-src{font-size:11px; color:var(--s-M); text-decoration:none; white-space:nowrap;}
+.paper-src:hover{text-decoration:underline;}
+.glist a,.acc-b a{color:var(--s-M); text-decoration:none;}
+.glist a:hover,.acc-b a:hover{text-decoration:underline;}
 /* diagnostic */
 .q{border-bottom:1px solid var(--rule-2); padding:10px 0;}
 .q-top{display:flex; gap:9px; align-items:flex-start;}
@@ -878,7 +884,7 @@ function App(){
   const reset=()=>{ if(!confirm("Clear every tick, test and week from this device? Export a backup first if you want to keep it.")) return;
     const seed={}; SEEDED.forEach(id=>{seed[id]={l1:true};}); commit({syllabus:seed,tests:[],audits:[],diag:{}}); };
 
-  const TABS=[["register","Register"],["week","This week"],["tests","Test log"],["sunday","Sunday"],
+  const TABS=[["register","Register"],["week","This week"],["papers","Papers"],["tests","Test log"],["sunday","Sunday"],
     ["diag","Diagnostic"],["plan","The plan"],["manual","Manual"],["data","Backup"]];
   return (
     <div className="reg">
@@ -893,6 +899,7 @@ function App(){
           <main className="body">
             {tab==="register" && <Register syl={db.syllabus} setChapter={setChapter}/>}
             {tab==="week" && <WeekPage syl={db.syllabus} setChapter={setChapter}/>}
+            {tab==="papers" && <Papers/>}
             {tab==="tests" && <TestLog db={db} commit={commit}/>}
             {tab==="sunday" && <Sunday db={db} commit={commit}/>}
             {tab==="diag" && <Diagnostic db={db} commit={commit}/>}
@@ -1102,6 +1109,65 @@ function WeekPage({syl,setChapter}){
       <p className="sub-h">Free resources — every chapter</p>
       <div className="card"><GList items={FREE_RES}/></div>
     </>)}
+  </>);
+}
+
+/* ═══════════════════  PAPERS  ═══════════════════ */
+const CBSE_HOME="https://cbseacademic.nic.in/";
+const NCERT_TB="https://ncert.nic.in/textbook.php";
+const NCERT_EX="https://ncert.nic.in/exemplar-problems.php";
+const NTA_JEE="https://jeemain.nta.nic.in/";
+const CBSE_SUBJECTS=[["Mathematics","maths"],["Physics","physics"],["Chemistry","chemistry"],
+  ["English Core","english"],["Physical Education","pe"]];
+const PAPERS=[
+  { group:"CBSE Class 12 — sample papers & marking schemes",
+    note:"The official 2026–27 sample papers release around Sept–Oct 2026; until then the 2025–26 set is the closest stand-in. The marking scheme matters more than the paper — self-mark every answer against it.",
+    source:{label:"Official — CBSE Academic, Sample Question Paper (Class XII)",url:CBSE_HOME},
+    subjects:CBSE_SUBJECTS.map(([name,slug])=>({name,
+      sqp:`papers/cbse-xii-${slug}-sqp.pdf`, ms:`papers/cbse-xii-${slug}-ms.pdf`, url:CBSE_HOME}))},
+  { group:"JEE Main — previous-year papers & official answer keys",
+    note:"Mix your test-series papers with real NTA papers from the Jan and Apr sessions of 2024–2026 — real papers calibrate difficulty in a way mock papers rarely do. Official answer keys drop after each session.",
+    source:{label:"Official — NTA JEE Main portal",url:NTA_JEE},
+    links:[["JEE Main 2026 — papers with official answer keys (NTA)",NTA_JEE],
+           ["JEE Main 2025 — papers with official answer keys (NTA)",NTA_JEE],
+           ["JEE Main archive 2019–2024 (jeemain.nta.nic.in → Question Paper)",NTA_JEE]]},
+  { group:"NCERT textbooks & Exemplar — free official PDFs",
+    note:"NCERT is the primary source for boards and — especially in inorganic chemistry — for JEE. Read it before any reference book.",
+    source:{label:"Official — NCERT textbooks",url:NCERT_TB},
+    links:[["NCERT Class 12 textbooks — all subjects (choose class XII)",NCERT_TB],
+           ["NCERT Exemplar Problems — Physics, Chemistry, Mathematics",NCERT_EX]]},
+];
+function HostedLink({file,children}){
+  const [ok,setOk]=useState(false);
+  useEffect(()=>{ let live=true; if(file) fetch(file,{method:"HEAD"})
+    .then(r=>{if(live)setOk(r.ok);}).catch(()=>{}); return ()=>{live=false;}; },[file]);
+  if(!ok) return null;
+  return <a className="paper-btn" href={file} target="_blank" rel="noopener noreferrer">{children}</a>;
+}
+function Papers(){
+  return (<>
+    <div className="note">Printable copies live in the <code>papers/</code> folder. When a file is present it shows a
+      <b> Download / print</b> button; until then, use the official-source link (opens in your browser).
+      Drop official PDFs into <code>papers/</code> using the filenames in that folder's README and they appear here
+      automatically.</div>
+    {PAPERS.map(sec=>(
+      <Acc key={sec.group} title={sec.group} open>
+        {sec.note && <p>{sec.note}</p>}
+        <p><a className="paper-src" href={sec.source.url} target="_blank" rel="noopener noreferrer">{sec.source.label} ↗</a></p>
+        {sec.subjects && <div className="tw"><table>
+          <thead><tr><th>Subject</th><th>Sample paper</th><th>Marking scheme</th></tr></thead>
+          <tbody>{sec.subjects.map(s=>(<tr key={s.name}><td>{s.name}</td>
+            <td><HostedLink file={s.sqp}>Download / print</HostedLink>
+              <a className="paper-src" href={s.url} target="_blank" rel="noopener noreferrer">official ↗</a></td>
+            <td><HostedLink file={s.ms}>Download / print</HostedLink>
+              <a className="paper-src" href={s.url} target="_blank" rel="noopener noreferrer">official ↗</a></td></tr>))}
+          </tbody></table></div>}
+        {sec.links && <ul className="glist">{sec.links.map(([label,url])=>(
+          <li key={label}><a href={url} target="_blank" rel="noopener noreferrer">{label} ↗</a></li>))}</ul>}
+      </Acc>))}
+    <div className="note note-red">Commercial question banks (Oswaal, Cengage, Arihant, D. C. Pandey, H. C. Verma,
+      N. Awasthi, M. S. Chouhan) are copyrighted — they can't be hosted here. The per-chapter guides in
+      <b> This week</b> say which to buy and for what.</div>
   </>);
 }
 

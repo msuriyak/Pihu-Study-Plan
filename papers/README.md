@@ -1,0 +1,40 @@
+# Printable exam & test papers
+
+Drop official, freely-redistributable PDFs into this folder and they appear as
+one-click **Download / print** buttons in the app's **Papers** tab
+automatically — the app HEAD-checks each expected path and shows the button
+only when the file is actually present.
+
+**Only official / free papers belong here:** CBSE sample papers & marking
+schemes, CBSE past board papers, NTA JEE Main papers & answer keys, and NCERT
+material. **Do not** add commercial question banks (Oswaal, Cengage, Arihant,
+D. C. Pandey, H. C. Verma, N. Awasthi, M. S. Chouhan) — they are copyrighted
+and must not be redistributed.
+
+## Filenames the app looks for
+
+The **Papers** tab wires up these exact names for the CBSE Class 12 sample
+papers and marking schemes. Save the PDFs with these names and the buttons
+light up:
+
+| Subject | Sample paper | Marking scheme |
+|---|---|---|
+| Mathematics | `cbse-xii-maths-sqp.pdf` | `cbse-xii-maths-ms.pdf` |
+| Physics | `cbse-xii-physics-sqp.pdf` | `cbse-xii-physics-ms.pdf` |
+| Chemistry | `cbse-xii-chemistry-sqp.pdf` | `cbse-xii-chemistry-ms.pdf` |
+| English Core | `cbse-xii-english-sqp.pdf` | `cbse-xii-english-ms.pdf` |
+| Physical Education | `cbse-xii-pe-sqp.pdf` | `cbse-xii-pe-ms.pdf` |
+
+Source: **cbseacademic.nic.in → Sample Question Paper → Class XII**. Prefer the
+**2026–27** set once it releases (around Sept–Oct 2026); the 2025–26 set is the
+closest stand-in until then.
+
+Other papers (JEE Main PYQ, NCERT, past board papers) are linked out to their
+official portals from the Papers tab. You can add them here too and extend the
+`PAPERS` list in `index.html` to point at the local files if you'd rather host
+them.
+
+> Note: these files could not be fetched automatically from the build
+> environment (its network is locked to package registries). Add them from a
+> machine with internet access, or from a session whose network policy allows
+> cbseacademic.nic.in / ncert.nic.in / nta.nic.in.
