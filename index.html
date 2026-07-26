@@ -202,6 +202,15 @@ input::placeholder{color:var(--ink-soft); font-family:'IBM Plex Sans',sans-serif
 .tw{overflow-x:auto; -webkit-overflow-scrolling:touch;}
 .note{border-left:3px solid var(--amber); background:#FBF6EC; padding:9px 12px; margin:11px 0; font-size:12px;}
 .note-red{border-left-color:var(--red); background:#FBF0EE;}
+.glist{margin:8px 0; padding-left:18px; font-size:12.8px; line-height:1.62;}
+.glist li{margin-bottom:6px;}
+.glist code,.note code{font-family:'IBM Plex Mono',monospace; font-size:11px; background:var(--paper-3);
+  padding:1px 4px; border-radius:2px;}
+.wk-nav{display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
+.wk-nav .btn{padding:9px 13px;}
+.cg-title{display:flex; align-items:center; gap:8px; flex:1; min-width:0;}
+.cg-name{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.cg-prog{margin-left:auto; flex:0 0 auto;}
 /* diagnostic */
 .q{border-bottom:1px solid var(--rule-2); padding:10px 0;}
 .q-top{display:flex; gap:9px; align-items:flex-start;}
@@ -377,6 +386,311 @@ const WEEKS = [
   [13,"26 Oct–1 Nov","12. Linear Programming","—","9. Amines · 10. Biomolecules","On the Face of It"],
   [14,"2–8 Nov","Buffer — spillover, consolidation, full-syllabus audit","","","Going Places · Memories of Childhood"],
 ];
+
+/* ── Chapter guides ──
+   SUBJECT_GUIDE = the default books/checks every chapter of a subject inherits.
+   CH_GUIDE      = per-chapter specifics, merged on top. Extend it freely over time. */
+const SUBJECT_GUIDE = {
+  M:{
+    core:[
+      "NCERT Class 12 Maths, Parts 1 & 2 — every solved example and every exercise question",
+      "NCERT Exemplar Problems, Class 12 Maths — for depth, once the plain exercises are clean"],
+    banks:[
+      "Oswaal CBSE Question Bank, Class 12 Mathematics — chapter-wise board PYQ + sample papers",
+      "Arihant 40 Years' JEE Main Chapterwise Mathematics (or the MTG equivalent)"],
+    extras:[
+      "Cengage Mathematics (G. Tewani) — buy the single volume as the chapter comes up, not the whole set",
+      "Gentler alternative if Cengage feels heavy: Arihant 'Skills in Mathematics' (Amit M. Agarwal). Pick one, stay with it"],
+    check:[
+      "Every NCERT exercise and Exemplar problem attempted before looking at any solution",
+      "Timed 15-question JEE sprint at ~2 min/question — and the time is falling week on week"]},
+  P:{
+    core:[
+      "NCERT Class 12 Physics, Parts 1 & 2 — non-negotiable; board questions come almost verbatim from it",
+      "H. C. Verma, Concepts of Physics Vol. 2 — for understanding and the short-answer sections"],
+    banks:[
+      "Oswaal CBSE Question Bank, Class 12 Physics — board depth + PYQ",
+      "Arihant 40 Years' JEE Main Chapterwise Physics"],
+    extras:[
+      "D. C. Pandey, Understanding Physics (Arihant) — Electricity & Magnetism and Optics & Modern Physics volumes. This is where the numerical gap closes",
+      "Do not buy Irodov — it is pitched above JEE Main and buys frustration, not marks"],
+    check:[
+      "Board: the standard derivation(s) written out once longhand, with a labelled diagram, into a derivation bank",
+      "JEE: problems worked in volume (60+ for a heavy chapter), every error tagged concept / silly / speed / didn't know"]},
+  C:{
+    core:[
+      "NCERT Class 12 Chemistry, read line by line — JEE Main lifts inorganic questions straight from NCERT sentences",
+      "The relevant coaching / online lecture for the mechanism or derivation"],
+    banks:[
+      "Oswaal CBSE Question Bank, Class 12 Chemistry — board PYQ + sample papers",
+      "Arihant / MTG 40 Years' JEE Main Chapterwise Chemistry"],
+    extras:[
+      "Physical chapters: N. Awasthi, Problems in Physical Chemistry (Balaji) — Level 1 & 2 only, skip Level 3",
+      "Organic chapters: M. S. Chouhan, Advanced Problems in Organic Chemistry (Balaji) — earlier exercises only",
+      "Inorganic reference (Phase 2): J. D. Lee, Concise Inorganic Chemistry (Sudarshan Guha adaptation) — reference only, not cover to cover"],
+    check:[
+      "Physical: numericals treated like physics practice — Awasthi L1 & L2 clean",
+      "Organic: one reaction map for the chapter — what converts to what — with mechanisms, not memorised exceptions",
+      "Inorganic: every fact hung on a reason, then a handwritten recall sheet from memory + flashcards for the residue"]},
+  E:{
+    core:[
+      "NCERT Flamingo and NCERT Vistas — the prescribed texts themselves",
+      "Read each piece once for pleasure, then again for the points an examiner ticks"],
+    banks:[
+      "Oswaal or Educart CBSE Question Bank, Class 12 English Core",
+      "CBSE official sample papers and marking schemes from cbseacademic.nic.in"],
+    extras:[
+      "Do not neglect the writing section — notice, letter, article, report. It is 40%+ of the paper and quickly learned",
+      "The marking scheme is more valuable than the sample paper — it shows exactly which points score"],
+    check:[
+      "Theme, tone and message in one sentence, plus 6–8 examiner value points in her own hand",
+      "One 120-word answer written under time and self-marked against the official marking scheme — a fluent answer that scores 3/5 is the pattern to catch"]},
+  X:{
+    core:[
+      "Saraswati, Health and Physical Education, Class 12 — the standard text",
+      "Confirm which units your syllabus actually covers before scheduling"],
+    banks:["Oswaal CBSE Question Bank, Class 12 Physical Education"],
+    extras:["Largely recall-based and best learned close to the exam — light touch now, a concentrated block in Phase 4"],
+    check:["One handwritten A4 recall sheet per unit","Diagram/label answers (asanas, test procedures) practised, not just read"]},
+};
+const FREE_RES = [
+  "cbseacademic.nic.in — official syllabus, sample papers and marking schemes",
+  "NTA Abhyas app — official practice on the real exam interface (the interface itself matters)",
+  "jeemain.nta.nic.in — past papers and answer keys released after each session"];
+
+const CH_GUIDE = {
+  /* ── Mathematics ── */
+  M1:{focus:"Types of relations — reflexive, symmetric, transitive, equivalence — and functions: one-one, onto, bijective, composition and invertibility. Light on board marks but foundational, and JEE asks quick one-liners on it.",
+    resources:["NCERT Ch 1 — the equivalence-relation and bijection proofs are the exam-worthy parts"],
+    gauge:["Proves a relation is an equivalence relation and a function a bijection, cleanly","Composes functions and finds inverses without hesitation"],
+    tests:["Board 3-mark proof (equivalence relation), written longhand"]},
+  M2:{focus:"Inverse Trigonometric Functions — principal-value branches and the property-based identities used to simplify and solve. Already covered once; treat as a fast retention check and a JEE speed drill.",
+    resources:["NCERT Ch 2","Cengage Trigonometry — Inverse Trigonometric Functions"],
+    gauge:["Principal-value ranges of all six inverse functions memorised","Simplifies nested inverse-trig expressions and solves ITF equations fast"],
+    tests:["Re-do the seen chapter cold to test retention"]},
+  M3:{focus:"Matrices — operations, transpose, symmetric/skew-symmetric split, and inverse by elementary operations. Seen already; pairs with Determinants for a big JEE block.",
+    resources:["NCERT Ch 3"],
+    gauge:["Splits any square matrix into symmetric + skew-symmetric parts","Finds an inverse by elementary row operations without error"],
+    tests:["Mixed Matrices + Determinants set once M4 is done"]},
+  M4:{focus:"Determinants — properties, minors and cofactors, adjoint and inverse, area of a triangle, and solving/ testing consistency of linear systems (matrix method). Seen already; high JEE frequency.",
+    resources:["NCERT Ch 4","Cengage Algebra — Determinants"],
+    gauge:["Uses row/column properties to evaluate determinants without brute expansion","Solves and tests consistency of a 3-variable system by the matrix method"],
+    tests:["Board 5-marker: solve a system by matrices, longhand"]},
+  M5:{focus:"The gateway to all of calculus: continuity, differentiability, chain rule, implicit / logarithmic / parametric differentiation, second derivatives, and Rolle's & Mean Value theorems. Everything downstream rests on it — do not rush.",
+    resources:["NCERT Ch 5 — implicit and parametric exercises are where marks are won","Cengage Calculus — Continuity, Differentiability and Differentiation"],
+    gauge:["Differentiates any composite / implicit / parametric / logarithmic function without pausing","States Rolle's and MVT with one application each","Handles continuity/differentiability of piecewise functions"],
+    tests:["Two 3-mark and one 5-mark board answer, timed, longhand","60+ mixed JEE problems (heavy chapter)"]},
+  M6:{focus:"Application of Derivatives — rate of change, increasing/decreasing functions, tangents & normals, and the big one: maxima and minima, including optimisation word problems. High in both board and JEE.",
+    resources:["NCERT Ch 6 — the maxima/minima word problems especially","Cengage Calculus — Monotonicity and Maxima & Minima"],
+    gauge:["Sets up and solves an optimisation word problem from scratch","Uses first/second-derivative tests confidently; finds tangents/normals"],
+    tests:["Board 5-marker: a maxima-minima word problem, longhand","40+ JEE optimisation & monotonicity problems"]},
+  M7:{focus:"Integrals — the highest-effort chapter in the syllabus. Indefinite integration by substitution, partial fractions and by parts; standard forms; definite integrals and their properties; the Fundamental Theorem. Everything after depends on fluency here.",
+    resources:["NCERT Ch 7 in full — build a personal table of standard integrals","Cengage Calculus — Indefinite and Definite Integration"],
+    gauge:["Recognises which technique an integral needs within seconds","Uses definite-integral properties (king, even/odd, periodic) fluently","A personal standard-forms sheet, written from memory"],
+    tests:["Two board 5-markers on definite integrals, timed","80+ JEE integrals — volume is the only thing that builds recognition"]},
+  M8:{focus:"Application of Integrals — area under a curve and area between curves by definite integration. Short chapter, entirely dependent on Integrals being solid.",
+    resources:["NCERT Ch 8","Cengage — Area under Curves"],
+    gauge:["Sets up the correct limits and integrand from a rough sketch","Handles area-between-two-curves and symmetry"],
+    tests:["Board 3–5 mark area problem with a labelled sketch"]},
+  M9:{focus:"Differential Equations — order and degree, formation, and solving variable-separable, homogeneous and linear first-order equations (integrating factor). Formula-driven once the type is spotted.",
+    resources:["NCERT Ch 9","Cengage — Differential Equations"],
+    gauge:["Classifies a DE (separable / homogeneous / linear) instantly","Applies the integrating factor for linear DEs without error"],
+    tests:["Board 5-marker: solve a linear or homogeneous DE, longhand"]},
+  M10:{focus:"Vector Algebra — vectors, direction cosines/ratios, dot and cross products, projections, and the scalar triple product. Overlaps heavily with 3D Geometry — learn the two together.",
+    resources:["NCERT Ch 10","Cengage — Vectors"],
+    gauge:["Uses dot/cross/triple products for angle, area and coplanarity","Moves comfortably between component and geometric forms"],
+    tests:["Board short answers on projections and areas"]},
+  M11:{focus:"Three Dimensional Geometry — direction cosines, equations of lines and planes, angles between them, and shortest distance between skew lines. Vector methods make it far cleaner than Cartesian.",
+    resources:["NCERT Ch 11","Cengage — Three Dimensional Geometry"],
+    gauge:["Writes line/plane equations in both vector and Cartesian form","Finds shortest distance between skew lines and foot of perpendicular"],
+    tests:["Board 5-marker: line-and-plane distance/angle, longhand"]},
+  M12:{focus:"Linear Programming — formulating a linear program and solving it graphically via the feasible region and corner points. 5 board marks, absent from JEE — learn it in two sittings, late.",
+    resources:["NCERT Ch 12"],
+    gauge:["Translates a word problem into constraints + objective function","Identifies the feasible region and optimal corner point cleanly"],
+    tests:["Board 5-marker: a full LPP word problem with a graph — no JEE sprint needed"]},
+  M13:{focus:"Probability — conditional probability, multiplication theorem, independence, total probability and Bayes' theorem; random variables, distributions and mean. 8 board marks; steady JEE presence.",
+    resources:["NCERT Ch 13","Cengage — Probability"],
+    gauge:["Applies Bayes' theorem correctly to a two-stage problem","Builds a probability distribution and computes its mean"],
+    tests:["Board 5-marker: a Bayes / distribution problem, longhand"]},
+
+  /* ── Physics ── */
+  P1:{focus:"Electric Charges and Fields — Coulomb's law, the electric field, electric flux and Gauss's law with its standard applications (wire, sheet, shell). Seen already; the foundation for the whole electrostatics block.",
+    resources:["NCERT Ch 1","H. C. Verma Vol 2 — Gauss's Law","D. C. Pandey — Electrostatics"],
+    gauge:["Derives field for a line/sheet/shell using Gauss's law, Gaussian surface drawn","Fluent with superposition and flux problems"],
+    tests:["Board derivation (charged wire/sheet) into the derivation bank","40+ JEE field/flux problems"]},
+  P2:{focus:"Electrostatic Potential & Capacitance — heavy and a board favourite. Potential due to charges and a dipole, equipotentials, capacitance, series/parallel networks, energy stored, and dielectrics.",
+    resources:["NCERT Ch 2 in full","D. C. Pandey — Capacitors","H. C. Verma Vol 2 — Capacitors"],
+    gauge:["Derivations written: dipole potential, energy stored in a capacitor, effect of a dielectric","Solves series/parallel networks and the energy-loss-on-charge-sharing result"],
+    tests:["60+ numericals across PYQ + D. C. Pandey","Board 5-marker on a capacitor network, longhand"]},
+  P3:{focus:"Current Electricity — Ohm's law and resistivity, drift velocity, resistor networks, Kirchhoff's rules, Wheatstone bridge and potentiometer, cells and internal resistance. Circuit-solving fluency is the whole game.",
+    resources:["NCERT Ch 3","D. C. Pandey — Current Electricity","H. C. Verma Vol 2 — Electric Current in Conductors"],
+    gauge:["Solves any resistor network and applies Kirchhoff to multi-loop circuits","Derives Wheatstone/potentiometer balance conditions"],
+    tests:["Board derivation (Wheatstone / potentiometer) with circuit diagram","50+ JEE circuit problems"]},
+  P4:{focus:"Moving Charges and Magnetism — heavy. Biot–Savart and Ampère's law, force on a moving charge and current-carrying conductor, cyclotron, and the moving-coil galvanometer. Vector care and standard field derivations.",
+    resources:["NCERT Ch 4","D. C. Pandey — Magnetics","H. C. Verma Vol 2 — Magnetic Field due to a Current"],
+    gauge:["Derives B for a loop/solenoid/toroid via Ampère's law, with the diagram","Handles combined E and B force problems and galvanometer conversion"],
+    tests:["Board derivations (solenoid, galvanometer) into the bank","60+ JEE problems"]},
+  P5:{focus:"Magnetism and Matter — light. Bar magnet as a dipole, field lines, and the classification into dia-, para- and ferromagnetism. Mostly conceptual and recall — a cheap chapter.",
+    resources:["NCERT Ch 5"],
+    gauge:["Explains dia/para/ferromagnetism with the reason for each","States the bar-magnet-as-dipole analogy and its field"],
+    tests:["A recall sheet of the magnetic-material properties"]},
+  P6:{focus:"Electromagnetic Induction — Faraday's and Lenz's laws, motional EMF, eddy currents, and self/mutual inductance. The bridge between electricity and magnetism; sets up AC.",
+    resources:["NCERT Ch 6","D. C. Pandey — Electromagnetic Induction","H. C. Verma Vol 2 — Electromagnetic Induction"],
+    gauge:["Applies Faraday/Lenz with the correct sign to changing-flux problems","Derives motional EMF and self-inductance of a solenoid"],
+    tests:["Board derivation (motional EMF / mutual inductance) with diagram","40+ JEE problems"]},
+  P7:{focus:"Alternating Current — AC through R, L, C; reactance and impedance; the series LCR circuit, resonance, power factor and wattless current; and the transformer. Phasor thinking makes it easy.",
+    resources:["NCERT Ch 7","D. C. Pandey — Alternating Current","H. C. Verma Vol 2 — Alternating Current"],
+    gauge:["Draws phasor diagrams and finds impedance/phase for LCR","Explains resonance, power factor and transformer working"],
+    tests:["Board derivation (LCR impedance / resonance) with phasor diagram","40+ JEE problems"]},
+  P8:{focus:"Electromagnetic Waves — a light, high-certainty chapter. Displacement current, the source and nature of EM waves, and the electromagnetic spectrum. Cheap board and JEE marks; learn the spectrum cold.",
+    resources:["NCERT Ch 8","H. C. Verma Vol 2 — Electromagnetic Waves"],
+    gauge:["EM spectrum in order, with a use and rough wavelength for each band","Displacement current and the modified Ampère's law stated"],
+    tests:["A recall sheet of the spectrum + key relations (c = 1/√(μ₀ε₀), E/B = c)"]},
+  P9:{focus:"Ray Optics and Optical Instruments — heavy. Reflection and refraction, total internal reflection, mirror/lens formulae, prism and dispersion, and optical instruments. Sign conventions are everything.",
+    resources:["NCERT Ch 9","D. C. Pandey — Ray Optics","H. C. Verma Vol 1 — Geometrical Optics"],
+    gauge:["Applies the sign convention flawlessly to multi-surface/lens problems","Derives lens-maker and prism (minimum deviation) results; instrument magnifications"],
+    tests:["Board derivations (lens-maker, prism, telescope) with ray diagrams","60+ JEE ray-optics problems"]},
+  P10:{focus:"Wave Optics — Huygens' principle, interference (Young's double slit), single-slit diffraction, and polarisation. Complements ray optics; formula + condition recall.",
+    resources:["NCERT Ch 10","D. C. Pandey — Wave Optics","H. C. Verma Vol 1 — Light Waves"],
+    gauge:["Derives fringe width and states maxima/minima conditions for interference and diffraction","Explains polarisation and Brewster's law"],
+    tests:["Board derivation (YDSE fringe width) with diagram","40+ JEE problems"]},
+  P11:{focus:"Dual Nature of Radiation and Matter — the photoelectric effect and Einstein's equation, and the de Broglie wavelength. Modern physics — cheap, high-certainty JEE marks.",
+    resources:["NCERT Ch 11","D. C. Pandey (Optics & Modern Physics) — Modern Physics"],
+    gauge:["Uses Einstein's equation for stopping-potential / threshold problems","Computes de Broglie wavelength for particles under given energy/voltage"],
+    tests:["Recall sheet of the photoelectric graphs and key relations"]},
+  P12:{focus:"Atoms — Rutherford's model, the Bohr model of hydrogen, energy levels and spectral series. Formula-recall chapter, reliable JEE marks.",
+    resources:["NCERT Ch 12","D. C. Pandey — Modern Physics (Atoms)"],
+    gauge:["Derives Bohr radius / energy / spectral wavelengths from the postulates","Knows the Lyman/Balmer/Paschen series and their transitions"],
+    tests:["Recall sheet of Bohr formulae and the hydrogen spectrum"]},
+  P13:{focus:"Nuclei — nuclear size and density, mass defect and binding energy, radioactivity and decay laws, and fission/fusion. Pairs with Atoms as the modern-physics block.",
+    resources:["NCERT Ch 13","D. C. Pandey — Modern Physics (Nuclei)"],
+    gauge:["Uses the decay law and half-life; computes binding energy per nucleon","Explains the binding-energy curve and why fission/fusion release energy"],
+    tests:["Recall sheet: decay law, half-life, binding-energy curve"]},
+  P14:{focus:"Semiconductor Electronics — intrinsic/extrinsic semiconductors, the p–n junction diode, rectifiers, and special diodes (Zener, LED, photodiode, solar cell). Cheap, high-certainty JEE marks and a small board unit.",
+    resources:["NCERT Ch 14 — read closely; JEE lifts from it","D. C. Pandey — Semiconductors"],
+    gauge:["Explains p–n junction, biasing and half/full-wave rectifier action with diagrams","Knows each special diode and its use"],
+    tests:["Recall sheet of diode types + rectifier circuits"]},
+
+  /* ── Chemistry ── */
+  C1:{focus:"Solutions — a physical-chemistry chapter. Concentration terms, Raoult's law, ideal/non-ideal solutions, the four colligative properties, and the van't Hoff factor. Treat it like physics: formula-driven numerical practice.",
+    resources:["NCERT Ch 1","N. Awasthi — Solutions, Levels 1 & 2"],
+    gauge:["All four colligative properties with their formulae and when each applies","van't Hoff factor for association/dissociation handled correctly"],
+    tests:["A timed numerical set on colligative properties"]},
+  C2:{focus:"Electrochemistry — heavy. Electrode potentials, the Nernst equation and EMF, conductance and Kohlrausch's law, electrolysis and Faraday's laws, batteries, fuel cells and corrosion. 9 board marks — the biggest chemistry unit.",
+    resources:["NCERT Ch 2","N. Awasthi — Electrochemistry, Levels 1 & 2"],
+    gauge:["Applies the Nernst equation to cells and computes EMF / Kc","Uses Kohlrausch's law and Faraday's laws in numericals"],
+    tests:["Board 5-marker (Nernst / electrolysis), longhand","50+ JEE numericals"]},
+  C3:{focus:"Chemical Kinetics — rate of reaction, order vs molecularity, integrated rate laws (zero and first order), half-life, the Arrhenius equation, and collision theory. Formula + graph recognition.",
+    resources:["NCERT Ch 3","N. Awasthi — Chemical Kinetics, Levels 1 & 2"],
+    gauge:["Derives/uses first- and zero-order integrated laws and half-lives","Uses the two-temperature Arrhenius form and reads rate-law graphs"],
+    tests:["Board 3–5 marker on order / rate determination"]},
+  C4:{focus:"The d- and f-Block Elements — trends across the transition series (variable oxidation states, colour, magnetic moment, catalytic behaviour) and the lanthanoids/actinoids with lanthanoid contraction. Inorganic rule: every trend explained by its reason, never a bare list.",
+    resources:["NCERT Ch 4, line by line","J. D. Lee (Guha) — transition / inner-transition elements, as reference"],
+    gauge:["Explains each trend (oxidation states, colour, magnetic moment, Kⁿ) with its cause","Recall sheet written from memory; flashcards for the residue"],
+    tests:["Board 3-marker on transition-metal trends"]},
+  C5:{focus:"Coordination Compounds — the model inorganic chapter and among the highest marks-per-hour on the JEE paper. The plan's rule: never a bare list. Hang every fact on a reason — why a geometry, why a colour, why a magnetic moment.",
+    resources:["NCERT Ch 5, line by line","J. D. Lee (Guha) — coordination chemistry, as reference"],
+    gauge:["Nomenclature, isomerism, VBT and CFT (with the spectrochemical series) each explained with its reason","Predicts geometry, magnetic moment and colour; recall sheet from memory + flashcards (20 min/day)"],
+    tests:["Board 3-marker on isomerism + 5-marker on CFT / colour"]},
+  C6:{focus:"Haloalkanes and Haloarenes — nomenclature and preparation, nucleophilic substitution (SN1 vs SN2, with stereochemistry), elimination, and haloarene reactivity. Seen already; the launch-pad for the Class 12 organic chain.",
+    resources:["NCERT Ch 6","M. S. Chouhan — Haloalkanes/Haloarenes, earlier exercises"],
+    gauge:["Predicts SN1/SN2 pathway and stereochemical outcome with reasons","Reaction map for the chapter drawn from memory"],
+    tests:["Board distinguishing-tests / conversions question"]},
+  C7:{focus:"Alcohols, Phenols and Ethers — preparation and reactions; the acidity of phenol and its causes; and distinguishing tests. Builds directly on GOC and Haloalkanes.",
+    resources:["NCERT Ch 7","M. S. Chouhan — Alcohols/Phenols/Ethers, earlier exercises"],
+    gauge:["Explains phenol's acidity and substituent effects from electronic effects","One reaction map; named tests (Lucas, etc.) at the ready"],
+    tests:["Board conversions + distinguishing-tests question"]},
+  C8:{focus:"Aldehydes, Ketones and Carboxylic Acids — heavy. Preparation, nucleophilic addition to the carbonyl, aldol and Cannizzaro reactions, α-hydrogen chemistry, and the acidity of carboxylic acids. The densest organic chapter.",
+    resources:["NCERT Ch 8","M. S. Chouhan — Carbonyl compounds, earlier exercises"],
+    gauge:["Predicts products of nucleophilic addition, aldol, Cannizzaro and named reactions","Explains the acidity order of acids; one full reaction map from memory"],
+    tests:["Board 5-marker: conversions / distinguishing tests, longhand","50+ JEE organic problems"]},
+  C9:{focus:"Amines — preparation, the basicity of amines (gas phase vs solution), key reactions, and diazonium salts as a synthetic hub. Distinguishing 1°/2°/3° amines is a favourite.",
+    resources:["NCERT Ch 9","M. S. Chouhan — Nitrogen compounds, earlier exercises"],
+    gauge:["Explains the basicity order with reasons (inductive, solvation, steric)","Diazonium-salt reaction map and amine distinguishing tests"],
+    tests:["Board distinguishing-tests / conversions question"]},
+  C10:{focus:"Biomolecules — carbohydrates, proteins and enzymes, vitamins, and nucleic acids: structures, classification and functions. Board-heavy (7 marks) but JEE-light; largely recall, so learn it close to the boards.",
+    resources:["NCERT Ch 10 — the primary source"],
+    gauge:["Classifies carbohydrates/proteins and states their structures and functions","Recall sheet of the key structures and definitions"],
+    tests:["Board short answers on structures/functions — a value-point exercise"]},
+
+  /* ── English (Flamingo prose F, poems Pm; Vistas V) ── */
+  EF1:{focus:"'The Last Lesson' (Alphonse Daudet) — the final French lesson in Prussian-occupied Alsace. Themes: language as identity, the pain of subjugation, and regret for chances missed. Characters: Franz, M. Hamel.",
+    resources:["NCERT Flamingo — The Last Lesson"],
+    gauge:["Characterises Franz and M. Hamel and explains the story's central irony"],
+    tests:["Long answer: language as an instrument of freedom / identity — self-marked"]},
+  EF2:{focus:"'Lost Spring' (Anees Jung) — Saheb, a ragpicker in Seemapuri, and Mukesh of the bangle-makers of Firozabad. Themes: child labour, the grip of poverty and tradition, and stifled dreams.",
+    resources:["NCERT Flamingo — Lost Spring"],
+    gauge:["Contrasts Saheb and Mukesh and explains the 'two worlds' of the bangle industry"],
+    tests:["Long answer on child labour / the vicious cycle of poverty — self-marked"]},
+  EF3:{focus:"'Deep Water' (William Douglas) — conquering a childhood terror of water. Themes: fear and its irrational grip, the will to overcome, and the triumph of determination.",
+    resources:["NCERT Flamingo — Deep Water"],
+    gauge:["Traces how the fear formed and the exact method by which he defeated it"],
+    tests:["Long answer: what the experience teaches about fear — self-marked"]},
+  EF4:{focus:"'The Rattrap' (Selma Lagerlöf) — a vagabond peddler and the metaphor of the world as a rattrap. Themes: essential human goodness awakened by kindness, and redemption. Characters: the peddler, Edla.",
+    resources:["NCERT Flamingo — The Rattrap"],
+    gauge:["Explains the rattrap metaphor and how Edla's kindness transforms the peddler"],
+    tests:["Long answer on human goodness / the rattrap metaphor — self-marked"]},
+  EF5:{focus:"'Indigo' (Louis Fischer) — Gandhi's 1917 Champaran campaign against indigo sharecropping. Themes: civil disobedience, self-reliance and leadership. Characters: Gandhi, Rajkumar Shukla.",
+    resources:["NCERT Flamingo — Indigo"],
+    gauge:["Narrates the Champaran episode and what it achieved for the peasants"],
+    tests:["Long answer on Gandhi's methods / self-reliance — self-marked"]},
+  EF6:{focus:"'Poets and Pancakes' (Asokamitran) — an affectionate satire of Gemini Studios, Madras. Themes: humour and irony, the make-up department, and the small people behind big productions.",
+    resources:["NCERT Flamingo — Poets and Pancakes"],
+    gauge:["Explains the title and the gentle satire of the studio's hierarchy"],
+    tests:["Long answer on the humour / irony in the account — self-marked"]},
+  EF7:{focus:"'The Interview' (Christopher Silvester) — the interview as a form, its uses and intrusions, with Umberto Eco's contrasting view. Themes: celebrity, the ethics of the interview, self-presentation.",
+    resources:["NCERT Flamingo — The Interview"],
+    gauge:["States both the positive and negative views of interviews, and Eco's stance"],
+    tests:["Long answer on the interview as a literary / journalistic form — self-marked"]},
+  EF8:{focus:"'Going Places' (A. R. Barton) — Sophie, an adolescent lost in fantasy and hero-worship of footballer Danny Casey. Themes: escapism, class aspiration, and the gap between dream and reality.",
+    resources:["NCERT Flamingo — Going Places"],
+    gauge:["Contrasts Sophie's fantasies with her reality; characterises Sophie and Jansie"],
+    tests:["Long answer on adolescent fantasy / escapism — self-marked"]},
+  EPm1:{focus:"'My Mother at Sixty-Six' (Kamala Das) — ageing and the fear of losing her mother, on a drive to the airport. Themes: mortality, filial love, the ache of parting. Images: pale face, late winter's moon.",
+    resources:["NCERT Flamingo (poem) — My Mother at Sixty-Six"],
+    gauge:["Explains the central simile and the poet's controlled smile at the end"],
+    tests:["Long answer on the fear of loss / ageing — self-marked"]},
+  EPm2:{focus:"'Keeping Quiet' (Pablo Neruda) — a call for a reflective silence, 'let's stop for one second'. Themes: introspection, the value of stillness, human unity and non-violence toward others and nature.",
+    resources:["NCERT Flamingo (poem) — Keeping Quiet"],
+    gauge:["Explains what the poet means by keeping quiet (introspection, not death)"],
+    tests:["Long answer on the message of silence / self-examination — self-marked"]},
+  EPm3:{focus:"'A Thing of Beauty' (John Keats) — 'A thing of beauty is a joy for ever'. Themes: beauty as an enduring source of joy and a link to the divine, drawn from nature and legend.",
+    resources:["NCERT Flamingo (poem) — A Thing of Beauty"],
+    gauge:["Lists the 'things of beauty' Keats names and explains their effect on us"],
+    tests:["Long answer on how beauty is a joy for ever — self-marked"]},
+  EPm4:{focus:"'A Roadside Stand' (Robert Frost) — a rural roadside stand ignored by passing city traffic. Themes: rural poverty, the urban-rural divide, and false promises of aid.",
+    resources:["NCERT Flamingo (poem) — A Roadside Stand"],
+    gauge:["Explains the plight of the rural poor and the poet's sympathy / anger"],
+    tests:["Long answer on the rural-urban divide / neglect of the poor — self-marked"]},
+  EPm5:{focus:"'Aunt Jennifer's Tigers' (Adrienne Rich) — Aunt Jennifer's fearless embroidered tigers set against her fear-bound married life. Themes: gender oppression, the burden of marriage, and art as freedom.",
+    resources:["NCERT Flamingo (poem) — Aunt Jennifer's Tigers"],
+    gauge:["Explains the tigers as a symbol and the 'ringed with ordeals' image"],
+    tests:["Long answer on women's oppression / art vs life — self-marked"]},
+  EV1:{focus:"'The Third Level' (Jack Finney) — a man finds a third level at Grand Central Station leading to 1894. Themes: escapism from modern anxiety, the blur of reality and fantasy, psychological refuge.",
+    resources:["NCERT Vistas — The Third Level"],
+    gauge:["Explains the third level as a symbol of escape; the intersection of past and present"],
+    tests:["Long answer on escapism / reality vs illusion — self-marked"]},
+  EV2:{focus:"'The Tiger King' (Kalki) — the Maharaja who vows to kill a hundred tigers and is undone by a wooden toy tiger. Themes: the arrogance of power, dramatic irony, and the futility of defying destiny.",
+    resources:["NCERT Vistas — The Tiger King"],
+    gauge:["Explains the dramatic irony and the satire on autocratic power"],
+    tests:["Long answer on the satire of power / irony of the ending — self-marked"]},
+  EV3:{focus:"'Journey to the End of the Earth' (Tishani Doshi) — a voyage to Antarctica with the Students on Ice programme. Themes: climate change, the geological past (Gondwana), and human impact on the planet.",
+    resources:["NCERT Vistas — Journey to the End of the Earth"],
+    gauge:["Explains why Antarctica matters to understanding Earth's past and future"],
+    tests:["Long answer on the environmental message / Students on Ice — self-marked"]},
+  EV4:{focus:"'The Enemy' (Pearl S. Buck) — Dr Sadao, a Japanese surgeon, saves a wounded American POW in wartime. Themes: professional duty and humanity against patriotism and prejudice.",
+    resources:["NCERT Vistas — The Enemy"],
+    gauge:["Explains Sadao's dilemma and how humanity wins over racial / national prejudice"],
+    tests:["Long answer on humanity vs prejudice / the doctor's dilemma — self-marked"]},
+  EV5:{focus:"'On the Face of It' (Susan Hill) — Derry, a boy scarred by acid, and old Mr Lamb. Themes: physical disfigurement and the deeper wounds of isolation, and the healing power of acceptance.",
+    resources:["NCERT Vistas — On the Face of It"],
+    gauge:["Explains how Mr Lamb changes Derry's view of himself and the world"],
+    tests:["Long answer on disability / isolation and acceptance — self-marked"]},
+  EV6:{focus:"'Memories of Childhood' — two autobiographical accounts of marginalisation: Zitkala-Sa (Native American) and Bama (Dalit). Themes: racism and casteism through a child's eyes, humiliation, and the seeds of resistance.",
+    resources:["NCERT Vistas — Memories of Childhood"],
+    gauge:["Contrasts the two narrators' experiences of oppression and their responses"],
+    tests:["Long answer on marginalisation / resistance in the two accounts — self-marked"]},
+};
 
 /* ── Diagnostic ── */
 const DIAG_A = [
@@ -564,7 +878,7 @@ function App(){
   const reset=()=>{ if(!confirm("Clear every tick, test and week from this device? Export a backup first if you want to keep it.")) return;
     const seed={}; SEEDED.forEach(id=>{seed[id]={l1:true};}); commit({syllabus:seed,tests:[],audits:[],diag:{}}); };
 
-  const TABS=[["register","Register"],["tests","Test log"],["sunday","Sunday"],
+  const TABS=[["register","Register"],["week","This week"],["tests","Test log"],["sunday","Sunday"],
     ["diag","Diagnostic"],["plan","The plan"],["manual","Manual"],["data","Backup"]];
   return (
     <div className="reg">
@@ -578,6 +892,7 @@ function App(){
         {!db ? <Empty>Opening the register…</Empty> : (
           <main className="body">
             {tab==="register" && <Register syl={db.syllabus} setChapter={setChapter}/>}
+            {tab==="week" && <WeekPage syl={db.syllabus} setChapter={setChapter}/>}
             {tab==="tests" && <TestLog db={db} commit={commit}/>}
             {tab==="sunday" && <Sunday db={db} commit={commit}/>}
             {tab==="diag" && <Diagnostic db={db} commit={commit}/>}
@@ -688,6 +1003,105 @@ function Register({syl,setChapter}){
       <b> Recall</b> handwritten A4 sheet · <b>JEE</b> chapter PYQ + timed sprint ·
       <b> +7 / +21 / +60</b> spaced revisits, dated automatically once the layers are ticked.
       Dashes mean that layer does not apply — Class 11 has no board layer, English and PE have no JEE layer.</p>
+  </>);
+}
+
+/* ═══════════════════  THIS WEEK  ═══════════════════ */
+const baseSubj = s => s.replace(/^K/,"");
+const MAX_WK = CH.reduce((m,c)=>Math.max(m,c.wk),0);
+const GList = ({items}) => items&&items.length ? (
+  <ul className="glist">{items.map((t,i)=><li key={i}>{t}</li>)}</ul>) : null;
+
+function ChapterGuide({ch,row,setChapter}){
+  const sg=SUBJECT_GUIDE[baseSubj(ch.s)]||{}, g=CH_GUIDE[ch.id]||{};
+  const ls=applicableLayers(ch), doneN=ls.filter(l=>row&&row[l.k]).length, bespoke=!!CH_GUIDE[ch.id];
+  const yr11=SUBJECTS[ch.s].yr===11;
+  const title=(<span className="cg-title">
+    <span className={`code s-${ch.s}`}>{ch.code}</span>
+    <span className="cg-name">{ch.title}</span>
+    {ch.tier==="h"&&<span className="heavy">heavy</span>}
+    {ch.crit&&<span className="crit">key</span>}
+    <span className="bar-n cg-prog">{doneN}<i>/{ls.length}</i></span></span>);
+  return (<Acc title={title}>
+    {g.focus && <p><b>What matters here.</b> {g.focus}</p>}
+    {yr11 && <div className="note">Class 11 JEE-only track — use the <b>Class 11</b> NCERT and Class 11 volumes
+      (e.g. H. C. Verma Vol 1, D. C. Pandey Mechanics), and skip the board layer.</div>}
+    {!bespoke && <div className="note">Chapter-specific notes aren't written yet — the subject guidance below applies.
+      Add specifics under <code>CH_GUIDE["{ch.id}"]</code>.</div>}
+
+    <h4>Progress gauge — {doneN} of {ls.length} layers done</h4>
+    <div className="tri-set" style={{marginLeft:0,flexWrap:"wrap"}}>
+      {ls.map(l=>(<button key={l.k} className={`tri ${row&&row[l.k]?"tri-c on":""}`} title={l.hint}
+        onClick={()=>setChapter(ch.id,{[l.k]:!(row&&row[l.k])})}>{l.label}</button>))}</div>
+    <GList items={[...(sg.check||[]),...(g.gauge||[])]}/>
+
+    <h4>Core reading</h4>
+    <GList items={[...(g.resources||[]),...(sg.core||[])]}/>
+
+    <h4>Question banks &amp; PYQ</h4>
+    <GList items={[...(g.banks||[]),...(sg.banks||[])]}/>
+
+    <h4>Additional materials to explore</h4>
+    <GList items={sg.extras}/>
+
+    <h4>Tests for the student</h4>
+    <GList items={[...(g.tests||[]),
+      ...(ch.jee?["T1 — 15-question JEE sprint on this chapter at 2 min/question (the L4 layer), errors tagged"]:[]),
+      ...(ch.board?["Board PYQ for this chapter + written answers, self-marked against the official marking scheme (L2)"]:[]),
+      "On completion it joins the +7 / +21 / +60 spaced-revision queue automatically"]}/>
+  </Acc>);
+}
+
+function WeekPage({syl,setChapter}){
+  const cur=Math.min(Math.max(currentWeek(),1),14);
+  const [wk,setWk]=useState(cur);
+  const [q,setQ]=useState("");
+  const query=q.trim().toLowerCase(), searching=query.length>0;
+  const hits=searching?CH.filter(c=>`${c.s}${c.code} ${c.title} ${SUBJECTS[c.s].name}`.toLowerCase().includes(query)):[];
+  const wk12=CH.filter(c=>SUBJECTS[c.s].yr===12&&c.wk===wk);
+  const wk11=CH.filter(c=>SUBJECTS[c.s].yr===11&&c.wk===wk);
+  const row=WEEKS.find(w=>w[0]===wk), isNow=wk===cur, ph=currentPhase();
+  const weekOpts=Array.from({length:MAX_WK},(_,i)=>i+1);
+  const dates=n=>{ const r=WEEKS.find(w=>w[0]===n); return r?r[1]:"Class 11 track / buffer"; };
+  return (<>
+    <div className="card">
+      <div className="row-end" style={{marginTop:0}}>
+        <div><h2 className="card-h">What to read — week {wk}
+          {isNow&&<span className="when-pill wp-now" style={{marginLeft:8}}>this week</span>}</h2>
+          <p className="card-sub" style={{margin:"4px 0 0"}}>{dates(wk)} · Phase {ph.n}, {ph.name}</p></div>
+        <div className="wk-nav">
+          <button className="btn btn-ghost" onClick={()=>setWk(Math.max(1,wk-1))} aria-label="Previous week">‹ Prev</button>
+          <select value={wk} onChange={e=>setWk(+e.target.value)} aria-label="Jump to week"
+            style={{width:"auto",minWidth:150}}>
+            {weekOpts.map(n=><option key={n} value={n}>Week {n} — {dates(n)}</option>)}</select>
+          <button className="btn btn-ghost" onClick={()=>setWk(Math.min(MAX_WK,wk+1))} aria-label="Next week">Next ›</button>
+          {!isNow&&<button className="btn btn-ghost" onClick={()=>setWk(cur)}>Jump to now</button>}
+        </div>
+      </div>
+      <div className="field" style={{marginTop:12}}>
+        <input placeholder="Or search any chapter — name or code (integrals, C5, optics)…"
+          value={q} onChange={e=>setQ(e.target.value)}/></div>
+    </div>
+
+    {searching ? (hits.length ? (<><p className="sub-h">Matches — {hits.length}</p>
+        {hits.map(ch=><ChapterGuide key={ch.id} ch={ch} row={syl[ch.id]} setChapter={setChapter}/>)}</>)
+      : <Empty>No chapter matches “{q}”. Try a name or a code like <b>M7</b>, <b>P9</b> or <b>C5</b>.</Empty>
+    ) : (<>
+      <div className="note">This is the selected week's <b>new</b> intake. Daily practice, the spaced-revision queue
+        and the Class 11 track run underneath every week — tick those in the <b>Register</b>. Expand any chapter for its
+        reading, question banks, a progress gauge you can tick, and the tests to sit. More detail is being added over time.</div>
+
+      {wk12.length>0 ? (<><p className="sub-h">New this week — Class 12 (boards + JEE)</p>
+        {wk12.map(ch=><ChapterGuide key={ch.id} ch={ch} row={syl[ch.id]} setChapter={setChapter}/>)}</>)
+        : <Empty>No new Class 12 chapter is scheduled for week {wk} — a buffer / consolidation week.
+            Keep the revision queue and Class 11 track moving.</Empty>}
+
+      {wk11.length>0 && (<><p className="sub-h">Class 11 — JEE-only track this week</p>
+        {wk11.map(ch=><ChapterGuide key={ch.id} ch={ch} row={syl[ch.id]} setChapter={setChapter}/>)}</>)}
+
+      <p className="sub-h">Free resources — every chapter</p>
+      <div className="card"><GList items={FREE_RES}/></div>
+    </>)}
   </>);
 }
 
