@@ -54,9 +54,13 @@ CLAUDE.md
 
 ## Tabs (each is a React component in `index.html`)
 
-Register · **This week** · **Papers** · Test log · Sunday · Diagnostic · The
-plan · Manual · Backup. Two are worth calling out because they're data-driven
-and meant to grow:
+Register · **This week** · **Schedule** · **Papers** · Test log · Sunday ·
+Diagnostic · The plan · Manual · Backup. A few are worth calling out because
+they're data-driven and meant to grow:
+
+- **Schedule** (`Schedule`) — the whole plan at a glance: every chapter placed
+  in its week (Weeks 0–18), built directly from the `CH` array grouped by `wk`,
+  so it stays in sync with the register. Read-only overview.
 
 - **This week** (`WeekPage` + `ChapterGuide`) — pick any week (stepper /
   dropdown / "jump to now") or search a chapter, and get a per-chapter guide:

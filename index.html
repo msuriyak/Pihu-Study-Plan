@@ -217,6 +217,14 @@ input::placeholder{color:var(--ink-soft); font-family:'IBM Plex Sans',sans-serif
 .paper-src:hover{text-decoration:underline;}
 .glist a,.acc-b a{color:var(--s-M); text-decoration:none;}
 .glist a:hover,.acc-b a:hover{text-decoration:underline;}
+.wk-block{background:var(--paper-2); border:1px solid var(--rule); border-radius:2px; padding:12px 14px; margin-bottom:10px;}
+.wk-block.now{box-shadow:inset 3px 0 0 var(--red); background:#FDF9EF;}
+.wk-head{display:flex; align-items:center; gap:9px; flex-wrap:wrap; border-bottom:1px solid var(--rule-2); padding-bottom:7px; margin-bottom:6px;}
+.wk-no{font-family:'Archivo',sans-serif; font-weight:700; font-size:14px;}
+.wk-row{display:grid; grid-template-columns:82px 1fr; gap:8px; padding:4px 0; font-size:12.5px; align-items:baseline;}
+.wk-subj{font:600 9.5px/1.3 'Archivo',sans-serif; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); padding-top:2px;}
+.wk-ch{display:inline-block; margin-right:14px; line-height:2;}
+.wk-ch .code{margin-right:5px;}
 /* diagnostic */
 .q{border-bottom:1px solid var(--rule-2); padding:10px 0;}
 .q-top{display:flex; gap:9px; align-items:flex-start;}
@@ -884,7 +892,7 @@ function App(){
   const reset=()=>{ if(!confirm("Clear every tick, test and week from this device? Export a backup first if you want to keep it.")) return;
     const seed={}; SEEDED.forEach(id=>{seed[id]={l1:true};}); commit({syllabus:seed,tests:[],audits:[],diag:{}}); };
 
-  const TABS=[["register","Register"],["week","This week"],["papers","Papers"],["tests","Test log"],["sunday","Sunday"],
+  const TABS=[["register","Register"],["week","This week"],["schedule","Schedule"],["papers","Papers"],["tests","Test log"],["sunday","Sunday"],
     ["diag","Diagnostic"],["plan","The plan"],["manual","Manual"],["data","Backup"]];
   return (
     <div className="reg">
@@ -899,6 +907,7 @@ function App(){
           <main className="body">
             {tab==="register" && <Register syl={db.syllabus} setChapter={setChapter}/>}
             {tab==="week" && <WeekPage syl={db.syllabus} setChapter={setChapter}/>}
+            {tab==="schedule" && <Schedule/>}
             {tab==="papers" && <Papers/>}
             {tab==="tests" && <TestLog db={db} commit={commit}/>}
             {tab==="sunday" && <Sunday db={db} commit={commit}/>}
@@ -1109,6 +1118,39 @@ function WeekPage({syl,setChapter}){
       <p className="sub-h">Free resources — every chapter</p>
       <div className="card"><GList items={FREE_RES}/></div>
     </>)}
+  </>);
+}
+
+/* ═══════════════════  SCHEDULE  ═══════════════════ */
+const SUBJ_ORDER=["M","P","C","E","X","KM","KP","KC"];
+function Schedule(){
+  const now=currentWeek();
+  const weeks=[]; for(let n=0;n<=MAX_WK;n++){ const list=CH.filter(c=>c.wk===n); if(list.length) weeks.push([n,list]); }
+  const label=n=>{ const r=WEEKS.find(w=>w[0]===n); if(r) return r[1];
+    const mon=addDays(START,n*7); return `${fmt(mon)} – ${fmt(addDays(mon,6))}`; };
+  const phaseOf=n=>{ const mon=addDays(START,n*7); return PHASES.find(p=>mon>=p.start&&mon<=p.end)||PHASES[0]; };
+  return (<>
+    <div className="note">The whole plan at a glance — every chapter placed in its week. Class 12 (boards + JEE) and
+      the Class 11 JEE-only track both run here; daily practice and the +7 / +21 / +60 revision queue sit underneath.
+      Open <b>This week</b> for a chapter's resources and tests, and tick progress in the <b>Register</b>.</div>
+    {weeks.map(([n,list])=>{ const ph=phaseOf(n);
+      return (<div key={n} className={`wk-block ${n===now?"now":""}`}>
+        <div className="wk-head">
+          <span className="wk-no">Week {n}</span>
+          <span className="ph-d">{n===0?"Already covered · diagnostic & setup":label(n)}</span>
+          <span className="pill">Phase {ph.n} · {ph.name}</span>
+          {n===now&&<span className="pill pill-bad">this week</span>}</div>
+        {SUBJ_ORDER.map(s=>{ const cs=list.filter(c=>c.s===s); if(!cs.length) return null;
+          return (<div key={s} className="wk-row">
+            <span className="wk-subj">{SUBJECTS[s].short}</span>
+            <span>{cs.map(c=>(<span key={c.id} className="wk-ch">
+              <span className={`code s-${c.s}`}>{c.code}</span>{c.title}
+              {c.tier==="h"&&<span className="heavy">heavy</span>}
+              {c.crit&&<span className="crit">key</span>}</span>))}</span></div>);})}
+      </div>);})}
+    <p className="legend"><b>heavy</b> = 12–14 hr chapter · <b>key</b> = a Class 11 chapter the Class 12 syllabus rests on ·
+      Weeks 1–14 are the Phase 1 first-pass intake; the Class 11 track continues into the later weeks shown.
+      Week 0 lists chapters already covered before the plan began.</p>
   </>);
 }
 
