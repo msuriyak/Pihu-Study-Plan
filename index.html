@@ -1163,14 +1163,50 @@ const CBSE_SUBJECTS=[["Mathematics","maths"],["Physics","physics"],["Chemistry",
   ["English Core","english"],["Physical Education","pe"]];
 const PAPERS=[
   { group:"Practice papers — printable, built into this tracker",
-    note:"Original JEE-style chapter sprints with verified answer keys, plus your Week 0 diagnostic — ready to print or save as PDF. These are not CBSE/NTA papers; more chapters can be added on request.",
-    bundled:[
-      ["Week 0 Diagnostic — question paper","papers/diagnostic-week0.html"],
-      ["Week 0 Diagnostic — marking key (for the guardian)","papers/diagnostic-week0-key.html"],
-      ["M1 Relations & Functions — JEE sprint (8 Q + key)","papers/sprint-m1.html"],
-      ["M5 Continuity & Differentiability — JEE sprint (10 Q + key)","papers/sprint-m5.html"],
-      ["C1 Solutions — JEE sprint (8 Q + key)","papers/sprint-c1.html"],
-      ["P8 Electromagnetic Waves — JEE sprint (8 Q + key)","papers/sprint-p8.html"]]},
+    note:"Original JEE-style chapter sprints (single correct, +4/−1) with hand-verified answer keys on the last page, plus your Week 0 diagnostic. Every Class 12 Maths, Physics and Chemistry chapter is covered. Open one and use Print / Save as PDF. These are original practice papers, not CBSE/NTA papers.",
+    bundledGroups:[
+      {head:"Diagnostic",items:[
+        ["Week 0 Diagnostic — question paper","papers/diagnostic-week0.html"],
+        ["Week 0 Diagnostic — marking key (for the guardian)","papers/diagnostic-week0-key.html"]]},
+      {head:"Mathematics",items:[
+        ["M1 · Relations and Functions","papers/sprint-m1.html"],
+        ["M2 · Inverse Trigonometric Functions","papers/sprint-m2.html"],
+        ["M3 · Matrices","papers/sprint-m3.html"],
+        ["M4 · Determinants","papers/sprint-m4.html"],
+        ["M5 · Continuity and Differentiability","papers/sprint-m5.html"],
+        ["M6 · Application of Derivatives","papers/sprint-m6.html"],
+        ["M7 · Integrals","papers/sprint-m7.html"],
+        ["M8 · Application of Integrals","papers/sprint-m8.html"],
+        ["M9 · Differential Equations","papers/sprint-m9.html"],
+        ["M10 · Vector Algebra","papers/sprint-m10.html"],
+        ["M11 · Three Dimensional Geometry","papers/sprint-m11.html"],
+        ["M13 · Probability","papers/sprint-m13.html"]]},
+      {head:"Physics",items:[
+        ["P1 · Electric Charges and Fields","papers/sprint-p1.html"],
+        ["P2 · Electrostatic Potential and Capacitance","papers/sprint-p2.html"],
+        ["P3 · Current Electricity","papers/sprint-p3.html"],
+        ["P4 · Moving Charges and Magnetism","papers/sprint-p4.html"],
+        ["P5 · Magnetism and Matter","papers/sprint-p5.html"],
+        ["P6 · Electromagnetic Induction","papers/sprint-p6.html"],
+        ["P7 · Alternating Current","papers/sprint-p7.html"],
+        ["P8 · Electromagnetic Waves","papers/sprint-p8.html"],
+        ["P9 · Ray Optics and Optical Instruments","papers/sprint-p9.html"],
+        ["P10 · Wave Optics","papers/sprint-p10.html"],
+        ["P11 · Dual Nature of Radiation and Matter","papers/sprint-p11.html"],
+        ["P12 · Atoms","papers/sprint-p12.html"],
+        ["P13 · Nuclei","papers/sprint-p13.html"],
+        ["P14 · Semiconductor Electronics","papers/sprint-p14.html"]]},
+      {head:"Chemistry",items:[
+        ["C1 · Solutions","papers/sprint-c1.html"],
+        ["C2 · Electrochemistry","papers/sprint-c2.html"],
+        ["C3 · Chemical Kinetics","papers/sprint-c3.html"],
+        ["C4 · The d- and f-Block Elements","papers/sprint-c4.html"],
+        ["C5 · Coordination Compounds","papers/sprint-c5.html"],
+        ["C6 · Haloalkanes and Haloarenes","papers/sprint-c6.html"],
+        ["C7 · Alcohols, Phenols and Ethers","papers/sprint-c7.html"],
+        ["C8 · Aldehydes, Ketones and Carboxylic Acids","papers/sprint-c8.html"],
+        ["C9 · Amines","papers/sprint-c9.html"],
+        ["C10 · Biomolecules","papers/sprint-c10.html"]]}]},
   { group:"CBSE Class 12 — sample papers & marking schemes",
     note:"The official 2026–27 sample papers release around Sept–Oct 2026; until then the 2025–26 set is the closest stand-in. The marking scheme matters more than the paper — self-mark every answer against it.",
     source:{label:"Official — CBSE Academic, Sample Question Paper (Class XII)",url:CBSE_HOME},
@@ -1207,6 +1243,11 @@ function Papers(){
         {sec.source && <p><a className="paper-src" href={sec.source.url} target="_blank" rel="noopener noreferrer">{sec.source.label} ↗</a></p>}
         {sec.bundled && <ul className="glist">{sec.bundled.map(([label,file])=>(
           <li key={file}><a className="paper-btn" href={file} target="_blank" rel="noopener noreferrer">Open / print</a>{label}</li>))}</ul>}
+        {sec.bundledGroups && sec.bundledGroups.map(g=>(<Fragment key={g.head}>
+          <h4>{g.head}</h4>
+          <ul className="glist">{g.items.map(([label,file])=>(
+            <li key={file}><a className="paper-btn" href={file} target="_blank" rel="noopener noreferrer">Open / print</a>{label}</li>))}</ul>
+        </Fragment>))}
         {sec.subjects && <div className="tw"><table>
           <thead><tr><th>Subject</th><th>Sample paper</th><th>Marking scheme</th></tr></thead>
           <tbody>{sec.subjects.map(s=>(<tr key={s.name}><td>{s.name}</td>
