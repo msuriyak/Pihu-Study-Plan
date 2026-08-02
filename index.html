@@ -266,8 +266,7 @@ const MILESTONES = [
   { label:"JEE Main S2", sub:"the real one", date:"2027-04-05" },
 ];
 const PHASES = [
-  { n:0, name:"Diagnostic & setup", start:"2026-07-27", end:"2026-08-02" },
-  { n:1, name:"First pass", start:"2026-08-03", end:"2026-11-08" },
+  { n:1, name:"First pass", start:"2026-07-27", end:"2026-11-08" },
   { n:2, name:"Second pass & consolidation", start:"2026-11-09", end:"2026-12-20" },
   { n:3, name:"JEE Session 1 window", start:"2026-12-21", end:"2027-01-24" },
   { n:4, name:"Board lockdown", start:"2027-01-25", end:"2027-02-16" },
@@ -385,20 +384,20 @@ const TEACHBACK = ["Started with the point, not the first formula","Didn't look 
 
 /* ── Phase 1 intake table ── */
 const WEEKS = [
-  [1,"3–9 Aug","5. Continuity & Differentiability","2. Electrostatic Potential & Capacitance","1. Solutions","Deep Water"],
-  [2,"10–16 Aug","1. Relations & Functions","3. Current Electricity","—","Keeping Quiet"],
-  [3,"17–23 Aug","6. Application of Derivatives","—","3. Chemical Kinetics","The Rattrap"],
-  [4,"24–30 Aug","—","4. Moving Charges & Magnetism · 5. Magnetism & Matter","4. d- and f-Block","The Tiger King"],
-  [5,"31 Aug–6 Sep","7. Integrals (part 1)","—","2. Electrochemistry","A Thing of Beauty"],
-  [6,"7–13 Sep","7. Integrals (part 2) · 8. App. of Integrals","6. Electromagnetic Induction","—","Indigo"],
-  [7,"14–20 Sep","—","7. Alternating Current","5. Coordination Compounds","Journey to the End of the Earth"],
-  [8,"21–27 Sep","9. Differential Equations","8. Electromagnetic Waves · 9. Ray Optics","—","Poets and Pancakes"],
-  [9,"28 Sep–4 Oct","—","10. Wave Optics","7. Alcohols, Phenols & Ethers","A Roadside Stand"],
-  [10,"5–11 Oct","10. Vector Algebra","11. Dual Nature · 12. Atoms","—","The Enemy"],
-  [11,"12–18 Oct","11. Three Dimensional Geometry","—","8. Aldehydes, Ketones & Acids","The Interview"],
-  [12,"19–25 Oct","13. Probability","13. Nuclei · 14. Semiconductors","—","Aunt Jennifer's Tigers"],
-  [13,"26 Oct–1 Nov","12. Linear Programming","—","9. Amines · 10. Biomolecules","On the Face of It"],
-  [14,"2–8 Nov","Buffer — spillover, consolidation, full-syllabus audit","","","Going Places · Memories of Childhood"],
+  [1,"27 Jul – 2 Aug","5. Continuity & Differentiability","2. Electrostatic Potential & Capacitance","1. Solutions","Deep Water"],
+  [2,"3–9 Aug","1. Relations & Functions","3. Current Electricity","—","Keeping Quiet"],
+  [3,"10–16 Aug","6. Application of Derivatives","—","3. Chemical Kinetics","The Rattrap"],
+  [4,"17–23 Aug","—","4. Moving Charges & Magnetism · 5. Magnetism & Matter","4. d- and f-Block","The Tiger King"],
+  [5,"24–30 Aug","7. Integrals (part 1)","—","2. Electrochemistry","A Thing of Beauty"],
+  [6,"31 Aug – 6 Sep","7. Integrals (part 2) · 8. App. of Integrals","6. Electromagnetic Induction","—","Indigo"],
+  [7,"7–13 Sep","—","7. Alternating Current","5. Coordination Compounds","Journey to the End of the Earth"],
+  [8,"14–20 Sep","9. Differential Equations","8. Electromagnetic Waves · 9. Ray Optics","—","Poets and Pancakes"],
+  [9,"21–27 Sep","—","10. Wave Optics","7. Alcohols, Phenols & Ethers","A Roadside Stand"],
+  [10,"28 Sep – 4 Oct","10. Vector Algebra","11. Dual Nature · 12. Atoms","—","The Enemy"],
+  [11,"5–11 Oct","11. Three Dimensional Geometry","—","8. Aldehydes, Ketones & Acids","The Interview"],
+  [12,"12–18 Oct","13. Probability","13. Nuclei · 14. Semiconductors","—","Aunt Jennifer's Tigers"],
+  [13,"19–25 Oct","12. Linear Programming","—","9. Amines · 10. Biomolecules","On the Face of It"],
+  [14,"26 Oct – 1 Nov","Buffer — spillover, consolidation, full-syllabus audit","","","Going Places · Memories of Childhood"],
 ];
 
 /* ── Chapter guides ──
@@ -1126,32 +1125,37 @@ function WeekPage({syl,setChapter}){
 const SUBJ_ORDER=["M","P","C","E","X","KM","KP","KC"];
 function Schedule(){
   const now=currentWeek();
-  const weeks=[]; for(let n=0;n<=MAX_WK;n++){ const list=CH.filter(c=>c.wk===n); if(list.length) weeks.push([n,list]); }
+  const seen=CH.filter(c=>c.wk===0);
+  const weeks=[]; for(let n=1;n<=MAX_WK;n++){ const list=CH.filter(c=>c.wk===n); if(list.length) weeks.push([n,list]); }
   const label=n=>{ const r=WEEKS.find(w=>w[0]===n); if(r) return r[1];
-    const mon=addDays(START,n*7); return `${fmt(mon)} – ${fmt(addDays(mon,6))}`; };
-  const phaseOf=n=>{ const mon=addDays(START,n*7); return PHASES.find(p=>mon>=p.start&&mon<=p.end)||PHASES[0]; };
+    const mon=addDays(START,(n-1)*7); return `${fmt(mon)} – ${fmt(addDays(mon,6))}`; };
+  const phaseOf=n=>{ const mon=addDays(START,(n-1)*7); return PHASES.find(p=>mon>=p.start&&mon<=p.end)||PHASES[PHASES.length-1]; };
+  const rows=list=>SUBJ_ORDER.map(s=>{ const cs=list.filter(c=>c.s===s); if(!cs.length) return null;
+    return (<div key={s} className="wk-row"><span className="wk-subj">{SUBJECTS[s].short}</span>
+      <span>{cs.map(c=>(<span key={c.id} className="wk-ch">
+        <span className={`code s-${c.s}`}>{c.code}</span>{c.title}
+        {c.tier==="h"&&<span className="heavy">heavy</span>}{c.crit&&<span className="crit">key</span>}</span>))}</span></div>);});
   return (<>
     <div className="note">The whole plan at a glance — every chapter placed in its week. Class 12 (boards + JEE) and
       the Class 11 JEE-only track both run here; daily practice and the +7 / +21 / +60 revision queue sit underneath.
       Open <b>This week</b> for a chapter's resources and tests, and tick progress in the <b>Register</b>.</div>
+    {seen.length>0 && (<div className="wk-block">
+      <div className="wk-head"><span className="wk-no">Already covered</span>
+        <span className="ph-d">before Week 1 — prior knowledge, not part of the weekly plan</span></div>
+      {rows(seen)}
+    </div>)}
     {weeks.map(([n,list])=>{ const ph=phaseOf(n);
       return (<div key={n} className={`wk-block ${n===now?"now":""}`}>
         <div className="wk-head">
           <span className="wk-no">Week {n}</span>
-          <span className="ph-d">{n===0?"Already covered · diagnostic & setup":label(n)}</span>
+          <span className="ph-d">{label(n)}</span>
           <span className="pill">Phase {ph.n} · {ph.name}</span>
           {n===now&&<span className="pill pill-bad">this week</span>}</div>
-        {SUBJ_ORDER.map(s=>{ const cs=list.filter(c=>c.s===s); if(!cs.length) return null;
-          return (<div key={s} className="wk-row">
-            <span className="wk-subj">{SUBJECTS[s].short}</span>
-            <span>{cs.map(c=>(<span key={c.id} className="wk-ch">
-              <span className={`code s-${c.s}`}>{c.code}</span>{c.title}
-              {c.tier==="h"&&<span className="heavy">heavy</span>}
-              {c.crit&&<span className="crit">key</span>}</span>))}</span></div>);})}
+        {rows(list)}
       </div>);})}
     <p className="legend"><b>heavy</b> = 12–14 hr chapter · <b>key</b> = a Class 11 chapter the Class 12 syllabus rests on ·
       Weeks 1–14 are the Phase 1 first-pass intake; the Class 11 track continues into the later weeks shown.
-      Week 0 lists chapters already covered before the plan began.</p>
+      The diagnostic/setup week has been removed — chapters known before Week 1 are listed under “Already covered”.</p>
   </>);
 }
 
