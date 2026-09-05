@@ -275,79 +275,86 @@ const PHASES = [
 ];
 
 // [subject, code, title, week, tier, board?, jee?, critical?]
+// Weeks 1–6 are the record of what was actually covered (checkpoint: 5 Sep 2026).
+// Weeks 7–15 are the revised first-pass intake; the Class 11 track runs on to Week 21.
 const CH = [
   ["M","1","Relations and Functions",2,"m",1,1],["M","2","Inverse Trigonometric Functions",0,"m",1,1],
   ["M","3","Matrices",0,"m",1,1],["M","4","Determinants",0,"m",1,1],
   ["M","5","Continuity and Differentiability",1,"h",1,1],["M","6","Application of Derivatives",3,"h",1,1],
-  ["M","7","Integrals",5,"h",1,1],["M","8","Application of Integrals",6,"l",1,1],
-  ["M","9","Differential Equations",8,"m",1,1],["M","10","Vector Algebra",10,"m",1,1],
-  ["M","11","Three Dimensional Geometry",11,"m",1,1],["M","12","Linear Programming",13,"l",1,0],
+  ["M","7","Integrals",5,"h",1,1],["M","8","Application of Integrals",7,"l",1,1],
+  ["M","9","Differential Equations",8,"m",1,1],["M","10","Vector Algebra",9,"m",1,1],
+  ["M","11","Three Dimensional Geometry",10,"m",1,1],["M","12","Linear Programming",11,"l",1,0],
   ["M","13","Probability",12,"m",1,1],
+  /* Physics runs strictly 1 → 14, in NCERT order: each chapter is a prerequisite for the next. */
   ["P","1","Electric Charges and Fields",0,"m",1,1],["P","2","Electrostatic Potential and Capacitance",2,"h",1,1],
-  ["P","3","Current Electricity",3,"m",1,1],["P","4","Moving Charges and Magnetism",4,"h",1,1],
-  ["P","5","Magnetism and Matter",4,"l",1,1],["P","6","Electromagnetic Induction",6,"m",1,1],
-  ["P","7","Alternating Current",7,"m",1,1],["P","8","Electromagnetic Waves",8,"l",1,1],
-  ["P","9","Ray Optics and Optical Instruments",8,"h",1,1],["P","10","Wave Optics",9,"m",1,1],
-  ["P","11","Dual Nature of Radiation and Matter",10,"l",1,1],["P","12","Atoms",10,"l",1,1],
-  ["P","13","Nuclei",12,"l",1,1],["P","14","Semiconductor Electronics",12,"l",1,1],
-  ["C","1","Solutions",1,"m",1,1],["C","2","Electrochemistry",5,"h",1,1],
-  ["C","3","Chemical Kinetics",3,"m",1,1],["C","4","The d- and f-Block Elements",4,"m",1,1],
-  ["C","5","Coordination Compounds",7,"h",1,1],["C","6","Haloalkanes and Haloarenes",0,"m",1,1],
-  ["C","7","Alcohols, Phenols and Ethers",9,"m",1,1],["C","8","Aldehydes, Ketones and Carboxylic Acids",11,"h",1,1],
-  ["C","9","Amines",13,"m",1,1],["C","10","Biomolecules",13,"l",1,1],
+  ["P","3","Current Electricity",7,"m",1,1],["P","4","Moving Charges and Magnetism",8,"h",1,1],
+  ["P","5","Magnetism and Matter",9,"l",1,1],["P","6","Electromagnetic Induction",9,"m",1,1],
+  ["P","7","Alternating Current",10,"m",1,1],["P","8","Electromagnetic Waves",10,"l",1,1],
+  ["P","9","Ray Optics and Optical Instruments",11,"h",1,1],["P","10","Wave Optics",12,"m",1,1],
+  ["P","11","Dual Nature of Radiation and Matter",12,"l",1,1],["P","12","Atoms",13,"l",1,1],
+  ["P","13","Nuclei",13,"l",1,1],["P","14","Semiconductor Electronics",14,"l",1,1],
+  ["C","1","Solutions",1,"m",1,1],["C","2","Electrochemistry",7,"h",1,1],
+  ["C","3","Chemical Kinetics",3,"m",1,1],["C","4","The d- and f-Block Elements",8,"m",1,1],
+  ["C","5","Coordination Compounds",9,"h",1,1],["C","6","Haloalkanes and Haloarenes",0,"m",1,1],
+  ["C","7","Alcohols, Phenols and Ethers",10,"m",1,1],["C","8","Aldehydes, Ketones and Carboxylic Acids",11,"h",1,1],
+  ["C","9","Amines",12,"m",1,1],["C","10","Biomolecules",13,"l",1,1],
   ["E","F1","The Last Lesson",0,"l",1,0],["E","F2","Lost Spring",0,"l",1,0],
   ["E","F3","Deep Water",1,"l",1,0],["E","F4","The Rattrap",3,"l",1,0],
-  ["E","F5","Indigo",6,"l",1,0],["E","F6","Poets and Pancakes",8,"l",1,0],
-  ["E","F7","The Interview",11,"l",1,0],["E","F8","Going Places",14,"l",1,0],
+  ["E","F5","Indigo",7,"l",1,0],["E","F6","Poets and Pancakes",11,"l",1,0],
+  ["E","F7","The Interview",13,"l",1,0],["E","F8","Going Places",14,"l",1,0],
   ["E","Pm1","My Mother at Sixty-Six",0,"l",1,0],["E","Pm2","Keeping Quiet",2,"l",1,0],
-  ["E","Pm3","A Thing of Beauty",5,"l",1,0],["E","Pm4","A Roadside Stand",9,"l",1,0],
-  ["E","Pm5","Aunt Jennifer's Tigers",12,"l",1,0],["E","V1","The Third Level",0,"l",1,0],
-  ["E","V2","The Tiger King",4,"l",1,0],["E","V3","Journey to the End of the Earth",7,"l",1,0],
-  ["E","V4","The Enemy",10,"l",1,0],["E","V5","On the Face of It",13,"l",1,0],
-  ["E","V6","Memories of Childhood",14,"l",1,0],
+  ["E","Pm3","A Thing of Beauty",8,"l",1,0],["E","Pm4","A Roadside Stand",12,"l",1,0],
+  ["E","Pm5","Aunt Jennifer's Tigers",14,"l",1,0],["E","V1","The Third Level",0,"l",1,0],
+  ["E","V2","The Tiger King",9,"l",1,0],["E","V3","Journey to the End of the Earth",10,"l",1,0],
+  ["E","V4","The Enemy",13,"l",1,0],["E","V5","On the Face of It",14,"l",1,0],
+  ["E","V6","Memories of Childhood",15,"l",1,0],
   ["X","1","Management of Sporting Events",0,"l",1,0],["X","2","Children and Women in Sports",0,"l",1,0],
   ["X","3","Yoga as Preventive Measure",0,"l",1,0],["X","4","Physical Education for CWSN",0,"l",1,0],
   ["X","5","Sports and Nutrition",0,"l",1,0],["X","6","Test and Measurement in Sports",0,"l",1,0],
   ["X","7","Physiology and Injuries in Sports",0,"l",1,0],["X","8","Biomechanics and Sports",0,"l",1,0],
   ["X","9","Psychology and Sports",0,"l",1,0],["X","10","Training in Sports",0,"l",1,0],
-  /* ── Class 11, JEE-only track ── */
-  ["KC","9","Organic Chemistry — Basic Principles (GOC)",1,"h",0,1,1],
-  ["KM","10","Limits and Derivatives",1,"m",0,1,1],
-  ["KC","1","Some Basic Concepts (Mole Concept)",2,"h",0,1,1],
-  ["KM","9","Trigonometric Ratios, Identities and Equations",2,"m",0,1],
-  ["KC","3","Chemical Bonding and Molecular Structure",3,"h",0,1,1],
-  ["KP","6","Rotational Motion",3,"h",0,1,1],
-  ["KM","2","Complex Numbers and Quadratic Equations",4,"h",0,1],
-  ["KC","6","Equilibrium — Chemical and Ionic",5,"h",0,1,1],
-  ["KP","12","Oscillations (SHM)",5,"h",0,1,1],
-  ["KM","8","Conic Sections",6,"h",0,1],
-  ["KP","13","Waves",6,"m",0,1],
-  ["KC","4","Classification of Elements and Periodicity",7,"l",0,1],
-  ["KP","3","Laws of Motion",7,"m",0,1],
-  ["KM","3","Sequences and Series",8,"m",0,1],
-  ["KC","2","Atomic Structure",8,"m",0,1],
-  ["KP","2","Kinematics",9,"m",0,1],
-  ["KM","7","Circles",9,"m",0,1],
-  ["KC","5","Chemical Thermodynamics",10,"m",0,1],
-  ["KP","11","Thermodynamics",10,"m",0,1],
-  ["KM","6","Straight Lines",11,"m",0,1],
-  ["KP","4","Work, Energy and Power",11,"m",0,1],
-  ["KC","10","Hydrocarbons",12,"m",0,1],
-  ["KM","4","Permutations and Combinations",12,"m",0,1],
-  ["KP","5","Centre of Mass, Momentum and Collisions",13,"m",0,1],
-  ["KM","5","Binomial Theorem",13,"l",0,1],
-  ["KC","7","Redox Reactions",14,"l",0,1],
-  ["KP","7","Gravitation",14,"l",0,1],
-  ["KP","8","Mechanical Properties of Solids and Fluids",15,"m",0,1],
-  ["KM","11","Statistics",15,"l",0,1],
-  ["KP","10","Kinetic Theory of Gases",16,"l",0,1],
-  ["KC","8","p-Block Elements (Groups 13 and 14)",16,"l",0,1],
-  ["KP","9","Thermal Properties of Matter",17,"l",0,1],
-  ["KM","1","Sets, Relations and Functions",17,"l",0,1],
-  ["KP","1","Units, Dimensions and Measurement",18,"l",0,1],
+  /* ── Class 11, JEE-only track — restarted from Week 7; nothing had been taken up by 5 Sep.
+       Class 11 Physics also runs strictly 1 → 13, in NCERT order. ── */
+  ["KP","1","Units, Dimensions and Measurement",7,"l",0,1],
+  ["KP","2","Kinematics",7,"m",0,1],
+  ["KC","9","Organic Chemistry — Basic Principles (GOC)",7,"h",0,1,1],
+  ["KP","3","Laws of Motion",8,"m",0,1],
+  ["KC","1","Some Basic Concepts (Mole Concept)",8,"h",0,1,1],
+  ["KP","4","Work, Energy and Power",9,"m",0,1],
+  ["KM","10","Limits and Derivatives",9,"m",0,1,1],
+  ["KP","5","Centre of Mass, Momentum and Collisions",10,"m",0,1],
+  ["KC","2","Atomic Structure",10,"m",0,1],
+  ["KP","6","Rotational Motion",11,"h",0,1,1],
+  ["KM","9","Trigonometric Ratios, Identities and Equations",11,"m",0,1],
+  ["KP","7","Gravitation",12,"l",0,1],
+  ["KC","3","Chemical Bonding and Molecular Structure",12,"h",0,1,1],
+  ["KP","8","Mechanical Properties of Solids and Fluids",13,"m",0,1],
+  ["KM","2","Complex Numbers and Quadratic Equations",13,"h",0,1],
+  ["KP","9","Thermal Properties of Matter",14,"l",0,1],
+  ["KP","10","Kinetic Theory of Gases",14,"l",0,1],
+  ["KC","4","Classification of Elements and Periodicity",14,"l",0,1],
+  ["KP","11","Thermodynamics",15,"m",0,1],
+  ["KM","3","Sequences and Series",15,"m",0,1],
+  ["KP","12","Oscillations (SHM)",16,"h",0,1,1],
+  ["KC","5","Chemical Thermodynamics",16,"m",0,1],
+  ["KP","13","Waves",17,"m",0,1],
+  ["KM","8","Conic Sections",17,"h",0,1],
+  ["KC","6","Equilibrium — Chemical and Ionic",18,"h",0,1,1],
+  ["KM","7","Circles",18,"m",0,1],
+  ["KC","10","Hydrocarbons",19,"m",0,1],
+  ["KM","6","Straight Lines",19,"m",0,1],
+  ["KC","7","Redox Reactions",20,"l",0,1],
+  ["KM","4","Permutations and Combinations",20,"m",0,1],
+  ["KM","11","Statistics",20,"l",0,1],
+  ["KC","8","p-Block Elements (Groups 13 and 14)",21,"l",0,1],
+  ["KM","5","Binomial Theorem",21,"l",0,1],
+  ["KM","1","Sets, Relations and Functions",21,"l",0,1],
 ].map(([s,code,title,wk,tier,board,jee,crit])=>({id:s+code,s,code,title,wk,tier,board:!!board,jee:!!jee,crit:!!crit}));
 
-const SEEDED = ["M2","M3","M4","P1","C6","EF1","EF2","EPm1","EV1"];
+/* Chapters already ticked "Read" at the 5 Sep 2026 checkpoint — the default state for a fresh browser. */
+const SEEDED = ["M1","M2","M3","M4","M5","M6","M7","P1","P2","C1","C3","C6",
+  "EF1","EF2","EF3","EF4","EPm1","EPm2","EV1"];
+
 const SUBJECTS = {
   M:{name:"Mathematics",short:"Maths",yr:12}, P:{name:"Physics",short:"Physics",yr:12},
   C:{name:"Chemistry",short:"Chem",yr:12}, E:{name:"English Core",short:"English",yr:12},
@@ -382,22 +389,25 @@ const TASKS = [
 const TEACHBACK = ["Started with the point, not the first formula","Didn't look anything up",
   "Used her own example or analogy","Survived a naive follow-up question"];
 
-/* ── Phase 1 intake table ── */
+/* ── First-pass intake table ──
+   Weeks 1–6 record what was actually taken up (checkpoint 5 Sep 2026);
+   Weeks 7–15 are the revised schedule. "→ Wk n" marks a chapter carried forward. */
 const WEEKS = [
   [1,"27 Jul – 2 Aug","5. Continuity & Differentiability","—","1. Solutions","Deep Water"],
   [2,"3–9 Aug","1. Relations & Functions","2. Electrostatic Potential & Capacitance","—","Keeping Quiet"],
-  [3,"10–16 Aug","6. Application of Derivatives","3. Current Electricity","3. Chemical Kinetics","The Rattrap"],
-  [4,"17–23 Aug","—","4. Moving Charges & Magnetism · 5. Magnetism & Matter","4. d- and f-Block","The Tiger King"],
-  [5,"24–30 Aug","7. Integrals (part 1)","—","2. Electrochemistry","A Thing of Beauty"],
-  [6,"31 Aug – 6 Sep","7. Integrals (part 2) · 8. App. of Integrals","6. Electromagnetic Induction","—","Indigo"],
-  [7,"7–13 Sep","—","7. Alternating Current","5. Coordination Compounds","Journey to the End of the Earth"],
-  [8,"14–20 Sep","9. Differential Equations","8. Electromagnetic Waves · 9. Ray Optics","—","Poets and Pancakes"],
-  [9,"21–27 Sep","—","10. Wave Optics","7. Alcohols, Phenols & Ethers","A Roadside Stand"],
-  [10,"28 Sep – 4 Oct","10. Vector Algebra","11. Dual Nature · 12. Atoms","—","The Enemy"],
-  [11,"5–11 Oct","11. Three Dimensional Geometry","—","8. Aldehydes, Ketones & Acids","The Interview"],
-  [12,"12–18 Oct","13. Probability","13. Nuclei · 14. Semiconductors","—","Aunt Jennifer's Tigers"],
-  [13,"19–25 Oct","12. Linear Programming","—","9. Amines · 10. Biomolecules","On the Face of It"],
-  [14,"26 Oct – 1 Nov","Buffer — spillover, consolidation, full-syllabus audit","","","Going Places · Memories of Childhood"],
+  [3,"10–16 Aug","6. Application of Derivatives","carried → Wk 7","3. Chemical Kinetics","The Rattrap"],
+  [4,"17–23 Aug","—","carried → Wk 8, 9","carried → Wk 8","carried → Wk 9"],
+  [5,"24–30 Aug","7. Integrals (part 1)","—","carried → Wk 7","carried → Wk 8"],
+  [6,"31 Aug – 6 Sep","7. Integrals (part 2)","—","—","carried → Wk 7"],
+  [7,"7–13 Sep","8. Application of Integrals","3. Current Electricity","2. Electrochemistry","Indigo"],
+  [8,"14–20 Sep","9. Differential Equations","4. Moving Charges & Magnetism","4. d- and f-Block Elements","A Thing of Beauty"],
+  [9,"21–27 Sep","10. Vector Algebra","5. Magnetism & Matter · 6. Electromagnetic Induction","5. Coordination Compounds","The Tiger King"],
+  [10,"28 Sep – 4 Oct","11. Three Dimensional Geometry","7. Alternating Current · 8. Electromagnetic Waves","7. Alcohols, Phenols & Ethers","Journey to the End of the Earth"],
+  [11,"5–11 Oct","12. Linear Programming","9. Ray Optics & Optical Instruments","8. Aldehydes, Ketones & Acids","Poets and Pancakes"],
+  [12,"12–18 Oct","13. Probability","10. Wave Optics · 11. Dual Nature","9. Amines","A Roadside Stand"],
+  [13,"19–25 Oct","—","12. Atoms · 13. Nuclei","10. Biomolecules","The Interview · The Enemy"],
+  [14,"26 Oct – 1 Nov","—","14. Semiconductor Electronics","—","Going Places · Aunt Jennifer's Tigers · On the Face of It"],
+  [15,"2–8 Nov","Buffer — spillover, consolidation, full-syllabus audit","","","Memories of Childhood"],
 ];
 
 /* ── Chapter guides ──
@@ -1069,7 +1079,7 @@ function ChapterGuide({ch,row,setChapter}){
 }
 
 function WeekPage({syl,setChapter}){
-  const cur=Math.min(Math.max(currentWeek(),1),14);
+  const cur=Math.min(Math.max(currentWeek(),1),MAX_WK);
   const [wk,setWk]=useState(cur);
   const [q,setQ]=useState("");
   const query=q.trim().toLowerCase(), searching=query.length>0;
@@ -1126,7 +1136,8 @@ const SUBJ_ORDER=["M","P","C","E","X","KM","KP","KC"];
 function Schedule(){
   const now=currentWeek();
   const seen=CH.filter(c=>c.wk===0);
-  const weeks=[]; for(let n=1;n<=MAX_WK;n++){ const list=CH.filter(c=>c.wk===n); if(list.length) weeks.push([n,list]); }
+  const weeks=[]; for(let n=1;n<=MAX_WK;n++){ const list=CH.filter(c=>c.wk===n);
+    if(list.length||WEEKS.some(w=>w[0]===n)) weeks.push([n,list]); }
   const label=n=>{ const r=WEEKS.find(w=>w[0]===n); if(r) return r[1];
     const mon=addDays(START,(n-1)*7); return `${fmt(mon)} – ${fmt(addDays(mon,6))}`; };
   const phaseOf=n=>{ const mon=addDays(START,(n-1)*7); return PHASES.find(p=>mon>=p.start&&mon<=p.end)||PHASES[PHASES.length-1]; };
@@ -1151,11 +1162,13 @@ function Schedule(){
           <span className="ph-d">{label(n)}</span>
           <span className="pill">Phase {ph.n} · {ph.name}</span>
           {n===now&&<span className="pill pill-bad">this week</span>}</div>
-        {rows(list)}
+        {list.length ? rows(list) : <div className="wk-row"><span className="wk-subj">—</span>
+          <span>Nothing new taken up — the week's intake was carried forward.</span></div>}
       </div>);})}
     <p className="legend"><b>heavy</b> = 12–14 hr chapter · <b>key</b> = a Class 11 chapter the Class 12 syllabus rests on ·
-      Weeks 1–14 are the Phase 1 first-pass intake; the Class 11 track continues into the later weeks shown.
-      The diagnostic/setup week has been removed — chapters known before Week 1 are listed under “Already covered”.</p>
+      Weeks 1–15 are the Phase 1 first-pass intake; the Class 11 track continues into Phase 2, to Week 21.
+      Revised at the 5 Sep 2026 checkpoint: Weeks 1–6 are the record of what was actually taken up, Weeks 7 onward
+      the re-plan. Chapters known before Week 1 are listed under “Already covered”.</p>
   </>);
 }
 
@@ -1662,51 +1675,90 @@ function Plan(){
         out in November scores nothing in April. The rest days are load-bearing, not rewards.</div>
     </Acc>
 
-    <Acc title="Phase 1 — the 14-week intake schedule">
+    <Acc title="Phase 1 — the 15-week intake schedule (revised 5 Sep 2026)">
       <p className="hint">New chapter intake. Daily practice, the revision queue and the Class 11 track run
         continuously underneath and always span at least two subjects, so nothing goes cold in a week where it takes
         no new chapter.</p>
+      <div className="note"><b>Where this stands at the 5 September checkpoint (end of Week 6).</b> Maths is on
+        schedule and slightly ahead — Chapters 1, 5, 6 and 7 are read. Physics is the problem: only Chapters 1 and 2
+        are read, so <b>ten chapters of the original plan have slipped</b>. Chemistry has Solutions, Kinetics and
+        Haloalkanes; Electrochemistry and the d- and f-Block have slipped. English is four pieces behind. The Class 11
+        track has not started at all, and the test log is empty — no T1 sprint, T2 retrieval set or T3 part-syllabus
+        mock has been recorded in six weeks, which is the more serious of the two problems, because it means none of
+        the reading so far has been tested. The table below is the re-plan, not the original: everything outstanding
+        is re-placed across Weeks 7–15, and Week 15 (2–8 Nov) is now the buffer, ending the first pass on the
+        original 8 November date. Restart the weekly T2 in Week 7 alongside it — a chapter read and never tested is
+        not yet a chapter done.</div>
       <div className="tw"><table><thead><tr><th>Wk</th><th>Dates</th><th>Maths</th><th>Physics</th><th>Chemistry</th><th>English</th></tr></thead>
         <tbody>{WEEKS.map(w=>(<tr key={w[0]}><td className="mono">{w[0]}</td><td className="mono">{w[1]}</td>
           <td>{w[2]}</td><td>{w[3]}</td><td>{w[4]}</td><td>{w[5]}</td></tr>))}</tbody></table></div>
       <h4>Why this sequence</h4>
       <ul>
-        <li>Calculus starts in Week 1 and dominates Aug–Sep. It is 35 board marks and the largest JEE block, and it
-          needs the longest runway to its Day-60 revisits.</li>
-        <li>Integrals gets a full 1.5 weeks. Highest-effort chapter in the syllabus, and everything downstream
-          depends on it.</li>
-        <li>Physics runs in prerequisite order 2→3→4→5→6→7→8: potential &amp; capacitance, then current, then
-          magnetism, induction and AC, and only then Electromagnetic Waves — whose displacement current builds on the
-          capacitor and Ampère's law from those earlier chapters. Electric Charges &amp; Fields (Ch 1) is already done.</li>
-        <li>Optics (9, 10) then Modern Physics and Semiconductors (11–14) follow in Weeks 8–12 — cheap, largely
-          self-contained JEE marks arriving mid-plan, when motivation typically dips.</li>
-        <li>Organic runs in dependency order 7→8→9, building on Haloalkanes which is already done.</li>
-        <li>Linear Programming is last: 5 board marks, absent from JEE, learnable in two sittings.</li>
-        <li>Week 14 is a real buffer, not padding. Something will slip. Plan for it.</li>
+        <li><b>Physics is taken strictly in NCERT order, 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13 → 14, with
+          no chapter skipped ahead of another.</b> The book is built as a chain: potential and capacitance feed
+          current electricity; moving charges and magnetism feed magnetism &amp; matter and then induction;
+          induction feeds alternating current; AC and the capacitor together feed the displacement current in
+          Electromagnetic Waves; ray optics precedes wave optics; the photoelectric effect precedes atoms and
+          nuclei. The original plan interleaved these to keep variety; ten weeks of slippage has removed that
+          luxury, and taking them out of order now would mean learning several of them twice.</li>
+        <li>Two physics chapters land in Weeks 9, 10, 12 and 13 — but each of those pairs is one medium chapter
+          plus one light one (Magnetism &amp; Matter, EM Waves, Dual Nature, Atoms, Nuclei are all short), so the
+          hours are ordinary even though the count is two.</li>
+        <li>Maths carries the recovery. It is ahead, so it takes a single chapter a week and finishes in Week 12,
+          freeing Weeks 13–15 for the physics tail and the audit.</li>
+        <li>Organic still runs in dependency order 7 → 8 → 9 (Weeks 10, 11, 12), on top of Haloalkanes, which is
+          done. The d- and f-Block (Week 8) still precedes Coordination Compounds (Week 9).</li>
+        <li>Electrochemistry moves to Week 7 rather than being dropped: it is a heavy chapter and it depends on
+          Solutions, which is already read, so delaying it further only compresses it.</li>
+        <li>Linear Programming stays late: 5 board marks, absent from JEE, learnable in two sittings.</li>
+        <li>English clusters into Weeks 13–15, where the physics tail is light. Prose and poetry are the one part of
+          this plan that genuinely can be caught up in a burst.</li>
+        <li>Week 15 is a real buffer, not padding. Six weeks of evidence says something will slip. Plan for it.</li>
       </ul>
+      <div className="note"><b>The honest trade.</b> Nothing has been deleted from the syllabus to make this fit —
+        the same 34 Class 12 chapters and 12 English pieces are all still placed. What absorbs the slippage is the
+        Class 11 track, which now starts in Week 7 and runs to Week 21, deep into Phase 2. If Physics slips again in
+        the next fortnight, the next thing to give is the second pass in Phase 2, not the first pass — a chapter
+        never read cannot be revised.</div>
     </Acc>
 
     <Acc title="The Class 11 JEE track">
       <p>Lower priority than Class 12, but it cannot be absent — roughly 45% of the JEE Main paper comes from it,
         and several Class 11 chapters are load-bearing for the Class 12 syllabus she is studying now. 34 chapters,
-        ~5–6 hrs/week, running across Phase 1 and Phase 2 in the rotating daily slot, then revised hard in Phase 6.</p>
+        ~5–6 hrs/week, running in the rotating daily slot, then revised hard in Phase 6.</p>
+      <div className="note"><b>Restarted at the 5 Sep checkpoint.</b> Nothing on this track had been taken up in
+        Weeks 1–6, so it is re-based to begin in <b>Week 7</b> and now runs to <b>Week 21</b> (20 Dec), through
+        Phase 2. That is the deliberate place to absorb the Class 12 slippage — but it also means the first full
+        JEE mocks in Phase 2 will sit on a Class 11 base that is only half built. Expect the Class 11 portion of
+        those mocks to score low until December, and read the scores accordingly.</div>
       <h4>The rule that makes this work</h4>
       <p>The Class 11 slot is <b>never</b> allowed to displace a Class 12 chapter. If a week goes badly, Class 11
         is what slips — and it catches up in Phase 2 and in the post-board sprint, when there is nothing competing.
         That is the whole reason it is scheduled as a parallel track rather than woven into the main table.</p>
+      <h4>Class 11 Physics also runs strictly in order</h4>
+      <p>Units → Kinematics → Laws of Motion → Work, Energy &amp; Power → Centre of Mass &amp; Collisions →
+        Rotational Motion → Gravitation → Solids &amp; Fluids → Thermal Properties → Kinetic Theory →
+        Thermodynamics → SHM → Waves, Weeks 7–17. Rotational Motion is the highest-yield chapter on this track and
+        it used to sit early, but it is unusable without Laws of Motion and Work–Energy underneath it, and SHM is
+        unusable without it. Sequence beats priority here.</p>
       <h4>The four that must not slip</h4>
       <ul>
-        <li><b>GOC — Organic Basic Principles (Week 1).</b> Every Class 12 organic chapter sits on top of it, and
-          those start in Week 9. Doing this late means learning Aldehydes and Amines twice.</li>
-        <li><b>Mole Concept (Week 2).</b> Underpins Solutions, Electrochemistry and every physical chemistry
-          numerical.</li>
-        <li><b>Chemical Bonding (Week 3).</b> Feeds Coordination Compounds directly.</li>
-        <li><b>Limits and Derivatives (Week 1).</b> Sits under the entire calculus block, which starts in Week 1.</li>
+        <li><b>GOC — Organic Basic Principles (Week 7).</b> Every Class 12 organic chapter sits on top of it, and
+          those start in Week 10. It leads this track for that reason — it is the one Class 11 chapter with a
+          deadline set by the Class 12 plan.</li>
+        <li><b>Mole Concept (Week 8).</b> Underpins Solutions, Electrochemistry and every physical chemistry
+          numerical — and Electrochemistry is now Week 7, so this one is already late. Pair it with that chapter's
+          numericals rather than treating it as separate work.</li>
+        <li><b>Limits and Derivatives (Week 9).</b> Sits under the entire calculus block. Maths is ahead, so this is
+          consolidation rather than prerequisite now, but it still cannot be skipped.</li>
+        <li><b>Chemical Bonding (Week 12).</b> Feeds Coordination Compounds (Week 9). This one <i>is</i> arriving
+          after the chapter that needs it — unavoidable without breaking the physics chain. Read the bonding section
+          of the Coordination chapter carefully when it comes up, and treat Week 12 as the second pass.</li>
       </ul>
       <h4>Highest JEE yield after those</h4>
       <p>Rotational Motion and SHM in Physics (2 questions each, reliably) · Equilibrium and Periodicity in
         Chemistry (Periodicity being near-free marks) · Conic Sections and Complex Numbers &amp; Quadratic in Maths.
-        These sit in Weeks 3–8 for that reason.</p>
+        These sit in Weeks 11–18.</p>
       <h4>What is deliberately excluded</h4>
       <p>NTA removed these in the 2024–25 rationalisation and they remain out: <b>Chemistry</b> — States of Matter,
         Hydrogen, s-Block, Environmental Chemistry, significant figures. <b>Maths</b> — Mathematical Induction,
@@ -1794,7 +1846,7 @@ function Plan(){
         <tr><td className="mono"><b>T2</b></td><td>Weekly mixed retrieval — 25 questions across everything covered</td><td>50 min</td><td>60 min</td><td>Week 1</td></tr>
         <tr><td className="mono"><b>T3</b></td><td>Part-syllabus JEE mock — covered chapters only</td><td>3 hrs</td><td>3 hrs</td><td>Week 2</td></tr>
         <tr><td className="mono"><b>T4</b></td><td>Full-length JEE mock — exam conditions</td><td>3 hrs</td><td>3 hrs</td><td>Phase 2</td></tr>
-        <tr><td className="mono"><b>T5</b></td><td>Board sample paper — longhand, self-marked</td><td>3 hrs</td><td>2 hrs</td><td>Phase 1 wk 6</td></tr>
+        <tr><td className="mono"><b>T5</b></td><td>Board sample paper — longhand, self-marked</td><td>3 hrs</td><td>2 hrs</td><td>Phase 1 wk 7</td></tr>
       </tbody></table></div>
       <p>Total across the plan: roughly <b>37 mock papers and 23 full board papers</b> before the exams that count.
         That volume is what separates a student who knows the syllabus from one who can convert it under a clock.</p>
@@ -2024,7 +2076,7 @@ function Manual(){
     <Acc title="Books">
       <p className="hint">Deliberately short. Every extra book is a daily decision about which one to open, and
         unfinished books breed guilt. One core book per purpose, finished, beats five started. Buy the "now" items
-        in Week 0 and nothing else until Phase 2.</p>
+        before Week 1 and nothing else until Phase 2.</p>
       <div className="bgrid">{BOOKS.map(([sub,list])=>(<div key={sub}><h4>{sub}</h4>
         <ul className="blist">{list.map(([b,when])=>(<li key={b}>
           <span className={`when-pill ${when==="now"?"wp-now":""}`}>{when}</span>{b}</li>))}</ul></div>))}</div>

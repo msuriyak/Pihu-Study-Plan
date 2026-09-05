@@ -10,7 +10,7 @@
 
 | Milestone | Expected date | Notes |
 |---|---|---|
-| Plan starts | Mon 27 Jul 2026 | Week 0 = diagnostic + setup |
+| Plan starts | Mon 27 Jul 2026 | Week 1 = first chapter intake; the diagnostic sits before it |
 | **CBSE Class 12 exam form window** | **Sept 2026** | Hard deadline. See Part 10 — action this first. |
 | JEE Main 2027 information bulletin | Oct–Nov 2026 | Registration opens |
 | CBSE date sheet released | Dec 2026 | Confirms exact paper dates |
@@ -30,7 +30,7 @@
 The student sits it fully and seriously, but the plan does not distort December–January to peak for it. NTA takes the *better* of the two scores, so Session 1 has no downside risk. Its real value is a genuine percentile reading and exam-hall experience under real conditions, six weeks before it counts.
 
 **2. The Class 11 syllabus is roughly 45% of the JEE paper and must be scheduled, not assumed.**
-This plan reserves a permanent daily slot for it (~5 hrs/week, ~150 hours total). Size it against the diagnostic. Non-negotiable Class 11 blocks: Physics — Rotational Motion, SHM, Waves, Thermodynamics/KTG, Laws of Motion, Work-Energy; Chemistry — Mole Concept, Bonding, Equilibrium, Thermodynamics, Periodic Properties, and **GOC (which every Class 12 organic chapter sits on top of)**; Maths — Conics, Straight Lines & Circles, Sequences, Binomial, P&C, Complex Numbers, Trigonometry, Limits.
+This plan reserves a permanent daily slot for it (~5 hrs/week, ~150 hours total). As of the 5 Sep 2026 checkpoint none of it had been started, so the track is re-based to Weeks 7–21 and Class 11 Physics is taken strictly in NCERT order (Units → Kinematics → Laws of Motion → Work-Energy → Centre of Mass → Rotational Motion → Gravitation → Solids & Fluids → Thermal → KTG → Thermodynamics → SHM → Waves) rather than by JEE yield — Rotational Motion is unusable without Laws of Motion and Work-Energy underneath it, and SHM is unusable without Rotational Motion. GOC leads the track in Week 7 because Class 12 organic starts in Week 10. Non-negotiable Class 11 blocks: Physics — Rotational Motion, SHM, Waves, Thermodynamics/KTG, Laws of Motion, Work-Energy; Chemistry — Mole Concept, Bonding, Equilibrium, Thermodynamics, Periodic Properties, and **GOC (which every Class 12 organic chapter sits on top of)**; Maths — Conics, Straight Lines & Circles, Sequences, Binomial, P&C, Complex Numbers, Trigonometry, Limits.
 
 **3. Inorganic Chemistry is the highest marks-per-hour on the JEE paper — and it is exactly what the student dislikes.**
 This is the single biggest available gain. Coordination Compounds, d-&f-Block and p-Block are ~30 JEE marks answerable in seconds with no calculation. The fix is not "memorise harder." It is: never present a bare list. Every fact gets hung on a reason (why Cu breaks the expected electronic configuration, why lanthanoid contraction produces the trend it does, why CFSE predicts the colour). Facts anchored to logic survive in a logical mind; naked facts fall out. Then spaced-repetition cards for the irreducible residue. Budget 20 min/day, every day, from Week 5 onward.
@@ -154,47 +154,66 @@ Testing rises from 5 hrs/week here to roughly 11 hrs in Phase 2, 17 in Phase 3 a
 
 ---
 
-## PART 6 — PHASE 1: First pass (Week 0 + 14 weeks, 27 Jul – 8 Nov 2026)
+## PART 6 — PHASE 1: First pass (15 weeks, 27 Jul – 8 Nov 2026)
 
-### Week 0 (27 Jul – 2 Aug) — Diagnostic and setup
+> **Revised 5 September 2026 (end of Week 6).** The original Week 0 diagnostic/setup week has been folded away —
+> chapters known before Week 1 are recorded as "already covered" — and the intake table below is a re-plan against
+> actual progress, not the schedule as first written. Read the checkpoint before the table.
 
-- Sit the diagnostic (see Part 10). Mark it honestly.
-- Confirm CBSE exam form eligibility and route — **this is the week's most important task** (Part 11).
-- Acquire: NCERT set, chapter-wise board PYQ book (10 years), chapter-wise JEE Main PYQ book (2019–2026), NCERT Exemplar for Physics & Chemistry.
-- Set up three artefacts: **error journal**, **spaced-revision queue** (a dated list), **flashcard deck**.
-- Re-do the already-covered chapters as fast diagnostic checks: Maths 2, 3, 4 · Physics 1 · Chemistry 6 · English Flamingo 1, 2, Poem 1, Vistas 1. Just L4 + L2 layers — 45 min each. This calibrates how much a "done once" chapter has actually retained, which tells us how much the Day-7/21/60 queue needs to carry.
+### The 5 September checkpoint — what has actually been done
 
-### Weeks 1–14 — chapter intake schedule
+Read (layer L1) at the end of Week 6:
 
-The table shows **new chapter intake**. Daily practice, revision queue and the Class 11 track run continuously underneath and always span at least two subjects, so no subject ever goes cold even in a week where it takes no new chapter.
+| Subject | Read | Outstanding |
+|---|---|---|
+| Maths | 1, 2, 3, 4, 5, 6, 7 | 8, 9, 10, 11, 12, 13 |
+| **Physics** | **1, 2 only** | **3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14** |
+| Chemistry | 1, 3, 6 | 2, 4, 5, 7, 8, 9, 10 |
+| English | Flamingo 1–4, Poems 1–2, Vistas 1 | 12 pieces |
+| Class 11 JEE track | nothing | all 34 chapters |
+
+Three findings:
+
+1. **Maths is on schedule and marginally ahead.** Integrals is done. This is the subject carrying the plan and it should now take a lighter weekly load so the others can catch up.
+2. **Physics has slipped by ten chapters** — the whole electricity/magnetism block after capacitance. This is the binding constraint on the rest of Phase 1.
+3. **Nothing has been tested.** The test log is empty: no T1 chapter sprint, no T2 weekly retrieval set, no T3 part-syllabus mock in six weeks. This is more serious than the slippage, because it means the accuracy of everything marked "read" is unknown. Restart T2 in Week 7 and keep it weekly regardless of what else gives.
+
+### Weeks 1–15 — revised chapter intake schedule
+
+Weeks 1–6 are the record of what was actually taken up; Weeks 7–15 are the re-plan. The table shows **new chapter intake** — daily practice, the revision queue and the Class 11 track run continuously underneath.
 
 | Wk | Dates | Maths | Physics | Chemistry | English (Sun slot) |
 |---|---|---|---|---|---|
-| 1 | 3–9 Aug | **5. Continuity & Differentiability** | 8. Electromagnetic Waves | **1. Solutions** | Deep Water |
-| 2 | 10–16 Aug | 1. Relations & Functions | **2. Electrostatic Potential & Capacitance** | — | Keeping Quiet |
-| 3 | 17–23 Aug | **6. Application of Derivatives** | — | 3. Chemical Kinetics | The Rattrap |
-| 4 | 24–30 Aug | — | 3. Current Electricity · 5. Magnetism & Matter | 4. d- and f-Block Elements | The Tiger King |
-| 5 | 31 Aug–6 Sep | **7. Integrals (part 1)** | — | **2. Electrochemistry** | A Thing of Beauty |
-| 6 | 7–13 Sep | **7. Integrals (part 2)** · 8. Application of Integrals | **4. Moving Charges & Magnetism** | — | Indigo |
-| 7 | 14–20 Sep | — | 6. Electromagnetic Induction | **5. Coordination Compounds** | Journey to the End of the Earth |
-| 8 | 21–27 Sep | 9. Differential Equations | 7. Alternating Current · 14. Semiconductors | — | Poets and Pancakes |
-| 9 | 28 Sep–4 Oct | — | **9. Ray Optics & Optical Instruments** | 7. Alcohols, Phenols & Ethers | A Roadside Stand |
-| 10 | 5–11 Oct | 10. Vector Algebra | 10. Wave Optics · 11. Dual Nature | — | The Enemy |
-| 11 | 12–18 Oct | 11. Three Dimensional Geometry | — | **8. Aldehydes, Ketones & Carboxylic Acids** | The Interview |
-| 12 | 19–25 Oct | 13. Probability | 12. Atoms · 13. Nuclei | — | Aunt Jennifer's Tigers |
-| 13 | 26 Oct–1 Nov | 12. Linear Programming | — | 9. Amines · 10. Biomolecules | On the Face of It |
-| 14 | 2–8 Nov | **Buffer week** — spillover, consolidation, first full-syllabus audit | | | Going Places · Memories of Childhood |
+| 1 | 27 Jul – 2 Aug | **5. Continuity & Differentiability** ✓ | — | **1. Solutions** ✓ | Deep Water ✓ |
+| 2 | 3–9 Aug | 1. Relations & Functions ✓ | **2. Electrostatic Potential & Capacitance** ✓ | — | Keeping Quiet ✓ |
+| 3 | 10–16 Aug | **6. Application of Derivatives** ✓ | *carried → Wk 7* | 3. Chemical Kinetics ✓ | The Rattrap ✓ |
+| 4 | 17–23 Aug | — | *carried → Wk 8, 9* | *carried → Wk 8* | *carried → Wk 9* |
+| 5 | 24–30 Aug | **7. Integrals (part 1)** ✓ | — | *carried → Wk 7* | *carried → Wk 8* |
+| 6 | 31 Aug – 6 Sep | **7. Integrals (part 2)** ✓ | — | — | *carried → Wk 7* |
+| 7 | 7–13 Sep | 8. Application of Integrals | 3. Current Electricity | **2. Electrochemistry** | Indigo |
+| 8 | 14–20 Sep | 9. Differential Equations | **4. Moving Charges & Magnetism** | 4. d- and f-Block Elements | A Thing of Beauty |
+| 9 | 21–27 Sep | 10. Vector Algebra | 5. Magnetism & Matter · 6. Electromagnetic Induction | **5. Coordination Compounds** | The Tiger King |
+| 10 | 28 Sep – 4 Oct | 11. Three Dimensional Geometry | 7. Alternating Current · 8. Electromagnetic Waves | 7. Alcohols, Phenols & Ethers | Journey to the End of the Earth |
+| 11 | 5–11 Oct | 12. Linear Programming | **9. Ray Optics & Optical Instruments** | **8. Aldehydes, Ketones & Carboxylic Acids** | Poets and Pancakes |
+| 12 | 12–18 Oct | 13. Probability | 10. Wave Optics · 11. Dual Nature | 9. Amines | A Roadside Stand |
+| 13 | 19–25 Oct | — | 12. Atoms · 13. Nuclei | 10. Biomolecules | The Interview · The Enemy |
+| 14 | 26 Oct – 1 Nov | — | 14. Semiconductor Electronics | — | Going Places · Aunt Jennifer's Tigers · On the Face of It |
+| 15 | 2–8 Nov | **Buffer week** — spillover, consolidation, first full-syllabus audit | | | Memories of Childhood |
 
-**Bold = heavy chapter, 12–14 hrs.** Every Class 12 chapter, poem and prose piece on your list is placed. Nothing is left to "later."
+**Bold = heavy chapter, 12–14 hrs. ✓ = done.** Every Class 12 chapter, poem and prose piece is still placed; nothing has been dropped to make the recovery fit, and the first pass still ends on 8 November as originally planned.
 
 **Why this sequence:**
-- Calculus starts in Week 1 and dominates Aug–Sep. It is 35 board marks and the largest JEE block, and it needs the longest runway to Day-60 revisits.
-- Integrals gets a full 1.5 weeks. It is the highest-effort chapter in the entire syllabus and everything downstream (Application of Integrals, Differential Equations) depends on it.
-- Physics electricity/magnetism (2→3→4→5→6→7) is deliberately *broken up* across Weeks 2–8 rather than run consecutively, so the student is never seven chapters deep in one topic.
-- Modern Physics + Semiconductors (11, 12, 13, 14) land in Weeks 8–12 — cheap JEE marks arriving mid-plan when motivation typically dips.
-- Organic runs in dependency order 7→8→9 (Weeks 9, 11, 13), building on Haloalkanes which is already done.
-- Linear Programming is last. It is 5 board marks, absent from JEE, and learnable in two sittings.
-- Week 14 is a real buffer, not padding. Something will slip. Plan for it.
+
+- **Physics is now taken strictly in NCERT order — 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13 → 14, with nothing skipped ahead.** The original plan deliberately interleaved the electricity/magnetism block so the student was never seven chapters deep in one topic. That was affordable when the block was spread over Weeks 2–8; it is not affordable now. The book is a chain: potential and capacitance feed current electricity; moving charges feeds magnetism & matter and then induction; induction feeds alternating current; AC plus the capacitor feed the displacement current in Electromagnetic Waves; ray optics precedes wave optics; the photoelectric effect precedes atoms and nuclei. Taking these out of order with ten chapters outstanding means learning several of them twice, which is exactly the time the plan no longer has.
+- Where two physics chapters share a week (9, 10, 12, 13), each pair is one medium chapter plus one light one — Magnetism & Matter, EM Waves, Dual Nature, Atoms and Nuclei are all short. The hours are ordinary even though the count is two.
+- **Maths carries the recovery.** It is ahead, so it drops to one chapter a week and finishes in Week 12, which frees Weeks 13–15 for the physics tail and the audit.
+- Organic still runs in dependency order 7 → 8 → 9 (Weeks 10, 11, 12) on top of Haloalkanes, which is done; the d- and f-Block (Week 8) still precedes Coordination Compounds (Week 9).
+- Electrochemistry moves to Week 7 rather than being pushed further back. It is heavy and it sits on Solutions, which is already read — delaying it only compresses it into a worse week later.
+- Linear Programming stays late: 5 board marks, absent from JEE, learnable in two sittings.
+- English clusters into Weeks 13–15 where the physics tail is light. Prose and poetry are the one part of this plan that can genuinely be caught up in a burst.
+- Week 15 is a real buffer, not padding. Six weeks of evidence says something will slip.
+
+**What absorbs the slippage:** the Class 11 JEE track, which had not been started and is now re-based to run Weeks 7–21, deep into Phase 2 (see Part 5). If Physics slips again in the next fortnight, the next thing to give is the *second pass* in Phase 2 — not the first pass. A chapter never read cannot be revised.
 
 ### Phase 1 testing rhythm
 
@@ -202,12 +221,12 @@ The table shows **new chapter intake**. Daily practice, revision queue and the C
 |---|---|---|
 | Per chapter | **T1 — Chapter sprint.** 15 JEE questions, timed at 2 min/q. Already built into layer L4. | End of each chapter |
 | Every week | **T2 — Mixed retrieval set.** 25 questions drawn from *everything covered so far*, all three subjects, 50 min. This is the single most valuable weekly hour in Phase 1 — it forces retrieval across chapter boundaries, which is what both real papers actually demand and what a single-pass reader is weakest at. | Sat, 50 min + 60 min review |
-| Every 2 weeks | **T3 — Part-syllabus JEE mock.** 75 questions, 3 hrs, exam timing, *restricted to chapters already covered*. Ends of Weeks 2, 4, 6, 8, 10, 12, 14. | Sun morning 9:00, + 3 hrs review Mon |
-| Weeks 6 and 12 | **T5 — One board sample paper**, longhand, timed, self-marked against the official marking scheme. Week 6 = Physics. Week 12 = English. | Replaces that week's T3 |
+| Every 2 weeks | **T3 — Part-syllabus JEE mock.** 75 questions, 3 hrs, exam timing, *restricted to chapters already covered*. Ends of Weeks 8, 10, 12, 14 — none were sat in Weeks 1–6, so the cadence restarts in Week 8. | Sun morning 9:00, + 3 hrs review Mon |
+| Weeks 7 and 12 | **T5 — One board sample paper**, longhand, timed, self-marked against the official marking scheme. Week 7 = Physics. Week 12 = English. | Replaces that week's T3 |
 
 Full-length JEE mocks (T4) deliberately do **not** start in Phase 1 — testing the student on Class 11 chapters not yet revised produces a demoralising number and no usable information. Part-syllabus mocks give a clean read on what has actually been learned. The first true full-length mock lands in Phase 2.
 
-Board sample papers for 2026–27 are already published on cbseacademic.nic.in — download the full set in Week 0 along with the marking schemes, which are the more useful document of the two.
+Board sample papers for 2026–27 are already published on cbseacademic.nic.in — download the full set now along with the marking schemes, which are the more useful document of the two.
 
 ---
 
@@ -218,7 +237,7 @@ Board sample papers for 2026–27 are already published on cbseacademic.nic.in �
 The whole Class 12 syllabus has now been seen once. This phase converts "seen" into "solid."
 
 - **Rotation:** 4–5 chapters/week — recall sheet from memory, then the full board PYQ set, then a timed JEE set. No re-reading from scratch; retrieval first, and open the book only where retrieval fails. This is the second read the student needs, and done as active recall it is far more effective than re-reading.
-- Class 11 JEE track continues at ~5 hrs/week.
+- Class 11 JEE track continues at ~5 hrs/week and now runs to Week 21 (20 Dec) — it is only half built when the first full mocks start, so read the Class 11 portion of those scores accordingly.
 - Inorganic flashcards move to daily, non-negotiable.
 
 **Testing schedule — this is where the full-length work begins**
@@ -371,7 +390,7 @@ Worth 30–50 marks to a student with identical knowledge. It is a skill; it nee
 
 ## PART 10 — Instruments
 
-### The diagnostic (Week 0, ~2 hours, one sitting)
+### The diagnostic (before Week 1, ~2 hours, one sitting)
 
 | Section | Content | What it tells us |
 |---|---|---|
@@ -402,7 +421,7 @@ Mark A and D for accuracy *and* time-per-question. Mark B and C against official
 
 ## PART 11 — Risks and open items
 
-**1. CBSE exam registration — action this in Week 0.**
+**1. CBSE exam registration — action this immediately.**
 For the 2026 cycle, the Class 12 private candidate form opened 9 Sept 2025 and closed 30 Sept 2025 (late fee to 11 Oct). The 2027 equivalent falls in **September 2026 — about six weeks from now.** Two things to verify immediately:
 
 - **Eligibility.** CBSE private candidature is generally restricted to fail, compartment, essential-repeat and improvement candidates. A first-time homeschooled candidate is typically **not** eligible for the CBSE private route and must either be enrolled in a CBSE-affiliated school (including the common non-attending arrangement) or take the NIOS route instead.
