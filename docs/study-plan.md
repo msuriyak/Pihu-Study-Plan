@@ -191,7 +191,7 @@ Weeks 1–6 are the record of what was actually taken up; Weeks 7–15 are the r
 | 5 | 24–30 Aug | **7. Integrals (part 1)** ✓ | — | *carried → Wk 7* | *carried → Wk 8* |
 | 6 | 31 Aug – 6 Sep | **7. Integrals (part 2)** ✓ | — | — | *carried → Wk 7* |
 | 7 | 7–13 Sep | 8. Application of Integrals | 3. Current Electricity | **2. Electrochemistry** | Indigo |
-| 8 | 14–20 Sep | 9. Differential Equations | **4. Moving Charges & Magnetism** | 4. d- and f-Block Elements | A Thing of Beauty |
+| 8 | 14–20 Sep | 9. Differential Equations | **4. Moving Charges & Magnetism** | **4. d- and f-Block Elements** | A Thing of Beauty |
 | 9 | 21–27 Sep | 10. Vector Algebra | 5. Magnetism & Matter · 6. Electromagnetic Induction | **5. Coordination Compounds** | The Tiger King |
 | 10 | 28 Sep – 4 Oct | 11. Three Dimensional Geometry | 7. Alternating Current · 8. Electromagnetic Waves | 7. Alcohols, Phenols & Ethers | Journey to the End of the Earth |
 | 11 | 5–11 Oct | 12. Linear Programming | **9. Ray Optics & Optical Instruments** | **8. Aldehydes, Ketones & Carboxylic Acids** | Poets and Pancakes |
